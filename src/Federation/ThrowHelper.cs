@@ -1,5 +1,6 @@
 using System.Reflection;
 using FieldSetTypeV1 = ApolloGraphQL.HotChocolate.Federation.One.FieldSetType;
+using FieldSetTypeV2 = ApolloGraphQL.HotChocolate.Federation.Two.FieldSetType;
 using static ApolloGraphQL.HotChocolate.Federation.Properties.FederationResources;
 
 namespace ApolloGraphQL.HotChocolate.Federation;
@@ -16,6 +17,19 @@ internal static class ThrowHelper
     /// </summary>
     public static SerializationException FieldSetV1_InvalidFormat(
         FieldSetTypeV1 fieldSetType) =>
+        new SerializationException(
+            ErrorBuilder.New()
+                .SetMessage(ThrowHelper_FieldSet_HasInvalidFormat)
+                .SetCode(ErrorCodes.Scalars.InvalidSyntaxFormat)
+                .Build(),
+            fieldSetType);
+
+    /// <summary>
+    /// Either the syntax node is invalid when parsing the literal or the syntax
+    /// node value has an invalid format.
+    /// </summary>
+    public static SerializationException FieldSetV2_InvalidFormat(
+        FieldSetTypeV2 fieldSetType) =>
         new SerializationException(
             ErrorBuilder.New()
                 .SetMessage(ThrowHelper_FieldSet_HasInvalidFormat)

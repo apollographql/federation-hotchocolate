@@ -22,16 +22,23 @@ public sealed class KeyAttribute : ObjectTypeDescriptorAttribute
     /// The field set that describes the key.
     /// Grammatically, a field set is a selection set minus the braces.
     /// </param>
-    public KeyAttribute(string? fieldSet = default)
+    public KeyAttribute(string fieldSet) : this(fieldSet, null)
+    {
+    }
+
+    public KeyAttribute(string fieldSet, bool? resolvable = null)
     {
         FieldSet = fieldSet;
+        Resolvable = resolvable;
     }
 
     /// <summary>
     /// Gets the field set that describes the key.
     /// Grammatically, a field set is a selection set minus the braces.
     /// </summary>
-    public string? FieldSet { get; }
+    public string FieldSet { get; }
+
+    public bool? Resolvable { get; }
 
     protected override void OnConfigure(IDescriptorContext context, IObjectTypeDescriptor descriptor, Type type)
     {
@@ -39,6 +46,6 @@ public sealed class KeyAttribute : ObjectTypeDescriptorAttribute
         {
             throw Key_FieldSet_CannotBeEmpty(type);
         }
-        descriptor.Key(FieldSet!);
+        descriptor.Key(FieldSet, Resolvable);
     }
 }

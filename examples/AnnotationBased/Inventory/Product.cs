@@ -3,7 +3,7 @@ using ApolloGraphQL.HotChocolate.Federation;
 namespace Inventory;
 
 [Key("upc")]
-[ExtendServiceType]
+[Extends]
 public class Product
 {
     public Product(string upc)

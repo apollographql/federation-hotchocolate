@@ -3,7 +3,7 @@ using ApolloGraphQL.HotChocolate.Federation;
 namespace Products;
 
 [Key("email")]
-[ExtendServiceType]
+[Extends]
 public class User
 {
     public User(string email, string? name)
@@ -26,6 +26,7 @@ public class User
     [External]
     public string Email { get; set; }
 
+    [Override("users")]
     public string? Name { get; }
 
     [External]

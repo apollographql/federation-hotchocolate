@@ -82,6 +82,13 @@ internal sealed class FederationTypeInterceptor : TypeInterceptor
         AddServiceTypeToQueryType(
             completionContext,
             definition);
+
+        AddInaccessibleMarkers(
+             definition);
+
+        AddShareableMarkers(definition);
+
+        AddTagMarkers(definition);
     }
 
     public override void OnAfterCompleteType(
@@ -189,8 +196,6 @@ internal sealed class FederationTypeInterceptor : TypeInterceptor
             {
                 if (possibleReferenceResolver.IsDefined(typeof(ReferenceResolverAttribute)))
                 {
-
-                    var attributes = possibleReferenceResolver.GetCustomAttributes(true);
                     foreach (var attribute in possibleReferenceResolver.GetCustomAttributes(true))
                     {
                         if (attribute is ReferenceResolverAttribute casted)
@@ -227,6 +232,130 @@ internal sealed class FederationTypeInterceptor : TypeInterceptor
             {
                 unionTypeDefinition.Types.Add(TypeReference.Create(objectType));
             }
+        }
+    }
+
+    private void AddInaccessibleMarkers(DefinitionBase? definition)
+    {
+        switch (definition)
+        {
+            case ObjectTypeDefinition objectTypeDefinition:
+                {
+                    var descriptor = ObjectTypeDescriptor.From(_context, objectTypeDefinition);
+                    if (objectTypeDefinition.RuntimeType.IsDefined(typeof(InaccessibleAttribute)))
+                    {
+                        foreach (var attribute in objectTypeDefinition.RuntimeType.GetCustomAttributes(true))
+                        {
+                            if (attribute is InaccessibleAttribute)
+                            {
+                                descriptor.Directive(WellKnownTypeNames.Inaccessible);
+                            }
+                        }
+                    }
+                    foreach (ObjectFieldDefinition fieldDefinition in objectTypeDefinition.Fields)
+                    {
+                        var fieldDescriptor = ObjectFieldDescriptor.From(_context, fieldDefinition);
+                        if (fieldDefinition.Member != null && fieldDefinition.Member.IsDefined(typeof(InaccessibleAttribute)))
+                        {
+                            foreach (var attribute in fieldDefinition.Member.GetCustomAttributes(true))
+                            {
+                                if (attribute is InaccessibleAttribute)
+                                {
+                                    fieldDescriptor.Directive(WellKnownTypeNames.Inaccessible);
+                                }
+                            }
+                        }
+                    }
+                    break;
+                }
+            // TODO add other applicable types
+            default:
+                break;
+        }
+    }
+
+    private void AddShareableMarkers(DefinitionBase? definition)
+    {
+        if (definition is ObjectTypeDefinition objectTypeDefinition)
+        {
+            {
+                var descriptor = ObjectTypeDescriptor.From(_context, objectTypeDefinition);
+                if (objectTypeDefinition.RuntimeType.IsDefined(typeof(ShareableAttribute)))
+                {
+                    foreach (var attribute in objectTypeDefinition.RuntimeType.GetCustomAttributes(true))
+                    {
+                        if (attribute is ShareableAttribute)
+                        {
+                            descriptor.Directive(WellKnownTypeNames.Shareable);
+                        }
+                    }
+                }
+                foreach (ObjectFieldDefinition fieldDefinition in objectTypeDefinition.Fields)
+                {
+                    var fieldDescriptor = ObjectFieldDescriptor.From(_context, fieldDefinition);
+                    if (fieldDefinition.Member != null && fieldDefinition.Member.IsDefined(typeof(ShareableAttribute)))
+                    {
+                        foreach (var attribute in fieldDefinition.Member.GetCustomAttributes(true))
+                        {
+                            if (attribute is ShareableAttribute)
+                            {
+                                fieldDescriptor.Directive(WellKnownTypeNames.Shareable);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void AddTagMarkers(DefinitionBase? definition)
+    {
+        switch (definition)
+        {
+            case ObjectTypeDefinition objectTypeDefinition:
+                {
+                    var descriptor = ObjectTypeDescriptor.From(_context, objectTypeDefinition);
+                    if (objectTypeDefinition.RuntimeType.IsDefined(typeof(TagAttribute)))
+                    {
+                        foreach (var attribute in objectTypeDefinition.RuntimeType.GetCustomAttributes(true))
+                        {
+                            if (attribute is TagAttribute casted)
+                            {
+                                descriptor.Directive(
+                                    WellKnownTypeNames.Tag,
+                                    new ArgumentNode(
+                                        WellKnownArgumentNames.Name,
+                                        new StringValueNode(casted.Name)
+                                    )
+                                );
+                            }
+                        }
+                    }
+                    foreach (ObjectFieldDefinition fieldDefinition in objectTypeDefinition.Fields)
+                    {
+                        var fieldDescriptor = ObjectFieldDescriptor.From(_context, fieldDefinition);
+                        if (fieldDefinition.Member != null && fieldDefinition.Member.IsDefined(typeof(TagAttribute)))
+                        {
+                            foreach (var attribute in fieldDefinition.Member.GetCustomAttributes(true))
+                            {
+                                if (attribute is TagAttribute casted)
+                                {
+                                    fieldDescriptor.Directive(
+                                        WellKnownTypeNames.Tag,
+                                        new ArgumentNode(
+                                            WellKnownArgumentNames.Name,
+                                            new StringValueNode(casted.Name)
+                                        )
+                                    );
+                                }
+                            }
+                        }
+                    }
+                    break;
+                }
+            // TODO add other applicable types
+            default:
+                break;
         }
     }
 }

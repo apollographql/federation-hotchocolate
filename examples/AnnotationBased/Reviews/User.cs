@@ -3,7 +3,7 @@ using ApolloGraphQL.HotChocolate.Federation;
 namespace Reviews;
 
 [Key("id")]
-[ExtendServiceType]
+[Extends]
 public class User
 {
     public User(string id, string username)

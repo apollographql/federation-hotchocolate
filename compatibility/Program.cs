@@ -5,7 +5,8 @@ builder.Services
 
 builder.Services
     .AddGraphQLServer()
-    .AddApolloFederation()
+    .AddApolloFederationV2()
+    .AddType<Inventory>()
     .AddQueryType<Query>()
     .RegisterService<Data>();
 

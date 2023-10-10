@@ -6,7 +6,6 @@ using GreenDonut;
 using ApolloGraphQL.HotChocolate.Federation.Helpers;
 using HotChocolate;
 using HotChocolate.Language;
-using Xunit;
 using static ApolloGraphQL.HotChocolate.Federation.TestHelper;
 
 namespace ApolloGraphQL.HotChocolate.Federation;

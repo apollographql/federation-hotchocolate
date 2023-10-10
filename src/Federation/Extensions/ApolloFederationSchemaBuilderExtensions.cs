@@ -31,7 +31,7 @@ public static class ApolloFederationSchemaBuilderExtensions
 
         builder.AddType<AnyType>();
         builder.AddType<EntityType>();
-        builder.AddType<ServiceType>();
+        builder.AddType(new ServiceType());
         builder.AddType<FieldSetType>();
         builder.AddType<ExtendsDirectiveType>();
         builder.AddType<ExternalDirectiveType>();

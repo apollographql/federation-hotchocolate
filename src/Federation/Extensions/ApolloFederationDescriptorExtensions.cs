@@ -1,8 +1,9 @@
 using ApolloGraphQL.HotChocolate.Federation.Constants;
 using ApolloGraphQL.HotChocolate.Federation.Descriptors;
 using HotChocolate.Language;
-using static ApolloGraphQL.HotChocolate.Federation.Properties.FederationResources;
 using static ApolloGraphQL.HotChocolate.Federation.Constants.WellKnownContextData;
+using static ApolloGraphQL.HotChocolate.Federation.Properties.FederationResources;
+using System.Collections.Generic;
 
 namespace HotChocolate.Types;
 
@@ -44,6 +45,29 @@ public static partial class ApolloFederationDescriptorExtensions
         return descriptor.Directive(WellKnownTypeNames.External);
     }
 
+    public static IObjectFieldDescriptor InaccessibleField(
+        this IObjectFieldDescriptor descriptor)
+    {
+        if (descriptor is null)
+        {
+            throw new ArgumentNullException(nameof(descriptor));
+        }
+
+        return descriptor.Directive(WellKnownTypeNames.Inaccessible);
+    }
+
+
+    public static IObjectTypeDescriptor InaccessibleType(
+        this IObjectTypeDescriptor descriptor)
+    {
+        if (descriptor is null)
+        {
+            throw new ArgumentNullException(nameof(descriptor));
+        }
+
+        return descriptor.Directive(WellKnownTypeNames.Inaccessible);
+    }
+
     /// <summary>
     /// Adds the @key directive which is used to indicate a combination of fields that
     /// can be used to uniquely identify and fetch an object or interface.
@@ -70,7 +94,8 @@ public static partial class ApolloFederationDescriptorExtensions
     /// </exception>
     public static IEntityResolverDescriptor Key(
         this IObjectTypeDescriptor descriptor,
-        string fieldSet)
+        string fieldSet,
+        bool? resolvable = null)
     {
         if (descriptor is null)
         {
@@ -84,11 +109,24 @@ public static partial class ApolloFederationDescriptorExtensions
                 nameof(fieldSet));
         }
 
-        descriptor.Directive(
-            WellKnownTypeNames.Key,
+        List<ArgumentNode> arguments = new List<ArgumentNode> {
             new ArgumentNode(
                 WellKnownArgumentNames.Fields,
-                new StringValueNode(fieldSet)));
+                new StringValueNode(fieldSet)
+            )
+        };
+        if (false == resolvable)
+        {
+            arguments.Add(
+                new ArgumentNode(
+                    WellKnownArgumentNames.Resolvable,
+                    new BooleanValueNode(false)
+                )
+            );
+        }
+        descriptor.Directive(
+            WellKnownTypeNames.Key,
+            arguments.ToArray());
 
         return new EntityResolverDescriptor<object>(descriptor);
     }
@@ -218,12 +256,45 @@ public static partial class ApolloFederationDescriptorExtensions
         {
             throw new ArgumentNullException(nameof(descriptor));
         }
-
         descriptor
             .Extend()
             .OnBeforeCreate(d => d.ContextData[ExtendMarker] = true);
 
         return descriptor;
+    }
+
+    public static IObjectFieldDescriptor Override(
+        this IObjectFieldDescriptor descriptor,
+        string from)
+    {
+        if (descriptor is null)
+        {
+            throw new ArgumentNullException(nameof(descriptor));
+        }
+
+        if (string.IsNullOrEmpty(from))
+        {
+            throw new ArgumentException(
+                FieldDescriptorExtensions_Requires_FieldSet_CannotBeNullOrEmpty,
+                nameof(from));
+        }
+
+        return descriptor.Directive(
+            WellKnownTypeNames.Override,
+            new ArgumentNode(
+                WellKnownArgumentNames.From,
+                new StringValueNode(from)));
+    }
+
+
+    public static IObjectTypeDescriptor InterfaceObject(this IObjectTypeDescriptor descriptor)
+    {
+        if (descriptor is null)
+        {
+            throw new ArgumentNullException(nameof(descriptor));
+        }
+
+        return descriptor.Directive(WellKnownTypeNames.InterfaceObject);
     }
 
     /// <summary>
