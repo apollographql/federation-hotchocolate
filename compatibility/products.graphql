@@ -1,0 +1,50 @@
+# TODO this file is manually created - it should be generated from the server code
+type Product @key(fields: "id") @key(fields: "sku package") @key(fields: "sku variation { id }")  {
+  id: ID!
+  sku: String
+  package: String
+  variation: ProductVariation
+  dimensions: ProductDimension
+  createdBy: User @provides(fields: "totalProductsCreated")
+  notes: String
+  research: [ProductResearch!]!
+}
+
+type DeprecatedProduct @key(fields: "sku package") {
+  sku: String!
+  package: String!
+  reason: String
+  createdBy: User
+}
+
+type ProductVariation {
+  id: ID!
+}
+
+type ProductResearch @key(fields: "study { caseNumber }") {
+  study: CaseStudy!
+  outcome: String
+}
+
+type CaseStudy {
+  caseNumber: ID!
+  description: String
+}
+
+type ProductDimension {
+  size: String
+  weight: Float
+  unit: String
+}
+
+extend type Query {
+  product(id: ID!): Product
+  deprecatedProduct(sku: String!, package: String!): DeprecatedProduct @deprecated(reason: "Use product query instead")
+}
+
+extend type User @key(fields: "email") {
+  averageProductsCreatedPerYear: Int @requires(fields: "totalProductsCreated yearsOfEmployment")
+  email: ID! @external
+  totalProductsCreated: Int @external
+  yearsOfEmployment: Int! @external
+}

@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <RootNamespace>ApolloGraphQL.Federation.HotChocolate</RootNamespace>
+    <PackageId>ApolloGraphQL.Federation.HotChocolate</PackageId>
+    <AssemblyName>ApolloGraphQL.Federation.HotChocolate</AssemblyName>
+    <Description>Apollo Federation Subgraph support for HotChocolate.</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="ApolloGraphQL.Federation.HotChocolate.Tests" />
+  </ItemGroup>
+
+  <ItemGroup> 
+    <PackageReference Include="HotChocolate" Version="13.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="System" />
+    <Using Include="HotChocolate" />
+    <Using Include="HotChocolate.Types" />
+    <Using Include="HotChocolate.Execution" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\FederationResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>FederationResources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Update="Properties\FederationResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>FederationResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="README.md" Pack="true" PackagePath="\"/>
+  </ItemGroup>
+</Project>

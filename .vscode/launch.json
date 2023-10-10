@@ -1,0 +1,65 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Federated Accounts [Annotation First]",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-annotated-accounts",
+            "program": "${workspaceFolder}/examples/AnnotationBased/Accounts/bin/Debug/net7.0/Accounts.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
+            "name": "Federated Inventory [Annotation First]",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-annotated-inventory",
+            "program": "${workspaceFolder}/examples/AnnotationBased/Inventory/bin/Debug/net7.0/Inventory.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
+            "name": "Federated Products [Annotation First]",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-annotated-products",
+            "program": "${workspaceFolder}/examples/AnnotationBased/Products/bin/Debug/net7.0/Products.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
+            "name": "Federated Reviews [Annotation First]",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-annotated-reviews",
+            "program": "${workspaceFolder}/examples/AnnotationBased/Reviews/bin/Debug/net7.0/Reviews.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
+            "name": "Federation Compatibility [Annotation First]",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-annotated-compatibility",
+            "program": "${workspaceFolder}/compatibility/bin/Debug/net7.0/Products.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "internalConsoleOptions": "openOnSessionStart"
+        }
+    ]
+}

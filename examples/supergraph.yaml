@@ -1,0 +1,14 @@
+federation_version: =2.5.5
+subgraphs:
+  accounts:
+    schema:
+      subgraph_url: http://localhost:5001/graphql
+  inventory:
+    schema:
+      subgraph_url: http://localhost:5002/graphql
+  products:
+    schema:
+      subgraph_url: http://localhost:5003/graphql
+  reviews:
+    schema:
+      subgraph_url: http://localhost:5004/graphql

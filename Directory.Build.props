@@ -1,0 +1,52 @@
+<Project>
+  <PropertyGroup>
+    <IsMacOsArm Condition="'$(NETCoreSdkPortableRuntimeIdentifier)' == 'osx-arm64'">true</IsMacOsArm>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <LangVersion>preview</LangVersion>
+    <Version Condition="$(Version) == ''">0.0.0</Version>
+    <NoWarn>$(NoWarn);CS0436;RS0026;RS0027;RS0041</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591;NU5104</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Authors>ApolloGraphQL authors and contributors</Authors>
+    <Copyright>Copyright (c) 2023- Apollo Graph, Inc. (Formerly Meteor Development Group, Inc.)</Copyright>
+    <!-- TODO
+      <PackageIcon></PackageIcon> 
+    -->
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/apollographql/federation-hotchocolate</PackageProjectUrl>
+    <PackageReleaseNotes>Release notes: https://github.com/apollographql/federation-hotchocolate/releases/$(PackageVersion)</PackageReleaseNotes>
+    <PackageTags>GraphQL Apollo Federation HotChocolate</PackageTags>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <RepositoryUrl>https://github.com/apollographql/federation-hotchocolate.git</RepositoryUrl>
+    <RepositoryType>GitHub</RepositoryType>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Nullable>enable</Nullable>
+    <TargetFrameworks>net8.0; net7.0; net6.0</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.0" PrivateAssets="All"/>
+  </ItemGroup>
+</Project>

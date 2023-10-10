@@ -1,0 +1,12 @@
+bin
+obj
+out
+
+# compatibility stuff
+package.json
+package-lock.json
+results.md
+supergraph-compose.yaml
+supergraph-config.yaml
+supergraph.graphql
+node_modules
