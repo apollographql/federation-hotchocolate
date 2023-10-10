@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
     <RootNamespace>ApolloGraphQL.Federation.HotChocolate</RootNamespace>
     <PackageId>ApolloGraphQL.Federation.HotChocolate</PackageId>
     <AssemblyName>ApolloGraphQL.Federation.HotChocolate</AssemblyName>
@@ -34,6 +33,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>FederationResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="README.md" Pack="true" PackagePath="\"/>
+    <None Include="$(MSBuildThisFileDirectory)..\..\README.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 </Project>

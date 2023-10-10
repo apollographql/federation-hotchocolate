@@ -1,0 +1,29 @@
+name: Release
+
+on:
+  release:
+    types: [ published ]
+
+jobs:
+  release-code:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    if: github.repository == 'apollographql/federation-hotchocolate'
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: |
+            6.0.x
+            7.0.x
+      - name: Create package
+        run: | 
+          NEW_VERSION=$(echo "${GITHUB_REF}" | sed 's/.*\/v//')
+          echo "New version: ${NEW_VERSION}"
+          dotnet pack -p:Version=${NEW_VERSION} -p:Configuration=Release src/Federation/ApolloGraphQL.Federation.HotChocolate.csproj
+      - name: Publish package
+        run: dotnet nuget push src/Federation/bin/Release/*.nupkg -k $NUGET_AUTH_TOKEN -s https://api.nuget.org/v3/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{ secrets.NUGET_TOKEN }}
