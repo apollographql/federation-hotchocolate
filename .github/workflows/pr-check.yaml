@@ -1,0 +1,20 @@
+name: Pull Request Check
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - '*.md'
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yaml
+
+  integration:
+    needs: build
+    permissions:
+      pull-requests: write
+    uses: ./.github/workflows/compatibility.yaml
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}

@@ -1,4 +1,4 @@
-<!-- [![Continuous Integration](https://github.com/apollographql/federation-hotchocolate/workflows/Continuous%20Integration/badge.svg)](https://github.com/apollographql/federation-hotchocolate/actions?query=workflow%3A%22Continuous+Integration%22) -->
+[![Continuous Integration](https://github.com/apollographql/federation-hotchocolate/workflows/Continuous%20Integration/badge.svg)](https://github.com/apollographql/federation-hotchocolate/actions?query=workflow%3A%22Continuous+Integration%22)
 [![MIT License](https://img.shields.io/github/license/apollographql/federation-hotchoclate.svg)](LICENSE)
 [![Nuget](https://img.shields.io/nuget/v/ApolloGraphQL.Federation.HotChocolate)](https://www.nuget.org/packages/ApolloGraphQL.Federation.HotChocolate/)
 [![Join the community forum](https://img.shields.io/badge/join%20the%20community-forum-blueviolet)](https://community.apollographql.com)
