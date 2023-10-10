@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <TargetFrameworks>net7.0; net6.0</TargetFrameworks>
     <RootNamespace>ApolloGraphQL.Federation.HotChocolate</RootNamespace>
     <PackageId>ApolloGraphQL.Federation.HotChocolate</PackageId>
     <AssemblyName>ApolloGraphQL.Federation.HotChocolate</AssemblyName>
