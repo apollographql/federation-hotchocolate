@@ -20,10 +20,10 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 7.0.x
-      - name: Restore dependencies
-        run: dotnet restore
-      - name: Build
-        run: dotnet build --no-restore
+      # - name: Restore dependencies
+      #   run: dotnet restore
+      # - name: Build
+      #   run: dotnet build --no-restore
       # - name: Generate schema file
       #   run: dotnet run --project compatibility/Products.csproj schema export --output products.graphql 
       - name: Compatibility Test
@@ -31,4 +31,5 @@ jobs:
         with:
           compose: 'compatibility/docker-compose.yaml'
           schema: 'compatibility/products.graphql'
+          debug: true
           token: ${{ secrets.token }}
