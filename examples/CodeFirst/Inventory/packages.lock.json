@@ -382,7 +382,7 @@
           "System.IO.Hashing": "7.0.0"
         }
       },
-      "apollographql.hotchocolate.federation": {
+      "ApolloGraphQL.HotChocolate.Federation": {
         "type": "Project",
         "dependencies": {
           "HotChocolate": "[13.5.1, )"
