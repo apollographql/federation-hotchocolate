@@ -15,11 +15,11 @@ namespace ApolloGraphQL.HotChocolate.Federation;
 /// }
 /// </example>
 /// </summary>
-public sealed class ExtendsAttribute : ObjectFieldDescriptorAttribute
+public sealed class ExtendsAttribute : ObjectTypeDescriptorAttribute
 {
     protected override void OnConfigure(
         IDescriptorContext context,
-        IObjectFieldDescriptor descriptor,
-        MemberInfo member)
-        => descriptor.External();
+        IObjectTypeDescriptor descriptor,
+        Type type)
+        => descriptor.ExtendsType();
 }

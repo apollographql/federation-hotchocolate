@@ -65,6 +65,7 @@ public static partial class ApolloFederationDescriptorExtensions
     /// of a type that is defined by another service when
     /// using apollo federation.
     /// </summary>
+    [Obsolete("Use ExtendsType type instead")]
     public static IObjectTypeDescriptor<T> ExtendServiceType<T>(
         this IObjectTypeDescriptor<T> descriptor)
     {
