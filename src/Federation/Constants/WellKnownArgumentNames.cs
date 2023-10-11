@@ -7,4 +7,5 @@ internal static class WellKnownArgumentNames
     public const string Name = "name";
     public const string Resolvable = "resolvable";
     public const string Representations = "representations";
+    public const string Url = "url";
 }

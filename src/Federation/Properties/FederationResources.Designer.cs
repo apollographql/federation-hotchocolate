@@ -198,6 +198,22 @@ namespace ApolloGraphQL.HotChocolate.Federation.Properties
             }
         }
 
+        internal static string ThrowHelper_ComposeDirective_Name_CannotBeEmpty
+        {
+            get
+            {
+                return ResourceManager.GetString("ThrowHelper_ComposeDirective_Name_CannotBeEmpty", resourceCulture);
+            }
+        }
+
+        internal static string ThrowHelper_Link_Url_CannotBeEmpty
+        {
+            get
+            {
+                return ResourceManager.GetString("ThrowHelper_Link_Url_CannotBeEmpty", resourceCulture);
+            }
+        }
+
         internal static string FieldDescriptorExtensions_Key_FieldSet_CannotBeNullOrEmpty
         {
             get

@@ -14,25 +14,4 @@ public sealed class Link
     public string Url { get; }
 
     public List<string?>? Import { get; }
-
-    public static Link LatestFederationVersionLinkImport()
-    {
-        return new Link(
-            "https://specs.apollo.dev/federation/v2.5",
-            new List<string?> {
-                "@composeDirective",
-                "@extends",
-                "@external",
-                "@key",
-                "@inaccessible",
-                "@interfaceObject",
-                "@override",
-                "@provides",
-                "@requires",
-                "@shareable",
-                "@tag",
-                "FieldSet"
-            }
-        );
-    }
 }

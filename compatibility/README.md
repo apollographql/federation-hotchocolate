@@ -10,6 +10,12 @@ Install compatibility script
 npm install --dev @apollo/federation-subgraph-compatibility
 ```
 
+Generate test schema
+
+```shell
+dotnet run --project compatibility/Products.csproj schema export --output products.graphql
+```
+
 Run compatibility tests
 
 ```shell

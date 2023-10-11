@@ -275,7 +275,7 @@ public static partial class ApolloFederationDescriptorExtensions
         if (string.IsNullOrEmpty(from))
         {
             throw new ArgumentException(
-                FieldDescriptorExtensions_Requires_FieldSet_CannotBeNullOrEmpty,
+                FieldDescriptorExtensions_Override_From_CannotBeNullOrEmpty,
                 nameof(from));
         }
 

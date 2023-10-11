@@ -1,4 +1,4 @@
-schema @link(url: "https:\/\/specs.apollo.dev\/federation\/v2.5", import: [ "@composeDirective", "@extends", "@external", "@key", "@inaccessible", "@interfaceObject", "@override", "@provides", "@requires", "@shareable", "@tag", "FieldSet" ]) {
+schema @composeDirective(name: "@custom") @link(url: "https:\/\/myspecs.dev\/myCustomDirective\/v1.0", import: [ "@custom" ]) @link(url: "https:\/\/specs.apollo.dev\/federation\/v2.5", import: [ "@composeDirective", "@extends", "@external", "@key", "@inaccessible", "@interfaceObject", "@override", "@provides", "@requires", "@shareable", "@tag", "FieldSet" ]) {
   query: Query
 }
 
@@ -19,7 +19,7 @@ type Inventory @key(fields: "id") @interfaceObject {
   id: ID!
 }
 
-type Product @key(fields: "id") @key(fields: "sku package") @key(fields: "sku variation { id }") {
+type Product @key(fields: "id") @key(fields: "sku package") @key(fields: "sku variation { id }") @custom {
   id: ID!
   sku: String
   package: String
@@ -45,7 +45,7 @@ type ProductVariation {
   id: ID!
 }
 
-type Query @extends {
+type Query {
   product(id: ID!): Product
   deprecatedProduct(sku: String! package: String!): DeprecatedProduct @deprecated(reason: "Use product query instead")
   _service: _Service!
@@ -71,7 +71,9 @@ union _Entity = Inventory | Product | DeprecatedProduct | User | ProductResearch
 "Marks underlying custom directive to be included in the Supergraph schema."
 directive @composeDirective(name: String!) on SCHEMA
 
-"Marks target object as extending part of the federated schema.\""
+directive @custom on OBJECT
+
+"Directive to indicate that marks target object as extending part of the federated schema."
 directive @extends on OBJECT | INTERFACE
 
 "Directive to indicate that a field is owned by another service, for example via Apollo federation."

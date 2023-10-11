@@ -1,28 +1,44 @@
-using System.Collections.Generic;
+using HotChocolate.Configuration;
+using HotChocolate.Types.Descriptors;
+using HotChocolate.Types.Descriptors.Definitions;
 
 namespace ApolloGraphQL.HotChocolate.Federation.Two;
 
+[Link("https://specs.apollo.dev/federation/v2.5", new string[] {
+                "@composeDirective",
+                "@extends",
+                "@external",
+                "@key",
+                "@inaccessible",
+                "@interfaceObject",
+                "@override",
+                "@provides",
+                "@requires",
+                "@shareable",
+                "@tag",
+                "FieldSet"
+})]
 public class FederatedSchema : Schema
 {
-    public FederatedSchema() : this(new List<Link> { Link.LatestFederationVersionLinkImport() })
+    private IDescriptorContext _context = default!;
+    protected override void OnAfterInitialize(ITypeDiscoveryContext context, DefinitionBase definition)
     {
+        base.OnAfterInitialize(context, definition);
+        _context = context.DescriptorContext;
     }
-
-    public FederatedSchema(List<Link> links)
-    {
-        Links = links;
-    }
-
-    public List<Link> Links { get; }
 
     protected override void Configure(ISchemaTypeDescriptor descriptor)
     {
-
-        // this.GetType().IsDefined(typeof)
-
-        foreach (Link link in Links)
+        var schemaType = this.GetType();
+        if (schemaType.IsDefined(typeof(SchemaTypeDescriptorAttribute), true))
         {
-            descriptor.Directive(link);
+            foreach (var attribute in schemaType.GetCustomAttributes(true))
+            {
+                if (attribute is SchemaTypeDescriptorAttribute casted)
+                {
+                    casted.OnConfigure(_context, descriptor, schemaType);
+                }
+            }
         }
     }
 }

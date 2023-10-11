@@ -6,6 +6,7 @@ namespace Products;
 [Key("id")]
 [Key("sku package")]
 [Key("sku variation { id }")]
+[Custom]
 public class Product
 {
     public Product(string id, string? sku, string? package, ProductVariation? variation, ProductDimension? dimensions, User? createdBy, string? notes, List<ProductResearch> research)
