@@ -7,7 +7,7 @@ using HotChocolate.Language;
 using Snapshooter.Xunit;
 using Xunit;
 
-namespace ApolloGraphQL.Federation.HotChocolate.CertificationSchema.CodeFirst;
+namespace ApolloGraphQL.HotChocolate.Federation.CertificationSchema.CodeFirst;
 
 public class CertificationTests
 {

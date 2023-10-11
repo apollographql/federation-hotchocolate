@@ -1,7 +1,8 @@
-using ApolloGraphQL.Federation.HotChocolate.Constants;
-using ApolloGraphQL.Federation.HotChocolate.Properties;
+using ApolloGraphQL.HotChocolate.Federation.Constants;
+using ApolloGraphQL.HotChocolate.Federation.One;
+using ApolloGraphQL.HotChocolate.Federation.Properties;
 
-namespace ApolloGraphQL.Federation.HotChocolate;
+namespace ApolloGraphQL.HotChocolate.Federation;
 
 /// <summary>
 /// A new object type called _Service must be created.

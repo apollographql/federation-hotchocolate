@@ -38,7 +38,7 @@ dotnet build
 
 #### Unit Tests
 
-We are using `ApolloGraphQL.Federation.HotChocolate.Tests` project for our unit tests. This ensures we have good code coverage and can easily test all cases of schema federation.
+We are using `ApolloGraphQL.HotChocolate.Federation.Tests` project for our unit tests. This ensures we have good code coverage and can easily test all cases of schema federation.
 
 To run tests:
 
@@ -66,7 +66,7 @@ In order to [release a new version](https://github.com/apollographql/federation-
 and tag the commit. Releases are following [semantic versioning](https://semver.org/) and specify major, minor and patch version.
 
 Once release is published it will trigger corresponding [Github Action](https://github.com/apollographql/federation-hotchocolate/blob/main/.github/workflows/release.yaml)
-based on the published release event. Release workflow will then proceed to build and publish all library artifacts to [NuGet](https://www.nuget.org/packages/ApolloGraphQL.Federation.HotChocolate).
+based on the published release event. Release workflow will then proceed to build and publish all library artifacts to [NuGet](https://www.nuget.org/packages/ApolloGraphQL.HotChocolate.Federation).
 
 ### Release requirements
 

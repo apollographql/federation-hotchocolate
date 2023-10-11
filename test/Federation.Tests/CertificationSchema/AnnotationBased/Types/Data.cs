@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace ApolloGraphQL.Federation.HotChocolate.CertificationSchema.AnnotationBased.Types;
+namespace ApolloGraphQL.HotChocolate.Federation.CertificationSchema.AnnotationBased.Types;
 
 public class Data
 {

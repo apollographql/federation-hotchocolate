@@ -1,6 +1,6 @@
 using HotChocolate.Types.Descriptors.Definitions;
 
-namespace ApolloGraphQL.Federation.HotChocolate.Descriptors;
+namespace ApolloGraphQL.HotChocolate.Federation.Descriptors;
 
 /// <summary>
 /// The entity definition allows to specify a reference resolver.

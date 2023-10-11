@@ -1,0 +1,26 @@
+using ApolloGraphQL.HotChocolate.Federation.Constants;
+using ApolloGraphQL.HotChocolate.Federation.Properties;
+
+namespace ApolloGraphQL.HotChocolate.Federation.One;
+
+/// <summary>
+/// The @external directive is used to mark a field as owned by another service.
+/// This allows service A to use fields from service B while also knowing at runtime
+/// the types of that field.
+///
+/// <example>
+/// # extended from the Users service
+/// extend type User @key(fields: "email") {
+///   email: String @external
+///   reviews: [Review]
+/// }
+/// </example>
+/// </summary>
+public sealed class ExtendsDirectiveType : DirectiveType
+{
+    protected override void Configure(IDirectiveTypeDescriptor descriptor)
+        => descriptor
+            .Name(WellKnownTypeNames.Extends)
+            .Description(FederationResources.ExtendsDirective_Description)
+            .Location(DirectiveLocation.Object | DirectiveLocation.Interface);
+}

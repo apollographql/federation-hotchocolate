@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
-using ApolloGraphQL.Federation.HotChocolate.CertificationSchema.CodeFirst.Types;
+using ApolloGraphQL.HotChocolate.Federation.CertificationSchema.CodeFirst.Types;
 using HotChocolate.Execution;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ApolloGraphQL.Federation.HotChocolate.CertificationSchema.CodeFirst;
+namespace ApolloGraphQL.HotChocolate.Federation.CertificationSchema.CodeFirst;
 
 public static class SchemaSetup
 {

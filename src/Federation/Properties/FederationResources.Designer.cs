@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ApolloGraphQL.Federation.HotChocolate.Properties
+namespace ApolloGraphQL.HotChocolate.Federation.Properties
 {
     using System;
 
@@ -34,7 +34,7 @@ namespace ApolloGraphQL.Federation.HotChocolate.Properties
             {
                 if (object.Equals(null, resourceMan))
                 {
-                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("ApolloGraphQL.Federation.HotChocolate.Properties.FederationResources", typeof(FederationResources).Assembly);
+                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("ApolloGraphQL.HotChocolate.Federation.Properties.FederationResources", typeof(FederationResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -53,6 +53,15 @@ namespace ApolloGraphQL.Federation.HotChocolate.Properties
                 resourceCulture = value;
             }
         }
+
+        internal static string ExtendsDirective_Description
+        {
+            get
+            {
+                return ResourceManager.GetString("ExtendsDirective_Description", resourceCulture);
+            }
+        }
+
 
         internal static string ExternalDirective_Description
         {

@@ -1,16 +1,16 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
-using ApolloGraphQL.Federation.HotChocolate.Helpers;
-using ApolloGraphQL.Federation.HotChocolate.Properties;
+using ApolloGraphQL.HotChocolate.Federation.Helpers;
+using ApolloGraphQL.HotChocolate.Federation.Properties;
 using HotChocolate.Internal;
 using HotChocolate.Resolvers;
 using HotChocolate.Types.Descriptors;
 using HotChocolate.Types.Descriptors.Definitions;
 using HotChocolate.Utilities;
-using static ApolloGraphQL.Federation.HotChocolate.Constants.WellKnownContextData;
+using static ApolloGraphQL.HotChocolate.Federation.Constants.WellKnownContextData;
 
-namespace ApolloGraphQL.Federation.HotChocolate.Descriptors;
+namespace ApolloGraphQL.HotChocolate.Federation.Descriptors;
 
 /// <summary>
 /// The entity descriptor allows to specify a reference resolver.

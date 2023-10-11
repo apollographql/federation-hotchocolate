@@ -1,21 +1,22 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using ApolloGraphQL.Federation.HotChocolate.Constants;
+using ApolloGraphQL.HotChocolate.Federation.Constants;
 using HotChocolate.Language;
 using HotChocolate.Types.Introspection;
 using HotChocolate.Utilities;
 using HotChocolate.Utilities.Introspection;
 
-namespace ApolloGraphQL.Federation.HotChocolate;
+namespace ApolloGraphQL.HotChocolate.Federation.One;
 
 /// <summary>
-/// The apollo federation schema printer.
+/// The Apollo Federation schema printer.
 /// </summary>
 public static partial class FederationSchemaPrinter
 {
     private static readonly HashSet<string> _builtInDirectives = new()
     {
+        WellKnownTypeNames.Extends,
         WellKnownTypeNames.External,
         WellKnownTypeNames.Requires,
         WellKnownTypeNames.Provides,

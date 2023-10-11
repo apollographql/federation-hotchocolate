@@ -1,7 +1,7 @@
-using ApolloGraphQL.Federation.HotChocolate.Properties;
-using static ApolloGraphQL.Federation.HotChocolate.Constants.WellKnownTypeNames;
+using ApolloGraphQL.HotChocolate.Federation.Properties;
+using static ApolloGraphQL.HotChocolate.Federation.Constants.WellKnownTypeNames;
 
-namespace ApolloGraphQL.Federation.HotChocolate;
+namespace ApolloGraphQL.HotChocolate.Federation;
 
 /// <summary>
 /// A union called _Entity which is a union of all types that use the @key directive,

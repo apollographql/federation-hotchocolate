@@ -1,8 +1,8 @@
-using ApolloGraphQL.Federation.HotChocolate.Constants;
-using ApolloGraphQL.Federation.HotChocolate.Descriptors;
+using ApolloGraphQL.HotChocolate.Federation.Constants;
+using ApolloGraphQL.HotChocolate.Federation.Descriptors;
 using HotChocolate.Language;
-using static ApolloGraphQL.Federation.HotChocolate.Properties.FederationResources;
-using static ApolloGraphQL.Federation.HotChocolate.Constants.WellKnownContextData;
+using static ApolloGraphQL.HotChocolate.Federation.Properties.FederationResources;
+using static ApolloGraphQL.HotChocolate.Federation.Constants.WellKnownContextData;
 
 namespace HotChocolate.Types;
 
@@ -210,6 +210,7 @@ public static partial class ApolloFederationDescriptorExtensions
     /// of a type that is defined by another service when
     /// using apollo federation.
     /// </summary>
+    [Obsolete("Use ExtendsType type instead")]
     public static IObjectTypeDescriptor ExtendServiceType(
         this IObjectTypeDescriptor descriptor)
     {
@@ -223,5 +224,37 @@ public static partial class ApolloFederationDescriptorExtensions
             .OnBeforeCreate(d => d.ContextData[ExtendMarker] = true);
 
         return descriptor;
+    }
+
+    /// <summary>
+    /// Adds @extends directive which is used to represent type extensions in the schema. Federated extended types should have 
+    /// corresponding @key directive defined that specifies primary key required to fetch the underlying object.
+    ///
+    /// <example>
+    /// # extended from the Users service
+    /// type User @extends @key(fields: "email") {
+    ///   email: String @external
+    ///   reviews: [Review]
+    /// }
+    /// </example>
+    /// </summary>
+    /// <param name="descriptor">
+    /// The object type descriptor on which this directive shall be annotated.
+    /// </param>
+    /// <returns>
+    /// Returns the object type descriptor.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="descriptor"/> is <c>null</c>.
+    /// </exception>
+    public static IObjectTypeDescriptor ExtendsType(
+        this IObjectTypeDescriptor descriptor)
+    {
+        if (descriptor is null)
+        {
+            throw new ArgumentNullException(nameof(descriptor));
+        }
+
+        return descriptor.Directive(WellKnownTypeNames.Extends);
     }
 }

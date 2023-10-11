@@ -1,7 +1,7 @@
-using ApolloGraphQL.Federation.HotChocolate.Constants;
-using ApolloGraphQL.Federation.HotChocolate.Properties;
+using ApolloGraphQL.HotChocolate.Federation.Constants;
+using ApolloGraphQL.HotChocolate.Federation.Properties;
 
-namespace ApolloGraphQL.Federation.HotChocolate;
+namespace ApolloGraphQL.HotChocolate.Federation.One;
 
 /// <summary>
 /// The @key directive is used to indicate a combination of fields that
@@ -21,5 +21,5 @@ public sealed class KeyDirectiveType : DirectiveType
             .Description(FederationResources.KeyDirective_Description)
             .Location(DirectiveLocation.Object | DirectiveLocation.Interface)
             .Repeatable()
-            .FieldsArgument();
+            .FieldsArgumentV1();
 }

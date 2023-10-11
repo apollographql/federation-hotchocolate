@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using HotChocolate.Resolvers;
 
-namespace ApolloGraphQL.Federation.HotChocolate.Descriptors;
+namespace ApolloGraphQL.HotChocolate.Federation.Descriptors;
 
 /// <summary>
 /// A reference resolver definition.

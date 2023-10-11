@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
-using ApolloGraphQL.Federation.HotChocolate.Constants;
+using ApolloGraphQL.HotChocolate.Federation.Constants;
 using HotChocolate.Language;
 using HotChocolate.Types.Descriptors.Definitions;
 using static System.Linq.Expressions.Expression;
 using static System.Reflection.BindingFlags;
-using static ApolloGraphQL.Federation.HotChocolate.Constants.WellKnownContextData;
+using static ApolloGraphQL.HotChocolate.Federation.Constants.WellKnownContextData;
 
-namespace ApolloGraphQL.Federation.HotChocolate.Helpers;
+namespace ApolloGraphQL.HotChocolate.Federation.Helpers;
 
 /// <summary>
 /// This class contains helpers to genereate external field setters.

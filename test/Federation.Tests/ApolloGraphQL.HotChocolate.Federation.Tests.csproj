@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <AssemblyName>ApolloGraphQL.HotChocolate.Federation.Tests</AssemblyName>
+    <RootNamespace>ApolloGraphQL.HotChocolate.Federation</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HotChocolate.AspNetCore" Version="13.5.1" />
+    <ProjectReference Include="..\..\src\Federation\ApolloGraphQL.HotChocolate.Federation.csproj" />
+  </ItemGroup>
+
+</Project>

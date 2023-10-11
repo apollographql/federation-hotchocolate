@@ -1,15 +1,16 @@
-using static ApolloGraphQL.Federation.HotChocolate.Constants.WellKnownArgumentNames;
+using static ApolloGraphQL.HotChocolate.Federation.Constants.WellKnownArgumentNames;
+using FieldSetTypeV1 = ApolloGraphQL.HotChocolate.Federation.One.FieldSetType;
 
-namespace ApolloGraphQL.Federation.HotChocolate;
+namespace ApolloGraphQL.HotChocolate.Federation;
 
 internal static class DirectiveTypeDescriptorExtensions
 {
-    public static IDirectiveTypeDescriptor FieldsArgument(
+    public static IDirectiveTypeDescriptor FieldsArgumentV1(
         this IDirectiveTypeDescriptor descriptor)
     {
         descriptor
             .Argument(Fields)
-            .Type<NonNullType<FieldSetType>>();
+            .Type<NonNullType<FieldSetTypeV1>>();
 
         return descriptor;
     }

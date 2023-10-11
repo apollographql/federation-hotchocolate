@@ -1,5 +1,6 @@
-using ApolloGraphQL.Federation.HotChocolate;
-using AnyType = ApolloGraphQL.Federation.HotChocolate.AnyType;
+using ApolloGraphQL.HotChocolate.Federation;
+using ApolloGraphQL.HotChocolate.Federation.One;
+using AnyType = ApolloGraphQL.HotChocolate.Federation.AnyType;
 
 namespace HotChocolate;
 
@@ -32,6 +33,7 @@ public static class ApolloFederationSchemaBuilderExtensions
         builder.AddType<EntityType>();
         builder.AddType<ServiceType>();
         builder.AddType<FieldSetType>();
+        builder.AddType<ExtendsDirectiveType>();
         builder.AddType<ExternalDirectiveType>();
         builder.AddType<ProvidesDirectiveType>();
         builder.AddType<KeyDirectiveType>();

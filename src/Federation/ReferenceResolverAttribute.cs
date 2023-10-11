@@ -1,8 +1,8 @@
 using System.Reflection;
-using ApolloGraphQL.Federation.HotChocolate.Descriptors;
+using ApolloGraphQL.HotChocolate.Federation.Descriptors;
 using HotChocolate.Types.Descriptors;
 
-namespace ApolloGraphQL.Federation.HotChocolate;
+namespace ApolloGraphQL.HotChocolate.Federation;
 
 /// <summary>
 /// The reference resolver enables your gateway's query planner to resolve a particular

@@ -5,9 +5,9 @@ using HotChocolate.Internal;
 using HotChocolate.Language;
 using HotChocolate.Resolvers;
 using HotChocolate.Utilities;
-using static ApolloGraphQL.Federation.HotChocolate.Constants.WellKnownContextData;
+using static ApolloGraphQL.HotChocolate.Federation.Constants.WellKnownContextData;
 
-namespace ApolloGraphQL.Federation.HotChocolate.Helpers;
+namespace ApolloGraphQL.HotChocolate.Federation.Helpers;
 
 // TODO IParameterExpressionBuilder : IParameterHandler are part of HotChocolate.Internal package
 internal class ReferenceResolverArgumentExpressionBuilder : IParameterExpressionBuilder

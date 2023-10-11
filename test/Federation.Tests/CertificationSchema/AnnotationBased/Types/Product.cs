@@ -1,7 +1,7 @@
 using System.Linq;
 using HotChocolate.Types.Relay;
 
-namespace ApolloGraphQL.Federation.HotChocolate.CertificationSchema.AnnotationBased.Types;
+namespace ApolloGraphQL.HotChocolate.Federation.CertificationSchema.AnnotationBased.Types;
 
 [Key("id")]
 [Key("sku package")]

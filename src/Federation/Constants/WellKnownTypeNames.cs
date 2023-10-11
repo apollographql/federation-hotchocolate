@@ -1,7 +1,8 @@
-namespace ApolloGraphQL.Federation.HotChocolate.Constants;
+namespace ApolloGraphQL.HotChocolate.Federation.Constants;
 
 internal static class WellKnownTypeNames
 {
+    public const string Extends = "extends";
     public const string External = "external";
     public const string Requires = "requires";
     public const string Provides = "provides";

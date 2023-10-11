@@ -7,7 +7,7 @@ using HotChocolate.Resolvers;
 using HotChocolate.Types;
 using Moq;
 
-namespace ApolloGraphQL.Federation.HotChocolate;
+namespace ApolloGraphQL.HotChocolate.Federation;
 
 public static class TestHelper
 {

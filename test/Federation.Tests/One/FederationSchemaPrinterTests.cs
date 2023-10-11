@@ -6,7 +6,7 @@ using HotChocolate.Types.Descriptors;
 using Snapshooter.Xunit;
 using Xunit;
 
-namespace ApolloGraphQL.Federation.HotChocolate;
+namespace ApolloGraphQL.HotChocolate.Federation.One;
 
 public class FederationSchemaPrinterTests
 {

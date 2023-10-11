@@ -1,9 +1,10 @@
 using System;
+using ApolloGraphQL.HotChocolate.Federation.One;
 using HotChocolate;
 using HotChocolate.Types;
 using Xunit;
 
-namespace ApolloGraphQL.Federation.HotChocolate;
+namespace ApolloGraphQL.HotChocolate.Federation;
 
 public class FederationTypesTestBase
 {

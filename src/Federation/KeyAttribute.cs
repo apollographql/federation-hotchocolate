@@ -1,7 +1,7 @@
 using HotChocolate.Types.Descriptors;
-using static ApolloGraphQL.Federation.HotChocolate.ThrowHelper;
+using static ApolloGraphQL.HotChocolate.Federation.ThrowHelper;
 
-namespace ApolloGraphQL.Federation.HotChocolate;
+namespace ApolloGraphQL.HotChocolate.Federation;
 
 /// <summary>
 /// The @key directive is used to indicate a combination of fields that

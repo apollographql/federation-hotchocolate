@@ -3,7 +3,7 @@ using System.Linq;
 using HotChocolate.Language;
 using static HotChocolate.Types.SpecifiedByDirectiveType.Names;
 
-namespace ApolloGraphQL.Federation.HotChocolate;
+namespace ApolloGraphQL.HotChocolate.Federation.One;
 
 public static partial class FederationSchemaPrinter
 {

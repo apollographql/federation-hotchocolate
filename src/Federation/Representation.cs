@@ -1,7 +1,7 @@
 using HotChocolate.Language;
 using HotChocolate.Utilities;
 
-namespace ApolloGraphQL.Federation.HotChocolate;
+namespace ApolloGraphQL.HotChocolate.Federation;
 
 /// <summary>
 /// A representation is a blob of data that is supposed to match

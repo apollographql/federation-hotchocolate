@@ -1,11 +1,12 @@
 using System.Linq;
-using ApolloGraphQL.Federation.HotChocolate.Constants;
+using ApolloGraphQL.HotChocolate.Federation.Constants;
+using ApolloGraphQL.HotChocolate.Federation.One;
 using HotChocolate;
 using HotChocolate.Types;
 using HotChocolate.Utilities;
 using Snapshooter.Xunit;
 
-namespace ApolloGraphQL.Federation.HotChocolate.Directives;
+namespace ApolloGraphQL.HotChocolate.Federation.Directives;
 
 public class ExternalDirectiveTests : FederationTypesTestBase
 {
