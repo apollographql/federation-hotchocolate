@@ -1,7 +1,7 @@
 using System.Linq;
 using HotChocolate.Language;
 
-namespace ApolloGraphQL.HotChocolate.Federation;
+namespace ApolloGraphQL.HotChocolate.Federation.One;
 
 public static partial class FederationSchemaPrinter
 {

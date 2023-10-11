@@ -1,4 +1,5 @@
 using ApolloGraphQL.HotChocolate.Federation.Constants;
+using ApolloGraphQL.HotChocolate.Federation.One;
 using ApolloGraphQL.HotChocolate.Federation.Properties;
 
 namespace ApolloGraphQL.HotChocolate.Federation;

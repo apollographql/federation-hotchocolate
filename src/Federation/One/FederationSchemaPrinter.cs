@@ -7,7 +7,7 @@ using HotChocolate.Types.Introspection;
 using HotChocolate.Utilities;
 using HotChocolate.Utilities.Introspection;
 
-namespace ApolloGraphQL.HotChocolate.Federation;
+namespace ApolloGraphQL.HotChocolate.Federation.One;
 
 /// <summary>
 /// The Apollo Federation schema printer.
@@ -16,6 +16,7 @@ public static partial class FederationSchemaPrinter
 {
     private static readonly HashSet<string> _builtInDirectives = new()
     {
+        WellKnownTypeNames.Extends,
         WellKnownTypeNames.External,
         WellKnownTypeNames.Requires,
         WellKnownTypeNames.Provides,
