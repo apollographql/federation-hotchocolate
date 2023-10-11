@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using ApolloGraphQL.HotChocolate.Federation.Constants;
 using ApolloGraphQL.HotChocolate.Federation.Descriptors;
@@ -61,11 +60,6 @@ internal sealed class FederationTypeInterceptor : TypeInterceptor
             AddToUnionIfHasTypeLevelKeyDirective(
                 objectType,
                 objectTypeDefinition);
-
-            AggregatePropertyLevelKeyDirectives(
-                objectType,
-                objectTypeDefinition,
-                discoveryContext);
         }
     }
 
@@ -222,52 +216,6 @@ internal sealed class FederationTypeInterceptor : TypeInterceptor
         }
     }
 
-    private void AggregatePropertyLevelKeyDirectives(
-        ObjectType objectType,
-        ObjectTypeDefinition objectTypeDefinition,
-        ITypeDiscoveryContext discoveryContext)
-    {
-        // if we find key markers on our fields, we need to construct the key directive
-        // from the annotated fields.
-        if (objectTypeDefinition.Fields.Any(f => f.ContextData.ContainsKey(KeyMarker)))
-        {
-            IReadOnlyList<ObjectFieldDefinition> fields = objectTypeDefinition.Fields;
-            var fieldSet = new StringBuilder();
-
-            foreach (var fieldDefinition in fields)
-            {
-                if (fieldDefinition.ContextData.ContainsKey(KeyMarker))
-                {
-                    if (fieldSet.Length > 0)
-                    {
-                        fieldSet.Append(' ');
-                    }
-
-                    fieldSet.Append(fieldDefinition.Name);
-                }
-            }
-
-            // add the key directive with the dynamically generated field set.
-            AddKeyDirective(objectTypeDefinition, fieldSet.ToString());
-
-            // register dependency to the key directive so that it is completed before
-            // we complete this type.
-            foreach (var directiveDefinition in objectTypeDefinition.Directives)
-            {
-                discoveryContext.Dependencies.Add(
-                    new TypeDependency(
-                        directiveDefinition.Type,
-                        TypeDependencyFulfilled.Completed));
-
-                discoveryContext.Dependencies.Add(new(directiveDefinition.Type));
-            }
-
-            // since this type has now a key directive we also need to add this type to
-            // the _Entity union type.
-            _entityTypes.Add(objectType);
-        }
-    }
-
     private void AddMemberTypesToTheEntityUnionType(
         ITypeCompletionContext completionContext,
         DefinitionBase? definition)
@@ -280,19 +228,5 @@ internal sealed class FederationTypeInterceptor : TypeInterceptor
                 unionTypeDefinition.Types.Add(TypeReference.Create(objectType));
             }
         }
-    }
-
-    private static void AddKeyDirective(
-        ObjectTypeDefinition objectTypeDefinition,
-        string fieldSet)
-    {
-        var directiveNode = new DirectiveNode(
-            WellKnownTypeNames.Key,
-            new ArgumentNode(
-                WellKnownArgumentNames.Fields,
-                fieldSet));
-
-        objectTypeDefinition.Directives.Add(
-            new DirectiveDefinition(directiveNode));
     }
 }
