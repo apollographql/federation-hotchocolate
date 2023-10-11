@@ -1,8 +1,8 @@
-using ApolloGraphQL.Federation.HotChocolate.Constants;
-using ApolloGraphQL.Federation.HotChocolate.Descriptors;
+using ApolloGraphQL.HotChocolate.Federation.Constants;
+using ApolloGraphQL.HotChocolate.Federation.Descriptors;
 using HotChocolate.Language;
-using static ApolloGraphQL.Federation.HotChocolate.Properties.FederationResources;
-using static ApolloGraphQL.Federation.HotChocolate.Constants.WellKnownContextData;
+using static ApolloGraphQL.HotChocolate.Federation.Properties.FederationResources;
+using static ApolloGraphQL.HotChocolate.Federation.Constants.WellKnownContextData;
 
 namespace HotChocolate.Types;
 

@@ -1,10 +1,10 @@
-using ApolloGraphQL.Federation.HotChocolate.Constants;
+using ApolloGraphQL.HotChocolate.Federation.Constants;
 using HotChocolate.Language;
 using HotChocolate.Types;
 using Xunit;
 using static HotChocolate.Language.Utf8GraphQLParser;
 
-namespace ApolloGraphQL.Federation.HotChocolate;
+namespace ApolloGraphQL.HotChocolate.Federation;
 
 public class FieldSetTypeTests
 {

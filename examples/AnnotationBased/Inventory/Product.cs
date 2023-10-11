@@ -1,4 +1,4 @@
-using ApolloGraphQL.Federation.HotChocolate;
+using ApolloGraphQL.HotChocolate.Federation;
 
 namespace Inventory;
 

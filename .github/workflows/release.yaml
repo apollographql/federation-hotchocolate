@@ -22,7 +22,7 @@ jobs:
         run: | 
           NEW_VERSION=$(echo "${GITHUB_REF}" | sed 's/.*\/v//')
           echo "New version: ${NEW_VERSION}"
-          dotnet pack -p:Version=${NEW_VERSION} -p:Configuration=Release src/Federation/ApolloGraphQL.Federation.HotChocolate.csproj
+          dotnet pack -p:Version=${NEW_VERSION} -p:Configuration=Release src/Federation/ApolloGraphQL.HotChocolate.Federation.csproj
       - name: Publish package
         run: dotnet nuget push src/Federation/bin/Release/*.nupkg -k $NUGET_AUTH_TOKEN -s https://api.nuget.org/v3/index.json
         env:

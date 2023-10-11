@@ -1,5 +1,5 @@
-using ApolloGraphQL.Federation.HotChocolate;
-using AnyType = ApolloGraphQL.Federation.HotChocolate.AnyType;
+using ApolloGraphQL.HotChocolate.Federation;
+using AnyType = ApolloGraphQL.HotChocolate.Federation.AnyType;
 
 namespace HotChocolate;
 

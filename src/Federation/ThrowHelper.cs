@@ -1,7 +1,7 @@
 using System.Reflection;
-using static ApolloGraphQL.Federation.HotChocolate.Properties.FederationResources;
+using static ApolloGraphQL.HotChocolate.Federation.Properties.FederationResources;
 
-namespace ApolloGraphQL.Federation.HotChocolate;
+namespace ApolloGraphQL.HotChocolate.Federation;
 
 /// <summary>
 /// This helper class provides a central place where we keep our exceptions so

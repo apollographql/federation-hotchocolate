@@ -1,6 +1,6 @@
 [![Continuous Integration](https://github.com/apollographql/federation-hotchocolate/workflows/Continuous%20Integration/badge.svg)](https://github.com/apollographql/federation-hotchocolate/actions?query=workflow%3A%22Continuous+Integration%22)
 [![MIT License](https://img.shields.io/github/license/apollographql/federation-hotchocolate.svg)](LICENSE)
-[![Nuget](https://img.shields.io/nuget/v/ApolloGraphQL.Federation.HotChocolate)](https://www.nuget.org/packages/ApolloGraphQL.Federation.HotChocolate/)
+[![Nuget](https://img.shields.io/nuget/v/ApolloGraphQL.HotChocolate.Federation)](https://www.nuget.org/packages/ApolloGraphQL.HotChocolate.Federation/)
 [![Join the community forum](https://img.shields.io/badge/join%20the%20community-forum-blueviolet)](https://community.apollographql.com)
 [![Join our Discord server](https://img.shields.io/discord/1022972389463687228.svg?color=7389D8&labelColor=6A7EC2&logo=discord&logoColor=ffffff&style=flat-square)](https://discord.gg/graphos)
 
@@ -10,28 +10,19 @@
 >This is a fork of `HotChocolate.Federation` module that aims to provide first class [Apollo Federation](https://www.apollographql.com/docs/federation/) support for [`HotChocolate` subgraphs](https://chillicream.com/docs/hotchocolate/v13).
 
 [**Apollo Federation**](https://www.apollographql.com/docs/federation/) is a powerful, open architecture that helps you create a **unified supergraph** that combines multiple GraphQL APIs.
-`ApolloGraphQL.Federation.HotChocolate` provides Apollo Federation support for building subgraphs in the `HotChocolate` ecosystem. Individual subgraphs can be run independently of each other but can also specify
+`ApolloGraphQL.HotChocolate.Federation` provides Apollo Federation support for building subgraphs in the `HotChocolate` ecosystem. Individual subgraphs can be run independently of each other but can also specify
 relationships to the other subgraphs by using Federated directives. See [Apollo Federation documentation](https://www.apollographql.com/docs/federation/) for details.
-
-```mermaid
-graph BT;
-  router([Supergraph<br/>router]);
-  serviceA[Users<br/>subgraph];
-  serviceB[Products<br/>subgraph];
-  serviceC[Reviews<br/>subgraph];
-  router --- serviceA & serviceB & serviceC;
-```
 
 ## Installation
 
-`ApolloGraphQL.Federation.HotChocolate` package is published to [Nuget](https://img.shields.io/nuget/v/ApolloGraphQL.Federation.HotChocolate). Update your `.csproj` file with following package references
+`ApolloGraphQL.HotChocolate.Federation` package is published to [Nuget](https://img.shields.io/nuget/v/ApolloGraphQL.HotChocolate.Federation). Update your `.csproj` file with following package references
 
 ```xml
   <ItemGroup>
     <!-- make sure to also include HotChocolate package -->
     <PackageReference Include="HotChocolate.AspNetCore" Version="13.5.1" />
     <!-- federation package -->
-    <PackageInstallation packageName="ApolloGraphQL.Federation.HotChocolate"/>
+    <PackageReference Include="ApolloGraphQL.HotChocolate.Federation" Version="$LatestVersion" />
   </ItemGroup>
 ```
 
@@ -60,7 +51,7 @@ Apollo Federation requires subgraphs to provide some additional metadata to make
 the supergraph by the specified `@key`s. Since entities can be extended by various subgraphs, we need an extra entry point to access the entities, i.e. subgraphs need to
 implement reference resolvers for entities that they support.
 
-Currently `ApolloGraphQL.Federation.HotChocolate` supports only Apollo Federation v1. See [Apollo documentation](https://www.apollographql.com/docs/federation/) for additional Federation details.
+Currently `ApolloGraphQL.HotChocolate.Federation` supports only Apollo Federation v1. See [Apollo documentation](https://www.apollographql.com/docs/federation/) for additional Federation details.
 
 ### Annotation
 

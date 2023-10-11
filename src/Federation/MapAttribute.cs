@@ -1,4 +1,4 @@
-namespace ApolloGraphQL.Federation.HotChocolate;
+namespace ApolloGraphQL.HotChocolate.Federation;
 
 /// <summary>
 /// Maps an argument to a representation value.

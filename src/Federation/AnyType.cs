@@ -1,11 +1,11 @@
 using System.Linq;
-using ApolloGraphQL.Federation.HotChocolate.Constants;
-using ApolloGraphQL.Federation.HotChocolate.Properties;
+using ApolloGraphQL.HotChocolate.Federation.Constants;
+using ApolloGraphQL.HotChocolate.Federation.Properties;
 using HotChocolate.Language;
 using HotChocolate.Utilities;
-using static ApolloGraphQL.Federation.HotChocolate.ThrowHelper;
+using static ApolloGraphQL.HotChocolate.Federation.ThrowHelper;
 
-namespace ApolloGraphQL.Federation.HotChocolate;
+namespace ApolloGraphQL.HotChocolate.Federation;
 
 /// <summary>
 /// The _Any scalar is used to pass representations of entities

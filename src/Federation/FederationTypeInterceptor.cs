@@ -4,18 +4,18 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using ApolloGraphQL.Federation.HotChocolate.Constants;
-using ApolloGraphQL.Federation.HotChocolate.Descriptors;
-using ApolloGraphQL.Federation.HotChocolate.Helpers;
+using ApolloGraphQL.HotChocolate.Federation.Constants;
+using ApolloGraphQL.HotChocolate.Federation.Descriptors;
+using ApolloGraphQL.HotChocolate.Federation.Helpers;
 using HotChocolate.Configuration;
 using HotChocolate.Language;
 using HotChocolate.Resolvers;
 using HotChocolate.Types.Descriptors;
 using HotChocolate.Types.Descriptors.Definitions;
-using static ApolloGraphQL.Federation.HotChocolate.ThrowHelper;
-using static ApolloGraphQL.Federation.HotChocolate.Constants.WellKnownContextData;
+using static ApolloGraphQL.HotChocolate.Federation.ThrowHelper;
+using static ApolloGraphQL.HotChocolate.Federation.Constants.WellKnownContextData;
 
-namespace ApolloGraphQL.Federation.HotChocolate;
+namespace ApolloGraphQL.HotChocolate.Federation;
 
 internal sealed class FederationTypeInterceptor : TypeInterceptor
 {

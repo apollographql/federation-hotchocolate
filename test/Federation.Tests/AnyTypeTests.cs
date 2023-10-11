@@ -1,9 +1,9 @@
-using ApolloGraphQL.Federation.HotChocolate.Constants;
+using ApolloGraphQL.HotChocolate.Federation.Constants;
 using HotChocolate.Language;
 using HotChocolate.Types;
 using Xunit;
 
-namespace ApolloGraphQL.Federation.HotChocolate;
+namespace ApolloGraphQL.HotChocolate.Federation;
 
 public class AnyTypeTests
 {

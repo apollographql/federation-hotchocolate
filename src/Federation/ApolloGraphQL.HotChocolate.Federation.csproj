@@ -2,15 +2,15 @@
 
   <PropertyGroup>
     <TargetFrameworks>net7.0; net6.0</TargetFrameworks>
-    <RootNamespace>ApolloGraphQL.Federation.HotChocolate</RootNamespace>
-    <PackageId>ApolloGraphQL.Federation.HotChocolate</PackageId>
-    <AssemblyName>ApolloGraphQL.Federation.HotChocolate</AssemblyName>
+    <RootNamespace>ApolloGraphQL.HotChocolate.Federation</RootNamespace>
+    <PackageId>ApolloGraphQL.HotChocolate.Federation</PackageId>
+    <AssemblyName>ApolloGraphQL.HotChocolate.Federation</AssemblyName>
     <Description>Apollo Federation Subgraph support for HotChocolate.</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="ApolloGraphQL.Federation.HotChocolate.Tests" />
+    <InternalsVisibleTo Include="ApolloGraphQL.HotChocolate.Federation.Tests" />
   </ItemGroup>
 
   <ItemGroup> 

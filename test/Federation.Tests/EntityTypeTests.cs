@@ -1,8 +1,8 @@
 using Xunit;
 using HotChocolate;
-using static ApolloGraphQL.Federation.HotChocolate.Properties.FederationResources;
+using static ApolloGraphQL.HotChocolate.Federation.Properties.FederationResources;
 
-namespace ApolloGraphQL.Federation.HotChocolate;
+namespace ApolloGraphQL.HotChocolate.Federation;
 
 public class EntityTypeTests
 {

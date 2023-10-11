@@ -2,7 +2,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using HotChocolate.Resolvers;
 
-namespace ApolloGraphQL.Federation.HotChocolate.Descriptors;
+namespace ApolloGraphQL.HotChocolate.Federation.Descriptors;
 
 /// <summary>
 /// The entity descriptor allows to specify a reference resolver.

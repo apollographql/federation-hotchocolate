@@ -1,7 +1,7 @@
 using System.Reflection;
 using HotChocolate.Types.Descriptors;
 
-namespace ApolloGraphQL.Federation.HotChocolate;
+namespace ApolloGraphQL.HotChocolate.Federation;
 
 /// <summary>
 /// The @external directive is used to mark a field as owned by another service.

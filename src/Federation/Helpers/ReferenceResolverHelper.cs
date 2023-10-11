@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using HotChocolate.Language;
 using HotChocolate.Resolvers;
-using static ApolloGraphQL.Federation.HotChocolate.Constants.WellKnownContextData;
+using static ApolloGraphQL.HotChocolate.Federation.Constants.WellKnownContextData;
 
-namespace ApolloGraphQL.Federation.HotChocolate.Helpers;
+namespace ApolloGraphQL.HotChocolate.Federation.Helpers;
 
 /// <summary>
 /// This class provides helpers for the reference resolver expression generators.

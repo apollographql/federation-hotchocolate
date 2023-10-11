@@ -1,6 +1,6 @@
-using static ApolloGraphQL.Federation.HotChocolate.Constants.WellKnownArgumentNames;
+using static ApolloGraphQL.HotChocolate.Federation.Constants.WellKnownArgumentNames;
 
-namespace ApolloGraphQL.Federation.HotChocolate;
+namespace ApolloGraphQL.HotChocolate.Federation;
 
 internal static class DirectiveTypeDescriptorExtensions
 {

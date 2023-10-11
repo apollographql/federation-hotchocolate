@@ -1,6 +1,6 @@
 using HotChocolate.Types.Descriptors;
 
-namespace ApolloGraphQL.Federation.HotChocolate;
+namespace ApolloGraphQL.HotChocolate.Federation;
 
 /// <summary>
 /// This attribute is used to mark types as an extended type

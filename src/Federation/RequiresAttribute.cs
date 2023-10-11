@@ -1,8 +1,8 @@
 using System.Reflection;
 using HotChocolate.Types.Descriptors;
-using static ApolloGraphQL.Federation.HotChocolate.ThrowHelper;
+using static ApolloGraphQL.HotChocolate.Federation.ThrowHelper;
 
-namespace ApolloGraphQL.Federation.HotChocolate;
+namespace ApolloGraphQL.HotChocolate.Federation;
 
 /// <summary>
 /// The @requires directive is used to annotate the required input fieldset

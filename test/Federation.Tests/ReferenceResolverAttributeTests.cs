@@ -5,10 +5,10 @@ using HotChocolate.Language;
 using HotChocolate.Resolvers;
 using HotChocolate.Types;
 using Xunit;
-using static ApolloGraphQL.Federation.HotChocolate.Constants.WellKnownContextData;
-using static ApolloGraphQL.Federation.HotChocolate.TestHelper;
+using static ApolloGraphQL.HotChocolate.Federation.Constants.WellKnownContextData;
+using static ApolloGraphQL.HotChocolate.Federation.TestHelper;
 
-namespace ApolloGraphQL.Federation.HotChocolate;
+namespace ApolloGraphQL.HotChocolate.Federation;
 
 public class ReferenceResolverAttributeTests
 {

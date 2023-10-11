@@ -1,11 +1,11 @@
 using System.Threading.Tasks;
-using ApolloGraphQL.Federation.HotChocolate.Constants;
+using ApolloGraphQL.HotChocolate.Federation.Constants;
 using HotChocolate;
 using Snapshooter.Xunit;
 using Xunit;
-using static ApolloGraphQL.Federation.HotChocolate.TestHelper;
+using static ApolloGraphQL.HotChocolate.Federation.TestHelper;
 
-namespace ApolloGraphQL.Federation.HotChocolate;
+namespace ApolloGraphQL.HotChocolate.Federation;
 
 public class ServiceTypeTests
 {

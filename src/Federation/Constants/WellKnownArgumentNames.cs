@@ -1,4 +1,4 @@
-namespace ApolloGraphQL.Federation.HotChocolate.Constants;
+namespace ApolloGraphQL.HotChocolate.Federation.Constants;
 
 internal static class WellKnownArgumentNames
 {

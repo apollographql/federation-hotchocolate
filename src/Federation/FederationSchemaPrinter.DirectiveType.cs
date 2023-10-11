@@ -3,7 +3,7 @@ using System.Linq;
 using HotChocolate.Language;
 using DirectiveLocationType = HotChocolate.Types.DirectiveLocation;
 
-namespace ApolloGraphQL.Federation.HotChocolate;
+namespace ApolloGraphQL.HotChocolate.Federation;
 
 public static partial class FederationSchemaPrinter
 {

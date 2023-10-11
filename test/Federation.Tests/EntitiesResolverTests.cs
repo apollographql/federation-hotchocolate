@@ -3,13 +3,13 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using GreenDonut;
-using ApolloGraphQL.Federation.HotChocolate.Helpers;
+using ApolloGraphQL.HotChocolate.Federation.Helpers;
 using HotChocolate;
 using HotChocolate.Language;
 using Xunit;
-using static ApolloGraphQL.Federation.HotChocolate.TestHelper;
+using static ApolloGraphQL.HotChocolate.Federation.TestHelper;
 
-namespace ApolloGraphQL.Federation.HotChocolate;
+namespace ApolloGraphQL.HotChocolate.Federation;
 
 public class EntitiesResolverTests
 {

@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using HotChocolate.Language;
 using HotChocolate.Utilities;
 
-namespace ApolloGraphQL.Federation.HotChocolate.Helpers;
+namespace ApolloGraphQL.HotChocolate.Federation.Helpers;
 
 /// <summary>
 /// A helper for getting field values from a representation object.
