@@ -1,7 +1,7 @@
 using ApolloGraphQL.HotChocolate.Federation.Constants;
 using ApolloGraphQL.HotChocolate.Federation.Properties;
 
-namespace ApolloGraphQL.HotChocolate.Federation;
+namespace ApolloGraphQL.HotChocolate.Federation.One;
 
 /// <summary>
 /// The @requires directive is used to annotate the required input fieldset
@@ -25,5 +25,5 @@ public sealed class RequiresDirectiveType : DirectiveType
             .Name(WellKnownTypeNames.Requires)
             .Description(FederationResources.RequiresDirective_Description)
             .Location(DirectiveLocation.FieldDefinition)
-            .FieldsArgument();
+            .FieldsArgumentV1();
 }

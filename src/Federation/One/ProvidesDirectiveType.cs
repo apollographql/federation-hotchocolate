@@ -1,7 +1,7 @@
 using ApolloGraphQL.HotChocolate.Federation.Constants;
 using ApolloGraphQL.HotChocolate.Federation.Properties;
 
-namespace ApolloGraphQL.HotChocolate.Federation;
+namespace ApolloGraphQL.HotChocolate.Federation.One;
 
 /// <summary>
 /// The @provides directive is used to annotate the expected returned fieldset
@@ -25,5 +25,5 @@ public sealed class ProvidesDirectiveType : DirectiveType
             .Name(WellKnownTypeNames.Provides)
             .Description(FederationResources.ProvidesDirective_Description)
             .Location(DirectiveLocation.FieldDefinition)
-            .FieldsArgument();
+            .FieldsArgumentV1();
 }

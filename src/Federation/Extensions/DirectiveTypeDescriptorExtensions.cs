@@ -4,7 +4,7 @@ namespace ApolloGraphQL.HotChocolate.Federation;
 
 internal static class DirectiveTypeDescriptorExtensions
 {
-    public static IDirectiveTypeDescriptor FieldsArgument(
+    public static IDirectiveTypeDescriptor FieldsArgumentV1(
         this IDirectiveTypeDescriptor descriptor)
     {
         descriptor

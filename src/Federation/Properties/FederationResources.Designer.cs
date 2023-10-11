@@ -54,6 +54,15 @@ namespace ApolloGraphQL.HotChocolate.Federation.Properties
             }
         }
 
+        internal static string ExtendsDirective_Description
+        {
+            get
+            {
+                return ResourceManager.GetString("ExtendsDirective_Description", resourceCulture);
+            }
+        }
+
+
         internal static string ExternalDirective_Description
         {
             get

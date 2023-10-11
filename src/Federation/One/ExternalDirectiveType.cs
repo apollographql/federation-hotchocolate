@@ -1,7 +1,7 @@
 using ApolloGraphQL.HotChocolate.Federation.Constants;
 using ApolloGraphQL.HotChocolate.Federation.Properties;
 
-namespace ApolloGraphQL.HotChocolate.Federation;
+namespace ApolloGraphQL.HotChocolate.Federation.One;
 
 /// <summary>
 /// The @external directive is used to mark a field as owned by another service.

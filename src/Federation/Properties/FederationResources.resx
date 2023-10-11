@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ExtendsDirective_Description" xml:space="preserve">
+    <value>Directive to indicate that marks target object as extending part of the federated schema.</value>
+  </data>
   <data name="ExternalDirective_Description" xml:space="preserve">
     <value>Directive to indicate that a field is owned by another service, for example via Apollo federation.</value>
   </data>

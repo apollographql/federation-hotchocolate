@@ -1,5 +1,6 @@
 using System.Linq;
 using ApolloGraphQL.HotChocolate.Federation.Constants;
+using ApolloGraphQL.HotChocolate.Federation.One;
 using HotChocolate;
 using HotChocolate.Types;
 using HotChocolate.Utilities;
