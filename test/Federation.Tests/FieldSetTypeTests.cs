@@ -1,4 +1,5 @@
 using ApolloGraphQL.HotChocolate.Federation.Constants;
+using ApolloGraphQL.HotChocolate.Federation.One;
 using HotChocolate.Language;
 using HotChocolate.Types;
 using Xunit;

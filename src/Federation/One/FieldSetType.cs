@@ -3,7 +3,7 @@ using ApolloGraphQL.HotChocolate.Federation.Properties;
 using HotChocolate.Language;
 using static ApolloGraphQL.HotChocolate.Federation.ThrowHelper;
 
-namespace ApolloGraphQL.HotChocolate.Federation;
+namespace ApolloGraphQL.HotChocolate.Federation.One;
 
 /// <summary>
 /// A scalar called _FieldSet is a custom scalar type that is used to
@@ -47,7 +47,7 @@ public sealed class FieldSetType : ScalarType<SelectionSetNode, StringValueNode>
         }
         catch (SyntaxException)
         {
-            throw FieldSet_InvalidFormat(this);
+            throw FieldSetV1_InvalidFormat(this);
         }
     }
 
