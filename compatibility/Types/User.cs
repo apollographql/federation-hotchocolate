@@ -3,6 +3,7 @@ using ApolloGraphQL.HotChocolate.Federation;
 namespace Products;
 
 [Key("email")]
+[Extends]
 public class User
 {
     public User(string email, string? name)

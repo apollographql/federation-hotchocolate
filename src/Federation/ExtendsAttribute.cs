@@ -9,9 +9,6 @@ namespace ApolloGraphQL.HotChocolate.Federation;
 /// 
 /// The @extends directive is used to represent type extensions in the schema. Federated extended types should have 
 /// corresponding @key directive defined that specifies primary key required to fetch the underlying object.
-/// 
-/// NOTE: Federation v2 no longer requires `@extends` directive due to the smart entity type merging. All usage of @extends
-/// directive should be removed from your Federation v2 schemas.
 /// <example>
 /// # extended from the Users service
 /// type Foo @extends @key(fields: "id") {
