@@ -6,10 +6,11 @@ using HotChocolate.Language;
 using HotChocolate.Resolvers;
 using HotChocolate.Utilities;
 using static ApolloGraphQL.HotChocolate.Federation.Constants.WellKnownContextData;
+using static ApolloGraphQL.HotChocolate.Federation.Properties.FederationResources;
 
 namespace ApolloGraphQL.HotChocolate.Federation.Helpers;
 
-// TODO IParameterExpressionBuilder : IParameterHandler are part of HotChocolate.Internal package
+// TODO this class references IParameterExpressionBuilder : IParameterHandler that are part of HotChocolate.Internal package
 internal class ReferenceResolverArgumentExpressionBuilder : IParameterExpressionBuilder
 {
     private readonly MethodInfo _getValue =
@@ -19,10 +20,10 @@ internal class ReferenceResolverArgumentExpressionBuilder : IParameterExpression
 
     private static readonly MethodInfo _getScopedState =
         typeof(ReferenceResolverArgumentExpressionBuilder).GetMethod(
-            nameof(ReferenceResolverArgumentExpressionBuilder.GetScopedState))!;
+            nameof(GetScopedState))!;
     private static readonly MethodInfo _getScopedStateWithDefault =
         typeof(ReferenceResolverArgumentExpressionBuilder).GetMethod(
-            nameof(ReferenceResolverArgumentExpressionBuilder.GetScopedStateWithDefault))!;
+            nameof(GetScopedStateWithDefault))!;
 
     public ArgumentKind Kind => ArgumentKind.LocalState;
     public bool CanHandle(ParameterInfo parameter) => true;
@@ -135,6 +136,6 @@ internal class ReferenceResolverArgumentExpressionBuilder : IParameterExpression
         }
 
         throw new ArgumentException(
-            string.Format("The specified key `{0}` does not exist on `context.ScopedContextData", key));
+            string.Format(ExpressionHelper_GetScopedStateWithDefault_NoDefaultValue, key));
     }
 }

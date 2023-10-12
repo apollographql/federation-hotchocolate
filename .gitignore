@@ -3,6 +3,7 @@ obj
 out
 
 # compatibility stuff
+products.graphql
 package.json
 package-lock.json
 results.md

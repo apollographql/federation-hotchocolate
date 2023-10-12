@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using ApolloGraphQL.HotChocolate.Federation.One;
 using HotChocolate;
 using HotChocolate.Types;
 using HotChocolate.Types.Descriptors;

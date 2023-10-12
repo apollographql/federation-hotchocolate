@@ -82,6 +82,8 @@ internal sealed class FederationTypeInterceptor : TypeInterceptor
         AddServiceTypeToQueryType(
             completionContext,
             definition);
+
+        AddFederationDirectiveMarkers(definition);
     }
 
     public override void OnAfterCompleteType(
@@ -189,8 +191,6 @@ internal sealed class FederationTypeInterceptor : TypeInterceptor
             {
                 if (possibleReferenceResolver.IsDefined(typeof(ReferenceResolverAttribute)))
                 {
-
-                    var attributes = possibleReferenceResolver.GetCustomAttributes(true);
                     foreach (var attribute in possibleReferenceResolver.GetCustomAttributes(true))
                     {
                         if (attribute is ReferenceResolverAttribute casted)
@@ -227,6 +227,180 @@ internal sealed class FederationTypeInterceptor : TypeInterceptor
             {
                 unionTypeDefinition.Types.Add(TypeReference.Create(objectType));
             }
+        }
+    }
+
+    private void AddFederationDirectiveMarkers(DefinitionBase? definition)
+    {
+        switch (definition)
+        {
+            case EnumTypeDefinition enumTypeDefinition:
+                {
+                    var descriptor = EnumTypeDescriptor.From(_context, enumTypeDefinition);
+                    foreach (var attribute in enumTypeDefinition.RuntimeType.GetCustomAttributes(true))
+                    {
+                        if (attribute is InaccessibleAttribute)
+                        {
+                            descriptor.Inaccessible();
+                        }
+                        if (attribute is ApolloTagAttribute casted)
+                        {
+                            descriptor.ApolloTag(casted.Name);
+                        }
+                    }
+
+                    foreach (EnumValueDefinition enumValueDefinition in enumTypeDefinition.Values)
+                    {
+                        var enumValueDescriptor = EnumValueDescriptor.From(_context, enumValueDefinition);
+                        if (enumValueDefinition.Member != null)
+                        {
+                            foreach (var attribute in enumValueDefinition.Member.GetCustomAttributes(true))
+                            {
+                                if (attribute is InaccessibleAttribute)
+                                {
+                                    enumValueDescriptor.Inaccessible();
+                                }
+                                if (attribute is ApolloTagAttribute casted)
+                                {
+                                    enumValueDescriptor.ApolloTag(casted.Name);
+                                }
+                            }
+                        }
+                    }
+                    break;
+                }
+            case InterfaceTypeDefinition interfaceTypeDefinition:
+                {
+                    var descriptor = InterfaceTypeDescriptor.From(_context, interfaceTypeDefinition);
+
+                    foreach (var attribute in interfaceTypeDefinition.RuntimeType.GetCustomAttributes(true))
+                    {
+                        if (attribute is InaccessibleAttribute)
+                        {
+                            descriptor.Inaccessible();
+                        }
+                        if (attribute is ApolloTagAttribute casted)
+                        {
+                            descriptor.ApolloTag(casted.Name);
+                        }
+                    }
+                    foreach (InterfaceFieldDefinition fieldDefinition in interfaceTypeDefinition.Fields)
+                    {
+                        var fieldDescriptor = InterfaceFieldDescriptor.From(_context, fieldDefinition);
+                        if (fieldDefinition.Member != null)
+                        {
+                            foreach (var attribute in fieldDefinition.Member.GetCustomAttributes(true))
+                            {
+                                if (attribute is InaccessibleAttribute)
+                                {
+                                    fieldDescriptor.Inaccessible();
+                                }
+                                if (attribute is ApolloTagAttribute casted)
+                                {
+                                    fieldDescriptor.ApolloTag(casted.Name);
+                                }
+                            }
+                        }
+                    }
+                    break;
+                }
+            case InputObjectTypeDefinition inputObjectTypeDefinition:
+                {
+                    var descriptor = InputObjectTypeDescriptor.From(_context, inputObjectTypeDefinition);
+                    foreach (var attribute in inputObjectTypeDefinition.RuntimeType.GetCustomAttributes(true))
+                    {
+                        if (attribute is InaccessibleAttribute)
+                        {
+                            descriptor.Inaccessible();
+                        }
+                        if (attribute is ApolloTagAttribute casted)
+                        {
+                            descriptor.ApolloTag(casted.Name);
+                        }
+
+                    }
+                    foreach (InputFieldDefinition fieldDefinition in inputObjectTypeDefinition.Fields)
+                    {
+                        var fieldDescriptor = InputFieldDescriptor.From(_context, fieldDefinition);
+                        if (fieldDefinition.RuntimeType != null)
+                        {
+                            foreach (var attribute in fieldDefinition.RuntimeType.GetCustomAttributes(true))
+                            {
+                                if (attribute is InaccessibleAttribute)
+                                {
+                                    fieldDescriptor.Inaccessible();
+                                }
+                                if (attribute is ApolloTagAttribute casted)
+                                {
+                                    fieldDescriptor.ApolloTag(casted.Name);
+                                }
+                            }
+                        }
+                    }
+                    break;
+                }
+            case ObjectTypeDefinition objectTypeDefinition:
+                {
+                    var descriptor = ObjectTypeDescriptor.From(_context, objectTypeDefinition);
+
+                    foreach (var attribute in objectTypeDefinition.RuntimeType.GetCustomAttributes(true))
+                    {
+                        if (attribute is InaccessibleAttribute)
+                        {
+                            descriptor.Inaccessible();
+                        }
+                        if (attribute is ShareableAttribute)
+                        {
+                            descriptor.Shareable();
+                        }
+                        if (attribute is ApolloTagAttribute casted)
+                        {
+                            descriptor.ApolloTag(casted.Name);
+                        }
+                    }
+                    foreach (ObjectFieldDefinition fieldDefinition in objectTypeDefinition.Fields)
+                    {
+                        var fieldDescriptor = ObjectFieldDescriptor.From(_context, fieldDefinition);
+                        if (fieldDefinition.Member != null)
+                        {
+                            foreach (var attribute in fieldDefinition.Member.GetCustomAttributes(true))
+                            {
+                                if (attribute is InaccessibleAttribute)
+                                {
+                                    fieldDescriptor.Inaccessible();
+                                }
+                                if (attribute is ShareableAttribute)
+                                {
+                                    fieldDescriptor.Shareable();
+                                }
+                                if (attribute is ApolloTagAttribute casted)
+                                {
+                                    fieldDescriptor.ApolloTag(casted.Name);
+                                }
+                            }
+                        }
+                    }
+                    break;
+                }
+            case UnionTypeDefinition unionTypeDefinition:
+                {
+                    var descriptor = UnionTypeDescriptor.From(_context, unionTypeDefinition);
+
+                    foreach (var attribute in unionTypeDefinition.RuntimeType.GetCustomAttributes(true))
+                    {
+                        if (attribute is InaccessibleAttribute)
+                        {
+                            descriptor.Inaccessible();
+                        }
+                        if (attribute is ApolloTagAttribute casted)
+                        {
+                            descriptor.ApolloTag(casted.Name);
+                        }
+                    }
+                    break;
+                }
+            default:
+                break;
         }
     }
 }

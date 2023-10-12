@@ -54,6 +54,14 @@ namespace ApolloGraphQL.HotChocolate.Federation.Properties
             }
         }
 
+        internal static string ComposeDirective_Description
+        {
+            get
+            {
+                return ResourceManager.GetString("ComposeDirective_Description", resourceCulture);
+            }
+        }
+
         internal static string ExtendsDirective_Description
         {
             get
@@ -61,7 +69,6 @@ namespace ApolloGraphQL.HotChocolate.Federation.Properties
                 return ResourceManager.GetString("ExtendsDirective_Description", resourceCulture);
             }
         }
-
 
         internal static string ExternalDirective_Description
         {
@@ -79,11 +86,35 @@ namespace ApolloGraphQL.HotChocolate.Federation.Properties
             }
         }
 
+        internal static string InaccessibleDirective_Description
+        {
+            get
+            {
+                return ResourceManager.GetString("InaccessibleDirective_Description", resourceCulture);
+            }
+        }
+
+        internal static string InterfaceObjectDirective_Description
+        {
+            get
+            {
+                return ResourceManager.GetString("InterfaceObjectDirective_Description", resourceCulture);
+            }
+        }
+
         internal static string KeyDirective_Description
         {
             get
             {
                 return ResourceManager.GetString("KeyDirective_Description", resourceCulture);
+            }
+        }
+
+        internal static string OverrideDirective_Description
+        {
+            get
+            {
+                return ResourceManager.GetString("OverrideDirective_Description", resourceCulture);
             }
         }
 
@@ -100,6 +131,22 @@ namespace ApolloGraphQL.HotChocolate.Federation.Properties
             get
             {
                 return ResourceManager.GetString("RequiresDirective_Description", resourceCulture);
+            }
+        }
+
+        internal static string ShareableDirective_Description
+        {
+            get
+            {
+                return ResourceManager.GetString("ShareableDirective_Description", resourceCulture);
+            }
+        }
+
+        internal static string TagDirective_Description
+        {
+            get
+            {
+                return ResourceManager.GetString("TagDirective_Description", resourceCulture);
             }
         }
 
@@ -151,6 +198,30 @@ namespace ApolloGraphQL.HotChocolate.Federation.Properties
             }
         }
 
+        internal static string ThrowHelper_ComposeDirective_Name_CannotBeEmpty
+        {
+            get
+            {
+                return ResourceManager.GetString("ThrowHelper_ComposeDirective_Name_CannotBeEmpty", resourceCulture);
+            }
+        }
+
+        internal static string ThrowHelper_Link_Url_CannotBeEmpty
+        {
+            get
+            {
+                return ResourceManager.GetString("ThrowHelper_Link_Url_CannotBeEmpty", resourceCulture);
+            }
+        }
+
+        internal static string ExpressionHelper_GetScopedStateWithDefault_NoDefaultValue
+        {
+            get
+            {
+                return ResourceManager.GetString("ExpressionHelper_GetScopedStateWithDefault_NoDefaultValue", resourceCulture);
+            }
+        }
+
         internal static string FieldDescriptorExtensions_Key_FieldSet_CannotBeNullOrEmpty
         {
             get
@@ -172,6 +243,14 @@ namespace ApolloGraphQL.HotChocolate.Federation.Properties
             get
             {
                 return ResourceManager.GetString("FieldDescriptorExtensions_Provides_FieldSet_CannotBeNullOrEmpty", resourceCulture);
+            }
+        }
+
+        internal static string FieldDescriptorExtensions_Override_From_CannotBeNullOrEmpty
+        {
+            get
+            {
+                return ResourceManager.GetString("FieldDescriptorExtensions_Override_From_CannotBeNullOrEmpty", resourceCulture);
             }
         }
 
