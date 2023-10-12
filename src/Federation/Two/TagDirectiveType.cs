@@ -26,9 +26,9 @@ namespace ApolloGraphQL.HotChocolate.Federation.Two;
 /// }
 /// </example>
 /// </summary>
-public sealed class TagDirectiveType : DirectiveType<Tag>
+public sealed class TagDirectiveType : DirectiveType<TagValue>
 {
-    protected override void Configure(IDirectiveTypeDescriptor<Tag> descriptor)
+    protected override void Configure(IDirectiveTypeDescriptor<TagValue> descriptor)
         => descriptor
             .Name(WellKnownTypeNames.Tag)
             .Description(FederationResources.TagDirective_Description)

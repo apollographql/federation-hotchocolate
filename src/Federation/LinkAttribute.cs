@@ -79,6 +79,6 @@ public sealed class LinkAttribute : SchemaTypeDescriptorAttribute
         {
             throw Link_Url_CannotBeEmpty(type);
         }
-        descriptor.LinkDirective(Url, Import);
+        descriptor.Link(Url, Import);
     }
 }

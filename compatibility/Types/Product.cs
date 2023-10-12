@@ -1,5 +1,4 @@
 using ApolloGraphQL.HotChocolate.Federation;
-using FederationTag = ApolloGraphQL.HotChocolate.Federation.TagAttribute;
 
 namespace Products;
 
@@ -35,7 +34,7 @@ public class Product
     [Provides("totalProductsCreated")]
     public User? CreatedBy { get; }
 
-    [FederationTag("internal")]
+    [ApolloTag("internal")]
     public string? Notes { get; }
 
     public List<ProductResearch> Research { get; }

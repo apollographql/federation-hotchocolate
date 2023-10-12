@@ -31,10 +31,10 @@ namespace ApolloGraphQL.HotChocolate.Federation;
     | AttributeTargets.Method
     | AttributeTargets.Property
 )]
-public sealed class TagAttribute : Attribute
+public sealed class ApolloTagAttribute : Attribute
 {
 
-    public TagAttribute(string name)
+    public ApolloTagAttribute(string name)
     {
         Name = name;
     }

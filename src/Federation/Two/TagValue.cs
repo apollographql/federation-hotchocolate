@@ -3,7 +3,7 @@ namespace ApolloGraphQL.HotChocolate.Federation.Two;
 /// <summary>
 /// Object representation of a @tag directive.
 /// </summary>
-public sealed class Tag
+public sealed class TagValue
 {
 
     /// <summary>
@@ -12,7 +12,7 @@ public sealed class Tag
     /// <param name="name">
     /// Custom tag value
     /// </param>
-    public Tag(string name)
+    public TagValue(string name)
     {
         Name = name;
     }

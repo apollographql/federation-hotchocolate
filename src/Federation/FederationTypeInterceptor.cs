@@ -83,12 +83,7 @@ internal sealed class FederationTypeInterceptor : TypeInterceptor
             completionContext,
             definition);
 
-        AddInaccessibleMarkers(
-             definition);
-
-        AddShareableMarkers(definition);
-
-        AddTagMarkers(definition);
+        AddFederationDirectiveMarkers(definition);
     }
 
     public override void OnAfterCompleteType(
@@ -235,125 +230,175 @@ internal sealed class FederationTypeInterceptor : TypeInterceptor
         }
     }
 
-    private void AddInaccessibleMarkers(DefinitionBase? definition)
+    private void AddFederationDirectiveMarkers(DefinitionBase? definition)
     {
         switch (definition)
         {
-            case ObjectTypeDefinition objectTypeDefinition:
+            case EnumTypeDefinition enumTypeDefinition:
                 {
-                    var descriptor = ObjectTypeDescriptor.From(_context, objectTypeDefinition);
-                    if (objectTypeDefinition.RuntimeType.IsDefined(typeof(InaccessibleAttribute)))
+                    var descriptor = EnumTypeDescriptor.From(_context, enumTypeDefinition);
+                    foreach (var attribute in enumTypeDefinition.RuntimeType.GetCustomAttributes(true))
                     {
-                        foreach (var attribute in objectTypeDefinition.RuntimeType.GetCustomAttributes(true))
+                        if (attribute is InaccessibleAttribute)
                         {
-                            if (attribute is InaccessibleAttribute)
+                            descriptor.Inaccessible();
+                        }
+                        if (attribute is ApolloTagAttribute casted)
+                        {
+                            descriptor.ApolloTag(casted.Name);
+                        }
+                    }
+
+                    foreach (EnumValueDefinition enumValueDefinition in enumTypeDefinition.Values)
+                    {
+                        var enumValueDescriptor = EnumValueDescriptor.From(_context, enumValueDefinition);
+                        if (enumValueDefinition.Member != null)
+                        {
+                            foreach (var attribute in enumValueDefinition.Member.GetCustomAttributes(true))
                             {
-                                descriptor.Directive(WellKnownTypeNames.Inaccessible);
+                                if (attribute is InaccessibleAttribute)
+                                {
+                                    enumValueDescriptor.Inaccessible();
+                                }
+                                if (attribute is ApolloTagAttribute casted)
+                                {
+                                    enumValueDescriptor.ApolloTag(casted.Name);
+                                }
                             }
                         }
                     }
-                    foreach (ObjectFieldDefinition fieldDefinition in objectTypeDefinition.Fields)
+                    break;
+                }
+            case InterfaceTypeDefinition interfaceTypeDefinition:
+                {
+                    var descriptor = InterfaceTypeDescriptor.From(_context, interfaceTypeDefinition);
+
+                    foreach (var attribute in interfaceTypeDefinition.RuntimeType.GetCustomAttributes(true))
                     {
-                        var fieldDescriptor = ObjectFieldDescriptor.From(_context, fieldDefinition);
-                        if (fieldDefinition.Member != null && fieldDefinition.Member.IsDefined(typeof(InaccessibleAttribute)))
+                        if (attribute is InaccessibleAttribute)
+                        {
+                            descriptor.Inaccessible();
+                        }
+                        if (attribute is ApolloTagAttribute casted)
+                        {
+                            descriptor.ApolloTag(casted.Name);
+                        }
+                    }
+                    foreach (InterfaceFieldDefinition fieldDefinition in interfaceTypeDefinition.Fields)
+                    {
+                        var fieldDescriptor = InterfaceFieldDescriptor.From(_context, fieldDefinition);
+                        if (fieldDefinition.Member != null)
                         {
                             foreach (var attribute in fieldDefinition.Member.GetCustomAttributes(true))
                             {
                                 if (attribute is InaccessibleAttribute)
                                 {
-                                    fieldDescriptor.Directive(WellKnownTypeNames.Inaccessible);
+                                    fieldDescriptor.Inaccessible();
+                                }
+                                if (attribute is ApolloTagAttribute casted)
+                                {
+                                    fieldDescriptor.ApolloTag(casted.Name);
                                 }
                             }
                         }
                     }
                     break;
                 }
-            // TODO add other applicable types
-            default:
-                break;
-        }
-    }
-
-    private void AddShareableMarkers(DefinitionBase? definition)
-    {
-        if (definition is ObjectTypeDefinition objectTypeDefinition)
-        {
-            {
-                var descriptor = ObjectTypeDescriptor.From(_context, objectTypeDefinition);
-                if (objectTypeDefinition.RuntimeType.IsDefined(typeof(ShareableAttribute)))
+            case InputObjectTypeDefinition inputObjectTypeDefinition:
                 {
-                    foreach (var attribute in objectTypeDefinition.RuntimeType.GetCustomAttributes(true))
+                    var descriptor = InputObjectTypeDescriptor.From(_context, inputObjectTypeDefinition);
+                    foreach (var attribute in inputObjectTypeDefinition.RuntimeType.GetCustomAttributes(true))
                     {
-                        if (attribute is ShareableAttribute)
+                        if (attribute is InaccessibleAttribute)
                         {
-                            descriptor.Directive(WellKnownTypeNames.Shareable);
+                            descriptor.Inaccessible();
                         }
-                    }
-                }
-                foreach (ObjectFieldDefinition fieldDefinition in objectTypeDefinition.Fields)
-                {
-                    var fieldDescriptor = ObjectFieldDescriptor.From(_context, fieldDefinition);
-                    if (fieldDefinition.Member != null && fieldDefinition.Member.IsDefined(typeof(ShareableAttribute)))
-                    {
-                        foreach (var attribute in fieldDefinition.Member.GetCustomAttributes(true))
+                        if (attribute is ApolloTagAttribute casted)
                         {
-                            if (attribute is ShareableAttribute)
+                            descriptor.ApolloTag(casted.Name);
+                        }
+
+                    }
+                    foreach (InputFieldDefinition fieldDefinition in inputObjectTypeDefinition.Fields)
+                    {
+                        var fieldDescriptor = InputFieldDescriptor.From(_context, fieldDefinition);
+                        if (fieldDefinition.RuntimeType != null)
+                        {
+                            foreach (var attribute in fieldDefinition.RuntimeType.GetCustomAttributes(true))
                             {
-                                fieldDescriptor.Directive(WellKnownTypeNames.Shareable);
+                                if (attribute is InaccessibleAttribute)
+                                {
+                                    fieldDescriptor.Inaccessible();
+                                }
+                                if (attribute is ApolloTagAttribute casted)
+                                {
+                                    fieldDescriptor.ApolloTag(casted.Name);
+                                }
                             }
                         }
                     }
+                    break;
                 }
-            }
-        }
-    }
-
-    private void AddTagMarkers(DefinitionBase? definition)
-    {
-        switch (definition)
-        {
             case ObjectTypeDefinition objectTypeDefinition:
                 {
                     var descriptor = ObjectTypeDescriptor.From(_context, objectTypeDefinition);
-                    if (objectTypeDefinition.RuntimeType.IsDefined(typeof(TagAttribute)))
+
+                    foreach (var attribute in objectTypeDefinition.RuntimeType.GetCustomAttributes(true))
                     {
-                        foreach (var attribute in objectTypeDefinition.RuntimeType.GetCustomAttributes(true))
+                        if (attribute is InaccessibleAttribute)
                         {
-                            if (attribute is TagAttribute casted)
-                            {
-                                descriptor.Directive(
-                                    WellKnownTypeNames.Tag,
-                                    new ArgumentNode(
-                                        WellKnownArgumentNames.Name,
-                                        new StringValueNode(casted.Name)
-                                    )
-                                );
-                            }
+                            descriptor.Inaccessible();
+                        }
+                        if (attribute is ShareableAttribute)
+                        {
+                            descriptor.Shareable();
+                        }
+                        if (attribute is ApolloTagAttribute casted)
+                        {
+                            descriptor.ApolloTag(casted.Name);
                         }
                     }
                     foreach (ObjectFieldDefinition fieldDefinition in objectTypeDefinition.Fields)
                     {
                         var fieldDescriptor = ObjectFieldDescriptor.From(_context, fieldDefinition);
-                        if (fieldDefinition.Member != null && fieldDefinition.Member.IsDefined(typeof(TagAttribute)))
+                        if (fieldDefinition.Member != null)
                         {
                             foreach (var attribute in fieldDefinition.Member.GetCustomAttributes(true))
                             {
-                                if (attribute is TagAttribute casted)
+                                if (attribute is InaccessibleAttribute)
                                 {
-                                    fieldDescriptor.Directive(
-                                        WellKnownTypeNames.Tag,
-                                        new ArgumentNode(
-                                            WellKnownArgumentNames.Name,
-                                            new StringValueNode(casted.Name)
-                                        )
-                                    );
+                                    fieldDescriptor.Inaccessible();
+                                }
+                                if (attribute is ShareableAttribute)
+                                {
+                                    fieldDescriptor.Shareable();
+                                }
+                                if (attribute is ApolloTagAttribute casted)
+                                {
+                                    fieldDescriptor.ApolloTag(casted.Name);
                                 }
                             }
                         }
                     }
                     break;
                 }
-            // TODO add other applicable types
+            case UnionTypeDefinition unionTypeDefinition:
+                {
+                    var descriptor = UnionTypeDescriptor.From(_context, unionTypeDefinition);
+
+                    foreach (var attribute in unionTypeDefinition.RuntimeType.GetCustomAttributes(true))
+                    {
+                        if (attribute is InaccessibleAttribute)
+                        {
+                            descriptor.Inaccessible();
+                        }
+                        if (attribute is ApolloTagAttribute casted)
+                        {
+                            descriptor.ApolloTag(casted.Name);
+                        }
+                    }
+                    break;
+                }
             default:
                 break;
         }

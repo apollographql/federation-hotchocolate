@@ -160,77 +160,6 @@ public static partial class ApolloFederationDescriptorExtensions
     }
 
     /// <summary>
-    /// Applies the @inaccessible directive which is used to mark location within schema as inaccessible 
-    /// from the GraphQL Router. While @inaccessible fields are not exposed by the router to the clients,
-    /// they are still available for query plans and can be referenced from @key and @requires directives.
-    /// This allows you to not expose sensitive fields to your clients but still make them available for
-    /// computations. Inaccessible can also be used to incrementally add schema elements (e.g. fields) to
-    /// multiple subgraphs without breaking composition.
-    /// <example>
-    /// type Foo @key(fields: "id") {
-    ///   id: ID!
-    ///   hidden: String @inaccessible
-    /// }
-    /// </example>
-    /// </summary>
-    /// <param name="descriptor">
-    /// The object field descriptor on which this directive shall be annotated.
-    /// </param>
-    /// <returns>
-    /// Returns the object field descriptor.
-    /// </returns>
-    /// <exception cref="ArgumentNullException">
-    /// The <paramref name="descriptor"/> is <c>null</c>.
-    /// </exception>
-    public static IObjectFieldDescriptor InaccessibleField(
-        this IObjectFieldDescriptor descriptor)
-    {
-        if (descriptor is null)
-        {
-            throw new ArgumentNullException(nameof(descriptor));
-        }
-
-        return descriptor.Directive(WellKnownTypeNames.Inaccessible);
-    }
-
-    /// <summary>
-    /// Applies the @inaccessible directive which is used to mark location within schema as inaccessible 
-    /// from the GraphQL Router. Applying @inaccessible directive on a type is equivalent of applying
-    /// it on all type fields.
-    /// 
-    /// While @inaccessible fields are not exposed by the router to the clients, they are still available
-    /// for query plans and can be referenced from @key and @requires directives. This allows you to not
-    /// expose sensitive fields to your clients but still make them available for computations. 
-    /// Inaccessible can also be used to incrementally add schema elements (e.g. fields) to multiple
-    /// subgraphs without breaking composition.
-    /// <example>
-    /// type Foo @inaccessible {
-    ///   hiddenId: ID!
-    ///   hiddenField: String
-    /// }
-    /// </example>
-    /// </summary>
-    /// <param name="descriptor">
-    /// The object field descriptor on which this directive shall be annotated.
-    /// </param>
-    /// <returns>
-    /// Returns the object field descriptor.
-    /// </returns>
-    /// <exception cref="ArgumentNullException">
-    /// The <paramref name="descriptor"/> is <c>null</c>.
-    /// </exception>
-    public static IObjectTypeDescriptor InaccessibleType(
-        this IObjectTypeDescriptor descriptor)
-    {
-        if (descriptor is null)
-        {
-            throw new ArgumentNullException(nameof(descriptor));
-        }
-
-        return descriptor.Directive(WellKnownTypeNames.Inaccessible);
-    }
-
-    /// <summary>
     /// Applies the @interfaceObject directive which provides meta information to the router that this entity
     /// type defined within this subgraph is an interface in the supergraph. This allows you to extend functionality
     /// of an interface across the supergraph without having to implement (or even be aware of) all its implementing types.
@@ -378,7 +307,7 @@ public static partial class ApolloFederationDescriptorExtensions
     /// <exception cref="ArgumentNullException">
     /// <paramref name="url"/> is <c>null</c>.
     /// </exception>
-    public static ISchemaTypeDescriptor LinkDirective(this ISchemaTypeDescriptor descriptor, string url, string?[]? import)
+    public static ISchemaTypeDescriptor Link(this ISchemaTypeDescriptor descriptor, string url, string?[]? import)
     {
         if (descriptor is null)
         {
@@ -559,5 +488,78 @@ public static partial class ApolloFederationDescriptorExtensions
             new ArgumentNode(
                 WellKnownArgumentNames.Fields,
                 new StringValueNode(fieldSet)));
+    }
+
+    /// <summary>
+    /// Applies @shareable directive which indicates that given object and/or field can be resolved by multiple subgraphs. 
+    /// If an object is marked as @shareable then all its fields are automatically shareable without the need
+    /// for explicitly marking them with @shareable directive. All fields referenced from @key directive are 
+    /// automatically shareable as well.
+    /// <example>
+    /// type Foo @key(fields: "id") {
+    ///   id: ID!                           # shareable because id is a key field
+    ///   name: String                      # non-shareable
+    ///   description: String @shareable    # shareable
+    /// }
+    ///
+    /// type Bar @shareable {
+    ///   description: String               # shareable because User is marked shareable
+    ///   name: String                      # shareable because User is marked shareable
+    /// }
+    /// </example>
+    /// </summary>
+    /// <param name="descriptor">
+    /// The object field descriptor on which this directive shall be annotated.
+    /// </param>
+    /// <returns>
+    /// Returns the object field descriptor.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="descriptor"/> is <c>null</c>.
+    /// </exception>
+    public static IObjectFieldDescriptor Shareable(this IObjectFieldDescriptor descriptor)
+    {
+        if (descriptor is null)
+        {
+            throw new ArgumentNullException(nameof(descriptor));
+        }
+        return descriptor.Directive(WellKnownTypeNames.Shareable);
+    }
+
+    /// <summary>
+    /// Applies @shareable directive which indicates that given object and/or field can be resolved by multiple subgraphs. 
+    /// If an object is marked as @shareable then all its fields are automatically shareable without the need
+    /// for explicitly marking them with @shareable directive. All fields referenced from @key directive are 
+    /// automatically shareable as well.
+    /// <example>
+    /// type Foo @key(fields: "id") {
+    ///   id: ID!                           # shareable because id is a key field
+    ///   name: String                      # non-shareable
+    ///   description: String @shareable    # shareable
+    /// }
+    ///
+    /// type Bar @shareable {
+    ///   description: String               # shareable because User is marked shareable
+    ///   name: String                      # shareable because User is marked shareable
+    /// }
+    /// </example>
+    /// </summary>
+    /// <param name="descriptor">
+    /// The object type descriptor on which this directive shall be annotated.
+    /// </param>
+    /// <returns>
+    /// Returns the object type descriptor.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="descriptor"/> is <c>null</c>.
+    /// </exception>
+    public static IObjectTypeDescriptor Shareable(this IObjectTypeDescriptor descriptor)
+    {
+        if (descriptor is null)
+        {
+            throw new ArgumentNullException(nameof(descriptor));
+        }
+
+        return descriptor.Directive(WellKnownTypeNames.Shareable);
     }
 }
