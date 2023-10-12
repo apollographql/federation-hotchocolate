@@ -243,7 +243,7 @@ internal sealed class FederationTypeInterceptor : TypeInterceptor
                         {
                             descriptor.Inaccessible();
                         }
-                        if (attribute is ApolloTagAttribute casted)
+                        else if (attribute is ApolloTagAttribute casted)
                         {
                             descriptor.ApolloTag(casted.Name);
                         }
@@ -251,16 +251,16 @@ internal sealed class FederationTypeInterceptor : TypeInterceptor
 
                     foreach (EnumValueDefinition enumValueDefinition in enumTypeDefinition.Values)
                     {
-                        var enumValueDescriptor = EnumValueDescriptor.From(_context, enumValueDefinition);
                         if (enumValueDefinition.Member != null)
                         {
+                            var enumValueDescriptor = EnumValueDescriptor.From(_context, enumValueDefinition);
                             foreach (var attribute in enumValueDefinition.Member.GetCustomAttributes(true))
                             {
                                 if (attribute is InaccessibleAttribute)
                                 {
                                     enumValueDescriptor.Inaccessible();
                                 }
-                                if (attribute is ApolloTagAttribute casted)
+                                else if (attribute is ApolloTagAttribute casted)
                                 {
                                     enumValueDescriptor.ApolloTag(casted.Name);
                                 }
@@ -272,14 +272,13 @@ internal sealed class FederationTypeInterceptor : TypeInterceptor
             case InterfaceTypeDefinition interfaceTypeDefinition:
                 {
                     var descriptor = InterfaceTypeDescriptor.From(_context, interfaceTypeDefinition);
-
                     foreach (var attribute in interfaceTypeDefinition.RuntimeType.GetCustomAttributes(true))
                     {
                         if (attribute is InaccessibleAttribute)
                         {
                             descriptor.Inaccessible();
                         }
-                        if (attribute is ApolloTagAttribute casted)
+                        else if (attribute is ApolloTagAttribute casted)
                         {
                             descriptor.ApolloTag(casted.Name);
                         }
@@ -295,7 +294,7 @@ internal sealed class FederationTypeInterceptor : TypeInterceptor
                                 {
                                     fieldDescriptor.Inaccessible();
                                 }
-                                if (attribute is ApolloTagAttribute casted)
+                                else if (attribute is ApolloTagAttribute casted)
                                 {
                                     fieldDescriptor.ApolloTag(casted.Name);
                                 }
@@ -313,7 +312,7 @@ internal sealed class FederationTypeInterceptor : TypeInterceptor
                         {
                             descriptor.Inaccessible();
                         }
-                        if (attribute is ApolloTagAttribute casted)
+                        else if (attribute is ApolloTagAttribute casted)
                         {
                             descriptor.ApolloTag(casted.Name);
                         }
@@ -321,16 +320,16 @@ internal sealed class FederationTypeInterceptor : TypeInterceptor
                     }
                     foreach (InputFieldDefinition fieldDefinition in inputObjectTypeDefinition.Fields)
                     {
-                        var fieldDescriptor = InputFieldDescriptor.From(_context, fieldDefinition);
                         if (fieldDefinition.RuntimeType != null)
                         {
+                            var fieldDescriptor = InputFieldDescriptor.From(_context, fieldDefinition);
                             foreach (var attribute in fieldDefinition.RuntimeType.GetCustomAttributes(true))
                             {
                                 if (attribute is InaccessibleAttribute)
                                 {
                                     fieldDescriptor.Inaccessible();
                                 }
-                                if (attribute is ApolloTagAttribute casted)
+                                else if (attribute is ApolloTagAttribute casted)
                                 {
                                     fieldDescriptor.ApolloTag(casted.Name);
                                 }
@@ -342,40 +341,53 @@ internal sealed class FederationTypeInterceptor : TypeInterceptor
             case ObjectTypeDefinition objectTypeDefinition:
                 {
                     var descriptor = ObjectTypeDescriptor.From(_context, objectTypeDefinition);
-
                     foreach (var attribute in objectTypeDefinition.RuntimeType.GetCustomAttributes(true))
                     {
-                        if (attribute is InaccessibleAttribute)
+                        switch (attribute)
                         {
-                            descriptor.Inaccessible();
-                        }
-                        if (attribute is ShareableAttribute)
-                        {
-                            descriptor.Shareable();
-                        }
-                        if (attribute is ApolloTagAttribute casted)
-                        {
-                            descriptor.ApolloTag(casted.Name);
+                            case ApolloTagAttribute tag:
+                                {
+                                    descriptor.ApolloTag(tag.Name);
+                                    break;
+                                }
+                            case InaccessibleAttribute:
+                                {
+                                    descriptor.Inaccessible();
+                                    break;
+                                }
+                            case ShareableAttribute:
+                                {
+                                    descriptor.Shareable();
+                                    break;
+                                }
+                            default: break;
                         }
                     }
                     foreach (ObjectFieldDefinition fieldDefinition in objectTypeDefinition.Fields)
                     {
-                        var fieldDescriptor = ObjectFieldDescriptor.From(_context, fieldDefinition);
                         if (fieldDefinition.Member != null)
                         {
+                            var fieldDescriptor = ObjectFieldDescriptor.From(_context, fieldDefinition);
                             foreach (var attribute in fieldDefinition.Member.GetCustomAttributes(true))
                             {
-                                if (attribute is InaccessibleAttribute)
+                                switch (attribute)
                                 {
-                                    fieldDescriptor.Inaccessible();
-                                }
-                                if (attribute is ShareableAttribute)
-                                {
-                                    fieldDescriptor.Shareable();
-                                }
-                                if (attribute is ApolloTagAttribute casted)
-                                {
-                                    fieldDescriptor.ApolloTag(casted.Name);
+                                    case ApolloTagAttribute tag:
+                                        {
+                                            fieldDescriptor.ApolloTag(tag.Name);
+                                            break;
+                                        }
+                                    case InaccessibleAttribute:
+                                        {
+                                            fieldDescriptor.Inaccessible();
+                                            break;
+                                        }
+                                    case ShareableAttribute:
+                                        {
+                                            fieldDescriptor.Shareable();
+                                            break;
+                                        }
+                                    default: break;
                                 }
                             }
                         }
@@ -385,14 +397,13 @@ internal sealed class FederationTypeInterceptor : TypeInterceptor
             case UnionTypeDefinition unionTypeDefinition:
                 {
                     var descriptor = UnionTypeDescriptor.From(_context, unionTypeDefinition);
-
                     foreach (var attribute in unionTypeDefinition.RuntimeType.GetCustomAttributes(true))
                     {
                         if (attribute is InaccessibleAttribute)
                         {
                             descriptor.Inaccessible();
                         }
-                        if (attribute is ApolloTagAttribute casted)
+                        else if (attribute is ApolloTagAttribute casted)
                         {
                             descriptor.ApolloTag(casted.Name);
                         }
