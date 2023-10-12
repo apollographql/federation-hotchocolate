@@ -6,7 +6,6 @@ using static ApolloGraphQL.HotChocolate.Federation.ThrowHelper;
 
 namespace ApolloGraphQL.HotChocolate.Federation;
 
-// directive @composeDirective(name: String!) repeatable on SCHEMA
 public sealed class ComposeDirectiveAttribute : SchemaTypeDescriptorAttribute
 {
     public ComposeDirectiveAttribute(string name)

@@ -6,7 +6,7 @@ using static ApolloGraphQL.HotChocolate.Federation.ThrowHelper;
 namespace ApolloGraphQL.HotChocolate.Federation.Two;
 
 /// <summary>
-/// A scalar called _FieldSet is a custom scalar type that is used to
+/// A scalar called FieldSet is a custom scalar type that is used to
 /// represent a set of fields.
 ///
 /// Grammatically, a field set is a selection set minus the braces.

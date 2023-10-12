@@ -24,18 +24,38 @@ public static class ApolloFederationSchemaBuilderExtensionsV2
     /// <exception cref="ArgumentNullException">
     /// The <paramref name="builder"/> is <c>null</c>.
     /// </exception>
-    public static ISchemaBuilder AddApolloFederationV2(
-    this ISchemaBuilder builder)
+    public static ISchemaBuilder AddApolloFederationV2(this ISchemaBuilder builder)
     {
         return AddApolloFederationV2(builder, new FederatedSchema());
     }
 
-    public static ISchemaBuilder AddApolloFederationV2(
-        this ISchemaBuilder builder, FederatedSchema schema)
+    /// <summary>
+    /// Adds support for Apollo Federation to the schema.
+    /// </summary>
+    /// <param name="builder">
+    /// The <see cref="ISchemaBuilder"/>.
+    /// </param>
+    /// <param name="schema">
+    /// Federated schema object.
+    /// </param>
+    /// <returns>
+    /// Returns the <see cref="ISchemaBuilder"/>.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">
+    /// The <paramref name="builder"/> is <c>null</c>.
+    /// </exception>
+    /// <exception cref="ArgumentNullException">
+    /// The <paramref name="schema"/> is <c>null</c>.
+    /// </exception>
+    public static ISchemaBuilder AddApolloFederationV2(this ISchemaBuilder builder, FederatedSchema schema)
     {
         if (builder is null)
         {
             throw new ArgumentNullException(nameof(builder));
+        }
+        if (schema is null)
+        {
+            throw new ArgumentNullException(nameof(schema));
         }
 
         builder.SetSchema(schema);

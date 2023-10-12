@@ -204,6 +204,9 @@
   <data name="ThrowHelper_Any_HasInvalidFormat" xml:space="preserve">
     <value>The given any representation has an invalid format.</value>
   </data>
+  <data name="ExpressionHelper_GetScopedStateWithDefault_NoDefaultValue" xml:space="preserve">
+    <value>The specified key `{0}` does not exist on `context.ScopedContextData`.</value>
+  </data>
   <data name="Any_Description" xml:space="preserve">
     <value>The _Any scalar is used to pass representations of entities from external services into the root _entities field for execution. Validation of the _Any scalar is done by matching the __typename and @external fields defined in the schema.</value>
   </data>

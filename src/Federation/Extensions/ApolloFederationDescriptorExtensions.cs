@@ -13,15 +13,73 @@ namespace HotChocolate.Types;
 public static partial class ApolloFederationDescriptorExtensions
 {
     /// <summary>
-    /// Adds the @external directive which is used to mark a field as owned by another service.
-    /// This allows service A to use fields from service B while also knowing at runtime
-    /// the types of that field.
-    ///
+    /// Mark the type as an extension of a type that is defined by another service when
+    /// using Apollo Federation.
+    /// </summary>
+    [Obsolete("Use ExtendsType type instead")]
+    public static IObjectTypeDescriptor ExtendServiceType(
+        this IObjectTypeDescriptor descriptor)
+    {
+        if (descriptor is null)
+        {
+            throw new ArgumentNullException(nameof(descriptor));
+        }
+        descriptor
+            .Extend()
+            .OnBeforeCreate(d => d.ContextData[ExtendMarker] = true);
+
+        return descriptor;
+    }
+
+    /// <summary>
+    /// Applies @extends directive which is used to represent type extensions in the schema. Federated extended types should have 
+    /// corresponding @key directive defined that specifies primary key required to fetch the underlying object.
+    /// 
+    /// NOTE: Federation v2 no longer requires `@extends` directive due to the smart entity type merging. All usage of @extends
+    /// directive should be removed from your Federation v2 schemas.
     /// <example>
     /// # extended from the Users service
-    /// extend type User @key(fields: "email") {
-    ///   email: String @external
-    ///   reviews: [Review]
+    /// type Foo @extends @key(fields: "id") {
+    ///   id: ID
+    ///   description: String
+    /// }
+    /// </example>
+    /// </summary>
+    /// <param name="descriptor">
+    /// The object type descriptor on which this directive shall be annotated.
+    /// </param>
+    /// <returns>
+    /// Returns the object type descriptor.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="descriptor"/> is <c>null</c>.
+    /// </exception>
+    public static IObjectTypeDescriptor ExtendsType(
+        this IObjectTypeDescriptor descriptor)
+    {
+        if (descriptor is null)
+        {
+            throw new ArgumentNullException(nameof(descriptor));
+        }
+
+        return descriptor.Directive(WellKnownTypeNames.Extends);
+    }
+
+    /// <summary>
+    /// Applies the @external directive which is used to mark a field as owned by another service.
+    /// This allows service A to use fields from service B while also knowing at runtime
+    /// the types of that field. All the external fields should either be referenced from the @key, 
+    /// @requires or @provides directives field sets.
+    ///
+    /// Due to the smart merging of entity types, Federation v2 no longer requires @external directive
+    /// on @key fields and can be safely omitted from the schema. @external directive is only required
+    /// on fields referenced by the @requires and @provides directive.
+    ///
+    /// <example>
+    /// type Foo @key(fields: "id") {
+    ///   id: ID!
+    ///   remoteField: String @external
+    ///   localField: String @requires(fields: "remoteField")
     /// }
     /// </example>
     /// </summary>
@@ -45,6 +103,29 @@ public static partial class ApolloFederationDescriptorExtensions
         return descriptor.Directive(WellKnownTypeNames.External);
     }
 
+    /// <summary>
+    /// Applies the @inaccessible directive which is used to mark location within schema as inaccessible 
+    /// from the GraphQL Router. While @inaccessible fields are not exposed by the router to the clients,
+    /// they are still available for query plans and can be referenced from @key and @requires directives.
+    /// This allows you to not expose sensitive fields to your clients but still make them available for
+    /// computations. Inaccessible can also be used to incrementally add schema elements (e.g. fields) to
+    /// multiple subgraphs without breaking composition.
+    /// <example>
+    /// type Foo @key(fields: "id") {
+    ///   id: ID!
+    ///   hidden: String @inaccessible
+    /// }
+    /// </example>
+    /// </summary>
+    /// <param name="descriptor">
+    /// The object field descriptor on which this directive shall be annotated.
+    /// </param>
+    /// <returns>
+    /// Returns the object field descriptor.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">
+    /// The <paramref name="descriptor"/> is <c>null</c>.
+    /// </exception>
     public static IObjectFieldDescriptor InaccessibleField(
         this IObjectFieldDescriptor descriptor)
     {
@@ -56,7 +137,32 @@ public static partial class ApolloFederationDescriptorExtensions
         return descriptor.Directive(WellKnownTypeNames.Inaccessible);
     }
 
-
+    /// <summary>
+    /// Applies the @inaccessible directive which is used to mark location within schema as inaccessible 
+    /// from the GraphQL Router. Applying @inaccessible directive on a type is equivalent of applying
+    /// it on all type fields.
+    /// 
+    /// While @inaccessible fields are not exposed by the router to the clients, they are still available
+    /// for query plans and can be referenced from @key and @requires directives. This allows you to not
+    /// expose sensitive fields to your clients but still make them available for computations. 
+    /// Inaccessible can also be used to incrementally add schema elements (e.g. fields) to multiple
+    /// subgraphs without breaking composition.
+    /// <example>
+    /// type Foo @inaccessible {
+    ///   hiddenId: ID!
+    ///   hiddenField: String
+    /// }
+    /// </example>
+    /// </summary>
+    /// <param name="descriptor">
+    /// The object field descriptor on which this directive shall be annotated.
+    /// </param>
+    /// <returns>
+    /// Returns the object field descriptor.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">
+    /// The <paramref name="descriptor"/> is <c>null</c>.
+    /// </exception>
     public static IObjectTypeDescriptor InaccessibleType(
         this IObjectTypeDescriptor descriptor)
     {
@@ -69,12 +175,53 @@ public static partial class ApolloFederationDescriptorExtensions
     }
 
     /// <summary>
-    /// Adds the @key directive which is used to indicate a combination of fields that
-    /// can be used to uniquely identify and fetch an object or interface.
+    /// Applies the @interfaceObject directive which provides meta information to the router that this entity
+    /// type defined within this subgraph is an interface in the supergraph. This allows you to extend functionality
+    /// of an interface across the supergraph without having to implement (or even be aware of) all its implementing types.
     /// <example>
-    /// type Product @key(fields: "upc") {
-    ///   upc: UPC!
-    ///   name: String
+    /// type Foo @interfaceObject @key(fields: "ids") {
+    ///   id: ID!
+    ///   newCommonField: String
+    /// }
+    /// </example>
+    /// </summary>
+    /// <param name="descriptor">
+    /// The object field descriptor on which this directive shall be annotated.
+    /// </param>
+    /// <returns>
+    /// Returns the object field descriptor.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">
+    /// The <paramref name="descriptor"/> is <c>null</c>.
+    /// </exception>
+    public static IObjectTypeDescriptor InterfaceObject(this IObjectTypeDescriptor descriptor)
+    {
+        if (descriptor is null)
+        {
+            throw new ArgumentNullException(nameof(descriptor));
+        }
+
+        return descriptor.Directive(WellKnownTypeNames.InterfaceObject);
+    }
+
+    /// <summary>
+    /// Applies the @key directive which is used to indicate a combination of fields that can be used to uniquely
+    /// identify and fetch an object or interface. The specified field set can represent single field (e.g. "id"),
+    /// multiple fields (e.g. "id name") or nested selection sets (e.g. "id user { name }"). Multiple keys can
+    /// be specified on a target type.
+    /// 
+    /// Keys can be marked as non-resolvable which indicates to router that given entity should never be
+    /// resolved within given subgraph. This allows your subgraph to still reference target entity without
+    /// contributing any fields to it.
+    /// <example>
+    /// type Foo @key(fields: "id") {
+    ///   id: ID!
+    ///   field: String
+    ///   bars: [Bar!]!
+    /// }
+    /// 
+    /// type Bar @key(fields: "id", resolvable: false) {
+    ///   id: ID!
     /// }
     /// </example>
     /// </summary>
@@ -84,6 +231,9 @@ public static partial class ApolloFederationDescriptorExtensions
     /// <param name="fieldSet">
     /// The field set that describes the key.
     /// Grammatically, a field set is a selection set minus the braces.
+    /// </param>
+    /// <param name="resolvable">
+    /// Boolean flag to indicate whether this entity is resolvable locally.
     /// </param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException">
@@ -132,28 +282,22 @@ public static partial class ApolloFederationDescriptorExtensions
     }
 
     /// <summary>
-    /// Adds the @requires directive which is used to annotate the required
-    /// input fieldset from a base type for a resolver. It is used to develop
-    /// a query plan where the required fields may not be needed by the client, but the
-    /// service may need additional information from other services.
-    ///
+    /// Applies the @override directive which is used to indicate that the current subgraph is taking
+    /// responsibility for resolving the marked field away from the subgraph specified in the from
+    /// argument. Name of the subgraph to be overridden has to match the name of the subgraph that
+    /// was used to publish their schema.
     /// <example>
-    /// # extended from the Users service
-    /// extend type User @key(fields: "id") {
-    ///   id: ID! @external
-    ///   email: String @external
-    ///   reviews: [Review] @requires(fields: "email")
+    /// type Foo @key(fields: "id") {
+    ///   id: ID!
+    ///   description: String @override(from: "BarSubgraph")
     /// }
     /// </example>
     /// </summary>
     /// <param name="descriptor">
     /// The object field descriptor on which this directive shall be annotated.
     /// </param>
-    /// <param name="fieldSet">
-    /// The <paramref name="fieldSet"/> describes which fields may
-    /// not be needed by the client, but are required by
-    /// this service as additional information from other services.
-    /// Grammatically, a field set is a selection set minus the braces.
+    /// <param name="from">
+    /// Name of the subgraph to be overridden.
     /// </param>
     /// <returns>
     /// Returns the object field descriptor.
@@ -162,44 +306,50 @@ public static partial class ApolloFederationDescriptorExtensions
     /// <paramref name="descriptor"/> is <c>null</c>.
     /// </exception>
     /// <exception cref="ArgumentException">
-    /// <paramref name="fieldSet"/> is <c>null</c> or <see cref="string.Empty"/>.
+    /// <paramref name="from"/> is <c>null</c> or <see cref="string.Empty"/>.
     /// </exception>
-    public static IObjectFieldDescriptor Requires(
+    public static IObjectFieldDescriptor Override(
         this IObjectFieldDescriptor descriptor,
-        string fieldSet)
+        string from)
     {
         if (descriptor is null)
         {
             throw new ArgumentNullException(nameof(descriptor));
         }
 
-        if (string.IsNullOrEmpty(fieldSet))
+        if (string.IsNullOrEmpty(from))
         {
             throw new ArgumentException(
-                FieldDescriptorExtensions_Requires_FieldSet_CannotBeNullOrEmpty,
-                nameof(fieldSet));
+                FieldDescriptorExtensions_Override_From_CannotBeNullOrEmpty,
+                nameof(from));
         }
 
         return descriptor.Directive(
-            WellKnownTypeNames.Requires,
+            WellKnownTypeNames.Override,
             new ArgumentNode(
-                WellKnownArgumentNames.Fields,
-                new StringValueNode(fieldSet)));
+                WellKnownArgumentNames.From,
+                new StringValueNode(from)));
     }
 
     /// <summary>
-    /// Adds the @provides directive which is used to annotate the expected returned
-    /// fieldset from a field on a base type that is guaranteed to be selectable by
-    /// the gateway.
-    ///
+    /// Applies the @provides directive which is a router optimization hint specifying field set that
+    /// can be resolved locally at the given subgraph through this particular query path. This 
+    /// allows you to expose only a subset of fields from the underlying entity type to be selectable
+    /// from the federated schema without the need to call other subgraphs. Provided fields specified
+    /// in the directive field set should correspond to a valid field on the underlying GraphQL 
+    /// interface/object type. @provides directive can only be used on fields returning entities.
     /// <example>
-    /// # extended from the Users service
-    /// type Review @key(fields: "id") {
-    ///     product: Product @provides(fields: "name")
+    /// type Foo @key(fields: "id") {
+    ///     id: ID!
+    ///     # implies name field can be resolved locally 
+    ///     bar: Bar @provides(fields: "name")
+    ///     # name fields are external 
+    ///     # so will be fetched from other subgraphs
+    ///     bars: [Bar]
     /// }
     ///
-    /// extend type Product @key(fields: "upc") {
-    ///     upc: String @external
+    /// type Bar @key(fields: "id") {
+    ///     id: ID!
     ///     name: String @external
     /// }
     /// </example>
@@ -244,88 +394,59 @@ public static partial class ApolloFederationDescriptorExtensions
     }
 
     /// <summary>
-    /// Mark the type as an extension
-    /// of a type that is defined by another service when
-    /// using apollo federation.
-    /// </summary>
-    [Obsolete("Use ExtendsType type instead")]
-    public static IObjectTypeDescriptor ExtendServiceType(
-        this IObjectTypeDescriptor descriptor)
-    {
-        if (descriptor is null)
-        {
-            throw new ArgumentNullException(nameof(descriptor));
-        }
-        descriptor
-            .Extend()
-            .OnBeforeCreate(d => d.ContextData[ExtendMarker] = true);
-
-        return descriptor;
-    }
-
-    public static IObjectFieldDescriptor Override(
-        this IObjectFieldDescriptor descriptor,
-        string from)
-    {
-        if (descriptor is null)
-        {
-            throw new ArgumentNullException(nameof(descriptor));
-        }
-
-        if (string.IsNullOrEmpty(from))
-        {
-            throw new ArgumentException(
-                FieldDescriptorExtensions_Override_From_CannotBeNullOrEmpty,
-                nameof(from));
-        }
-
-        return descriptor.Directive(
-            WellKnownTypeNames.Override,
-            new ArgumentNode(
-                WellKnownArgumentNames.From,
-                new StringValueNode(from)));
-    }
-
-
-    public static IObjectTypeDescriptor InterfaceObject(this IObjectTypeDescriptor descriptor)
-    {
-        if (descriptor is null)
-        {
-            throw new ArgumentNullException(nameof(descriptor));
-        }
-
-        return descriptor.Directive(WellKnownTypeNames.InterfaceObject);
-    }
-
-    /// <summary>
-    /// Adds @extends directive which is used to represent type extensions in the schema. Federated extended types should have 
-    /// corresponding @key directive defined that specifies primary key required to fetch the underlying object.
-    ///
+    /// Applies the @requires directive which is used to specify external (provided by other subgraphs)
+    /// entity fields that are needed to resolve target field. It is used to develop a query plan where
+    /// the required fields may not be needed by the client, but the service may need additional 
+    /// information from other subgraphs. Required fields specified in the directive field set should
+    /// correspond to a valid field on the underlying GraphQL interface/object and should be instrumented
+    /// with @external directive.
     /// <example>
-    /// # extended from the Users service
-    /// type User @extends @key(fields: "email") {
-    ///   email: String @external
-    ///   reviews: [Review]
+    /// type Foo @key(fields: "id") {
+    ///   id: ID!
+    ///   # this field will be resolved from other subgraph
+    ///   remote: String @external
+    ///   local: String @requires(fields: "remote")
     /// }
     /// </example>
     /// </summary>
     /// <param name="descriptor">
-    /// The object type descriptor on which this directive shall be annotated.
+    /// The object field descriptor on which this directive shall be annotated.
+    /// </param>
+    /// <param name="fieldSet">
+    /// The <paramref name="fieldSet"/> describes which fields may
+    /// not be needed by the client, but are required by
+    /// this service as additional information from other services.
+    /// Grammatically, a field set is a selection set minus the braces.
     /// </param>
     /// <returns>
-    /// Returns the object type descriptor.
+    /// Returns the object field descriptor.
     /// </returns>
     /// <exception cref="ArgumentNullException">
     /// <paramref name="descriptor"/> is <c>null</c>.
     /// </exception>
-    public static IObjectTypeDescriptor ExtendsType(
-        this IObjectTypeDescriptor descriptor)
+    /// <exception cref="ArgumentException">
+    /// <paramref name="fieldSet"/> is <c>null</c> or <see cref="string.Empty"/>.
+    /// </exception>
+    public static IObjectFieldDescriptor Requires(
+        this IObjectFieldDescriptor descriptor,
+        string fieldSet)
     {
         if (descriptor is null)
         {
             throw new ArgumentNullException(nameof(descriptor));
         }
 
-        return descriptor.Directive(WellKnownTypeNames.Extends);
+        if (string.IsNullOrEmpty(fieldSet))
+        {
+            throw new ArgumentException(
+                FieldDescriptorExtensions_Requires_FieldSet_CannotBeNullOrEmpty,
+                nameof(fieldSet));
+        }
+
+        return descriptor.Directive(
+            WellKnownTypeNames.Requires,
+            new ArgumentNode(
+                WellKnownArgumentNames.Fields,
+                new StringValueNode(fieldSet)));
     }
 }

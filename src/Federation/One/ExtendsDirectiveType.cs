@@ -4,15 +4,20 @@ using ApolloGraphQL.HotChocolate.Federation.Properties;
 namespace ApolloGraphQL.HotChocolate.Federation.One;
 
 /// <summary>
-/// The @external directive is used to mark a field as owned by another service.
-/// This allows service A to use fields from service B while also knowing at runtime
-/// the types of that field.
-///
+/// <code>
+/// directive @extends on OBJECT | INTERFACE
+/// </code>
+/// 
+/// The @extends directive is used to represent type extensions in the schema. Federated extended types should have 
+/// corresponding @key directive defined that specifies primary key required to fetch the underlying object.
+/// 
+/// NOTE: Federation v2 no longer requires `@extends` directive due to the smart entity type merging. All usage of @extends
+/// directive should be removed from your Federation v2 schemas.
 /// <example>
 /// # extended from the Users service
-/// extend type User @key(fields: "email") {
-///   email: String @external
-///   reviews: [Review]
+/// type Foo @extends @key(fields: "id") {
+///   id: ID
+///   description: String
 /// }
 /// </example>
 /// </summary>

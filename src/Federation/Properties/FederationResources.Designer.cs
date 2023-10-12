@@ -214,6 +214,14 @@ namespace ApolloGraphQL.HotChocolate.Federation.Properties
             }
         }
 
+        internal static string ExpressionHelper_GetScopedStateWithDefault_NoDefaultValue
+        {
+            get
+            {
+                return ResourceManager.GetString("ExpressionHelper_GetScopedStateWithDefault_NoDefaultValue", resourceCulture);
+            }
+        }
+
         internal static string FieldDescriptorExtensions_Key_FieldSet_CannotBeNullOrEmpty
         {
             get
