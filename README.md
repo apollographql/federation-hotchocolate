@@ -193,6 +193,61 @@ Entity resolution
 
 * you have to provide `ResolveReferenceWith` function to be able to resolve the entities
 
+### Advanced Use Cases
+
+#### Generating schema at build time
+
+See [HotChocolate documentation](https://chillicream.com/docs/hotchocolate/v13/server/command-line) for details on the server support for command line interface.
+
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services
+    .AddGraphQLServer()
+    .AddApolloFederationV2()
+    // register your types and services
+    ;
+
+var app = builder.Build();
+app.MapGraphQL();
+app.RunWithGraphQLCommands();
+```
+
+You can then generate your schema by running
+
+```shell
+dotnet run -- schema export --output schema.graphql
+```
+
+#### `@composedDirective` usage
+
+By default, Supergraph schema excludes all custom directives. The `@composeDirective`` is used to specify custom directives that should be preserved in the Supergraph schema.
+
+`ApolloGraphQL.HotChocolate.Federation` provides common `FederatedSchema` class that automatically includes Apollo Federation v2 `@link` definition. When applying any custom
+schema directives, you should extend this class and add required attributes/directives.
+
+When applying `@composedDirective` you also need to `@link` it your specification. Your custom schema should then be passed to the `AddApolloFederationV2` extension.
+
+```csharp
+[ComposeDirective("@custom")]
+[Link("https://myspecs.dev/myCustomDirective/v1.0", new string[] { "@custom" })]
+public class CustomSchema : FederatedSchema
+{
+}
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services
+    .AddGraphQLServer()
+    .AddApolloFederationV2(new CustomSchema())
+    // register your types and services
+    ;
+
+var app = builder.Build();
+app.MapGraphQL();
+app.Run();
+```
+
 ## Contact
 
 If you have a specific question about the library or code, please start a discussion in the [Apollo community forums](https://community.apollographql.com/) or start a conversation on our [Discord server](https://discord.gg/graphos).
