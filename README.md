@@ -112,6 +112,7 @@ Federation v2 directives (includes all of the v1 directives)
 * `ComposeDirective` applicable on schema, see [`@composeDirective` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#composedirective)
 * `Inaccessible` applicable on all type definitions, see [`@inaccessible` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#inaccessible)
 * `InterfaceObject` applicable on objects, see [`@interfaceObject` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#interfaceobject)
+* `KeyInterface` applicable on interfaces, see [entity interface `@key` documentation](https://www.apollographql.com/docs/federation/federated-types/interfaces)
 * `Link` applicable on schema, see [`@link` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#the-link-directive)
 * `Shareable` applicable on schema, see [`@shareable` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#shareable)
 
@@ -246,6 +247,51 @@ builder.Services
 var app = builder.Build();
 app.MapGraphQL();
 app.Run();
+```
+
+#### `@interfaceObject` usage
+
+Apollo Federation v2 supports **entity interfaces**, a powerful extension to the GraphQL interfaces that allows you to extend functionality of an interface across the supergraph
+without having to implement (or even be aware of) all its implementing types.
+
+In a subgraph defininig the interface we need to apply `@key`
+
+```csharp
+[InterfaceType]
+[KeyInterface("id")]
+public interface Product
+{
+    [ID]
+    string Id { get; }
+
+    string Name { get; }
+}
+
+[Key("id")]
+public class Book : Product
+{
+    [ID]
+    public string Id { get; set; }
+
+    public string Name { get; set; }
+
+    public string Content { get; set; }
+}
+```
+
+We can then extend the interface in another subgraph by making it a type, applying `@interfaceObject` and same `@key` directive. This allows you add new fields to every
+entity that implements your interface (e.g. adding `Reviews` field to all `Product` implementations).
+
+```csharp
+[Key("id")]
+[InterfaceObject]
+public class Product
+{
+    [ID]
+    public string Id { get; set; }
+
+    public List<string> Reviews { get; set; }
+}
 ```
 
 ## Contact

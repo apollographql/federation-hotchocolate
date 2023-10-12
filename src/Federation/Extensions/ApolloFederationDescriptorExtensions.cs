@@ -266,6 +266,44 @@ public static partial class ApolloFederationDescriptorExtensions
         return new EntityResolverDescriptor<object>(descriptor);
     }
 
+    /// <inheritdoc cref="Key(IObjectTypeDescriptor)"/>
+    public static IInterfaceTypeDescriptor Key(
+        this IInterfaceTypeDescriptor descriptor,
+        string fieldSet,
+        bool? resolvable = null)
+    {
+        if (descriptor is null)
+        {
+            throw new ArgumentNullException(nameof(descriptor));
+        }
+
+        if (string.IsNullOrEmpty(fieldSet))
+        {
+            throw new ArgumentException(
+                FieldDescriptorExtensions_Key_FieldSet_CannotBeNullOrEmpty,
+                nameof(fieldSet));
+        }
+
+        List<ArgumentNode> arguments = new List<ArgumentNode> {
+            new ArgumentNode(
+                WellKnownArgumentNames.Fields,
+                new StringValueNode(fieldSet)
+            )
+        };
+        if (false == resolvable)
+        {
+            arguments.Add(
+                new ArgumentNode(
+                    WellKnownArgumentNames.Resolvable,
+                    new BooleanValueNode(false)
+                )
+            );
+        }
+        return descriptor.Directive(
+            WellKnownTypeNames.Key,
+            arguments.ToArray());
+    }
+
     /// <summary>
     /// Applies @link directive definitions to link the document to external schemas.
     /// External schemas are identified by their url, which optionally ends with a name and version with
