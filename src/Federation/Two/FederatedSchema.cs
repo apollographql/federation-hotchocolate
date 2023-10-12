@@ -4,6 +4,9 @@ using HotChocolate.Types.Descriptors.Definitions;
 
 namespace ApolloGraphQL.HotChocolate.Federation.Two;
 
+/// <summary>
+/// Apollo Federation v2 base schema object that allows users to apply custom schema directives (e.g. @composeDirective)
+/// </summary>
 [Link("https://specs.apollo.dev/federation/v2.5", new string[] {
                 "@composeDirective",
                 "@extends",

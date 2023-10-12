@@ -3,22 +3,32 @@ using ApolloGraphQL.HotChocolate.Federation.Properties;
 
 namespace ApolloGraphQL.HotChocolate.Federation.Two;
 
-/*
-directive @tag(name: String!) repeatable on
-  | FIELD_DEFINITION
-  | INTERFACE
-  | OBJECT
-  | UNION
-  | ARGUMENT_DEFINITION
-  | SCALAR
-  | ENUM
-  | ENUM_VALUE
-  | INPUT_OBJECT
-  | INPUT_FIELD_DEFINITION
-*/
-public sealed class TagDirectiveType : DirectiveType
+/// <summary>
+/// <code>
+/// directive @tag(name: String!) repeatable on FIELD_DEFINITION 
+///  | OBJECT
+///  | INTERFACE
+///  | UNION
+///  | ENUM
+///  | ENUM_VALUE
+///  | SCALAR
+///  | INPUT_OBJECT
+///  | INPUT_FIELD_DEFINITION
+///  | ARGUMENT_DEFINITION
+/// </code>
+/// 
+/// The @tag directive allows users to annotate fields and types with additional metadata information.
+/// Tagging is commonly used for creating variants of the supergraph using contracts.
+/// <example>
+/// type Foo @tag(name: "internal") {
+///   id: ID!
+///   name: String
+/// }
+/// </example>
+/// </summary>
+public sealed class TagDirectiveType : DirectiveType<Tag>
 {
-    protected override void Configure(IDirectiveTypeDescriptor descriptor)
+    protected override void Configure(IDirectiveTypeDescriptor<Tag> descriptor)
         => descriptor
             .Name(WellKnownTypeNames.Tag)
             .Description(FederationResources.TagDirective_Description)
@@ -33,7 +43,5 @@ public sealed class TagDirectiveType : DirectiveType
                 | DirectiveLocation.Scalar
                 | DirectiveLocation.InputObject
                 | DirectiveLocation.InputFieldDefinition
-                | DirectiveLocation.ArgumentDefinition)
-            .Argument(WellKnownArgumentNames.Name)
-            .Type<NonNullType<StringType>>();
+                | DirectiveLocation.ArgumentDefinition);
 }

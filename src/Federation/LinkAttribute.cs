@@ -1,7 +1,5 @@
-using ApolloGraphQL.HotChocolate.Federation.Two;
 using HotChocolate.Types.Descriptors;
 using static ApolloGraphQL.HotChocolate.Federation.ThrowHelper;
-using System.Linq;
 
 namespace ApolloGraphQL.HotChocolate.Federation;
 
