@@ -1,4 +1,3 @@
-using ApolloGraphQL.HotChocolate.Federation;
 using ApolloGraphQL.HotChocolate.Federation.Constants;
 using ApolloGraphQL.HotChocolate.Federation.Properties;
 

@@ -1,9 +1,13 @@
 using ApolloGraphQL.HotChocolate.Federation.Constants;
 using ApolloGraphQL.HotChocolate.Federation.Descriptors;
 using HotChocolate.Language;
+using System.Collections.Generic;
+using System.Linq;
+
+using LinkDirective = ApolloGraphQL.HotChocolate.Federation.Two.Link;
+
 using static ApolloGraphQL.HotChocolate.Federation.Constants.WellKnownContextData;
 using static ApolloGraphQL.HotChocolate.Federation.Properties.FederationResources;
-using System.Collections.Generic;
 
 namespace HotChocolate.Types;
 
@@ -12,6 +16,58 @@ namespace HotChocolate.Types;
 /// </summary>
 public static partial class ApolloFederationDescriptorExtensions
 {
+    /// <summary>
+    /// Applies @composeDirective which is used to specify custom directives that should be exposed in the
+    /// Supergraph schema. If not specified, by default, Supergraph schema excludes all custom directives.
+    /// 
+    /// NOTE: Only available in Federation v2
+    /// <example>
+    /// extend schema @composeDirective(name: "@custom")
+    ///   @link(url: "https://specs.apollo.dev/federation/v2.5", import: ["@composeDirective"])
+    ///   @link(url: "https://myspecs.dev/custom/v1.0", import: ["@custom"])
+    /// 
+    /// directive @custom on FIELD_DEFINITION
+    /// 
+    /// type Query {
+    ///   helloWorld: String! @custom
+    /// }
+    /// </example>
+    /// </summary>
+    /// <param name="descriptor">
+    /// The object type descriptor on which this directive shall be annotated.
+    /// </param>
+    /// <param name="name">
+    /// Name of the directive that should be preserved in the supergraph composition.
+    /// </param>
+    /// <returns>
+    /// Returns the object type descriptor.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="descriptor"/> is <c>null</c>.
+    /// </exception>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="name"/> is <c>null</c>.
+    /// </exception>
+    public static ISchemaTypeDescriptor ComposeDirective(this ISchemaTypeDescriptor descriptor, string name)
+    {
+        if (descriptor is null)
+        {
+            throw new ArgumentNullException(nameof(descriptor));
+        }
+        if (name is null)
+        {
+            throw new ArgumentNullException(nameof(name));
+        }
+
+        return descriptor.Directive(
+            WellKnownTypeNames.ComposeDirective,
+            new ArgumentNode(
+                WellKnownArgumentNames.Name,
+                new StringValueNode(name)
+                )
+            );
+    }
+
     /// <summary>
     /// Mark the type as an extension of a type that is defined by another service when
     /// using Apollo Federation.
@@ -279,6 +335,61 @@ public static partial class ApolloFederationDescriptorExtensions
             arguments.ToArray());
 
         return new EntityResolverDescriptor<object>(descriptor);
+    }
+
+    /// <summary>
+    /// Applies @link directive definitions to link the document to external schemas.
+    /// External schemas are identified by their url, which optionally ends with a name and version with
+    /// the following format: `{NAME}/v{MAJOR}.{MINOR}`
+    /// 
+    /// By default, external types should be namespaced (prefixed with namespace__, e.g. key directive
+    /// should be namespaced as federation__key) unless they are explicitly imported. We automatically 
+    /// import ALL federation directives to avoid the need for namespacing.
+    /// 
+    /// NOTE: We currently DO NOT support full @link directive capability as it requires support for
+    /// namespacing and renaming imports. This functionality may be added in the future releases. 
+    /// See @link specification for details.
+    /// NOTE: Only available in Federation v2
+    /// <example>
+    /// extend schema @link(url: "https://specs.apollo.dev/federation/v2.5", import: ["@composeDirective"])
+    /// 
+    /// type Query {
+    ///   foo: Foo!
+    /// }
+    /// 
+    /// type Foo @key(fields: "id") {
+    ///   id: ID!
+    ///   name: String
+    /// }
+    /// </example>
+    /// </summary>
+    /// <param name="descriptor">
+    /// The object type descriptor on which this directive shall be annotated.
+    /// </param>
+    /// <param name="name">
+    /// Name of the directive that should be preserved in the supergraph composition.
+    /// </param>
+    /// <returns>
+    /// Returns the object type descriptor.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="descriptor"/> is <c>null</c>.
+    /// </exception>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="url"/> is <c>null</c>.
+    /// </exception>
+    public static ISchemaTypeDescriptor LinkDirective(this ISchemaTypeDescriptor descriptor, string url, string?[]? import)
+    {
+        if (descriptor is null)
+        {
+            throw new ArgumentNullException(nameof(descriptor));
+        }
+        if (url is null)
+        {
+            throw new ArgumentNullException(nameof(url));
+        }
+
+        return descriptor.Directive(new LinkDirective(url, import?.ToList()));
     }
 
     /// <summary>

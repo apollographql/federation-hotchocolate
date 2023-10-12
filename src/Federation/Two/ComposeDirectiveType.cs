@@ -3,9 +3,27 @@ using ApolloGraphQL.HotChocolate.Federation.Properties;
 
 namespace ApolloGraphQL.HotChocolate.Federation.Two;
 
-/*
-directive @composeDirective(name: String!) repeatable on SCHEMA
-*/
+/// <summary>
+/// <code>
+/// directive @composeDirective(name: String!) repeatable on SCHEMA
+/// </code>
+/// 
+/// By default, Supergraph schema excludes all custom directives. The @composeDirective is used to specify
+/// custom directives that should be exposed in the Supergraph schema.
+/// 
+/// NOTE: Only available in Federation v2
+/// <example>
+/// extend schema @composeDirective(name: "@custom")
+///   @link(url: "https://specs.apollo.dev/federation/v2.5", import: ["@composeDirective"])
+///   @link(url: "https://myspecs.dev/custom/v1.0", import: ["@custom"])
+/// 
+/// directive @custom on FIELD_DEFINITION
+/// 
+/// type Query {
+///   helloWorld: String! @custom
+/// }
+/// </example>
+/// </summary>
 public sealed class ComposeDirectiveType : DirectiveType
 {
     protected override void Configure(IDirectiveTypeDescriptor descriptor)
