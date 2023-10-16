@@ -15,7 +15,7 @@ relationships to the other subgraphs by using Federated directives. See [Apollo 
 
 ## Installation
 
-`ApolloGraphQL.HotChocolate.Federation` package is published to [Nuget](https://img.shields.io/nuget/v/ApolloGraphQL.HotChocolate.Federation). Update your `.csproj` file with following package references
+`ApolloGraphQL.HotChocolate.Federation` package is published to [Nuget](https://www.nuget.org/packages/ApolloGraphQL.HotChocolate.Federation). Update your `.csproj` file with following package references
 
 ```xml
   <ItemGroup>
