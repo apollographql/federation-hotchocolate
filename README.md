@@ -7,7 +7,7 @@
 
 # Apollo Federation for Hot Chocolate
 
->This is a fork of `HotChocolate.Federation` module that aims to provide first class [Apollo Federation](https://www.apollographql.com/docs/federation/) support for [`HotChocolate` subgraphs](https://chillicream.com/docs/hotchocolate/v13).
+>This is a fork of `HotChocolate.Federation` module that aims to provide first class [Apollo Federation](https://www.apollographql.com/docs/federation/) support for [`HotChocolate` subgraphs](https://chillicream.com/docs/hotchocolate/v13). See [migration guide](#migration-guide) for details.
 
 [**Apollo Federation**](https://www.apollographql.com/docs/federation/) is a powerful, open architecture that helps you create a **unified supergraph** that combines multiple GraphQL APIs.
 `ApolloGraphQL.HotChocolate.Federation` provides Apollo Federation support for building subgraphs in the `HotChocolate` ecosystem. Individual subgraphs can be run independently of each other but can also specify
@@ -119,7 +119,7 @@ Federation v2 directives (includes all of the v1 directives)
 Entity resolution
 
 * `Map` applicable on entity resolver method paramaters, allows you to map complex argument to a simpler representation value, e.g. `[Map("foo.bar")] string bar`
-* `ReferenceResolver` applicable on static public methods to indicate entity resolver
+* `ReferenceResolver` applicable on **public static methods** within an entity class to indicate entity resolver
 
 ### Code First
 
@@ -293,6 +293,32 @@ public class Product
     public List<string> Reviews { get; set; }
 }
 ```
+
+### Migration Guide
+
+Migrating from `HotChocolate.Federation` to `ApolloGraphQL.HotChocolate.Federation` is easy. Simply update your package import to point to a new module
+
+```diff
+  <ItemGroup>
+    <!-- make sure to also include HotChocolate package -->
+    <PackageReference Include="HotChocolate.AspNetCore" Version="13.5.1" />
+    <!-- federation package -->
+-    <PackageReference Include="HotChocolate.ApolloFederation" Version="$LatestVersion" />
++    <PackageReference Include="ApolloGraphQL.HotChocolate.Federation" Version="$LatestVersion" />
+  </ItemGroup>
+```
+
+and update namespace imports
+
+```diff
+- using HotChocolate.ApolloFederation;
++ using ApolloGraphQL.HotChocolate.Federation;
+```
+
+While we tried to make migration process as seamless as possible, we had to make few tweaks to the library. Due to the dependency on some of the internal APIs, we had to make following breaking changes to the library:
+
+* `[Key]` is now applicable **only on classes** and you no longer can apply it on individual fields
+* `[ReferenceResolver]` is now applicable **only on public static methods within an entity**, it is no longer applicable on classes
 
 ## Contact
 
