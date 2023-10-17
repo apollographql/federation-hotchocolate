@@ -18,9 +18,7 @@
   <PropertyGroup>
     <Authors>ApolloGraphQL authors and contributors</Authors>
     <Copyright>Copyright (c) 2023- Apollo Graph, Inc. (Formerly Meteor Development Group, Inc.)</Copyright>
-    <!-- TODO
-      <PackageIcon></PackageIcon> 
-    -->
+    <PackageIcon>Apollo.png</PackageIcon> 
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/apollographql/federation-hotchocolate</PackageProjectUrl>
     <PackageReleaseNotes>Release notes: https://github.com/apollographql/federation-hotchocolate/releases/$(PackageVersion)</PackageReleaseNotes>
@@ -48,5 +46,9 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)\Apollo.png" Pack="true" PackagePath="Apollo.png" Visible="false" />
   </ItemGroup>
 </Project>
