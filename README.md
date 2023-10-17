@@ -4,10 +4,9 @@
 [![Join the community forum](https://img.shields.io/badge/join%20the%20community-forum-blueviolet)](https://community.apollographql.com)
 [![Join our Discord server](https://img.shields.io/discord/1022972389463687228.svg?color=7389D8&labelColor=6A7EC2&logo=discord&logoColor=ffffff&style=flat-square)](https://discord.gg/graphos)
 
-
 # Apollo Federation for Hot Chocolate
 
->This is a fork of `HotChocolate.Federation` module that aims to provide first class [Apollo Federation](https://www.apollographql.com/docs/federation/) support for [`HotChocolate` subgraphs](https://chillicream.com/docs/hotchocolate/v13). See [migration guide](#migration-guide) for details.
+>This is the **official Apollo Federation support library for Hot Chocolate** with support for Federation 1 and Federation 2 subgraphs. For backwards compatibility, it was based on HotChocolate's original Fed 1 module with added support for Fed v2. We recommend [migrating to this officially supported library](#migration-guide) as ongoing Federation support for HotChocolate ecosystem and using `rover subgraph create` to kickstart new projects.
 
 [**Apollo Federation**](https://www.apollographql.com/docs/federation/) is a powerful, open architecture that helps you create a **unified supergraph** that combines multiple GraphQL APIs.
 `ApolloGraphQL.HotChocolate.Federation` provides Apollo Federation support for building subgraphs in the `HotChocolate` ecosystem. Individual subgraphs can be run independently of each other but can also specify
@@ -34,7 +33,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddGraphQLServer()
-    // .AddApolloFederation() // use this instead if you want to opt-in to fed v1 
     .AddApolloFederationV2() 
     // register your types and services
     ;
@@ -43,6 +41,8 @@ var app = builder.Build();
 app.MapGraphQL();
 app.Run();
 ```
+
+> If you would like to opt-in to Federation v1 schema, you need to use `.AddApolloFederation()` extension instead.
 
 ## Usage
 
