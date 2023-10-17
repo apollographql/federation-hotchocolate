@@ -27,9 +27,14 @@ namespace ApolloGraphQL.HotChocolate.Federation;
 /// </summary>
 [AttributeUsage(
     AttributeTargets.Class
-    | AttributeTargets.Struct
+    | AttributeTargets.Enum
+    | AttributeTargets.Field
+    | AttributeTargets.Interface
     | AttributeTargets.Method
+    | AttributeTargets.Parameter
     | AttributeTargets.Property
+    | AttributeTargets.Struct,
+    AllowMultiple = true
 )]
 public sealed class ApolloTagAttribute : Attribute
 {

@@ -24,6 +24,7 @@ namespace ApolloGraphQL.HotChocolate.Federation;
 /// }
 /// </example>
 /// </summary>
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, Inherited = true, AllowMultiple = true)]
 public sealed class ComposeDirectiveAttribute : SchemaTypeDescriptorAttribute
 {
     /// <summary>

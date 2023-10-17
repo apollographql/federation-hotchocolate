@@ -32,6 +32,16 @@ namespace ApolloGraphQL.HotChocolate.Federation;
 /// }
 /// </example>
 /// </summary>
+[AttributeUsage(
+    AttributeTargets.Class
+    | AttributeTargets.Enum
+    | AttributeTargets.Field
+    | AttributeTargets.Interface
+    | AttributeTargets.Method
+    | AttributeTargets.Parameter
+    | AttributeTargets.Property
+    | AttributeTargets.Struct
+)]
 public sealed class InaccessibleAttribute : Attribute
 {
 }
