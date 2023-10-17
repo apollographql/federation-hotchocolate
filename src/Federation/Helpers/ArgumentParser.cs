@@ -31,10 +31,15 @@ internal static class ArgumentParser
         int i,
         out T? value)
     {
+        // TODO does not support list
         switch (valueNode.Kind)
         {
             case SyntaxKind.ObjectValue:
                 var current = path[i];
+                if (type.IsNonNullType())
+                {
+                    return TryGetValue(valueNode, type.InnerType(), path, i, out value);
+                }
 
                 if (type is not IComplexOutputType complexType ||
                     !complexType.Fields.TryGetField(current, out var field))
@@ -55,11 +60,9 @@ internal static class ArgumentParser
                     }
                 }
                 break;
-
             case SyntaxKind.NullValue:
                 value = default(T);
                 return true;
-
             case SyntaxKind.StringValue:
             case SyntaxKind.IntValue:
             case SyntaxKind.FloatValue:
@@ -115,6 +118,7 @@ internal static class ArgumentParser
     {
         switch (valueNode.Kind)
         {
+            // TODO does not handle list
             case SyntaxKind.ObjectValue:
                 var current = path[i];
 

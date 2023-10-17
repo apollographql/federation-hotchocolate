@@ -65,29 +65,6 @@ public sealed class EntityResolverDescriptor<TEntity>
 
     protected override EntityResolverDefinition Definition { get; set; } = new();
 
-    /// <inheritdoc cref="IEntityResolverDescriptor"/>
-    public IObjectTypeDescriptor ResolveReference(
-        FieldResolverDelegate fieldResolver)
-        => ResolveReference(fieldResolver, Array.Empty<string[]>());
-
-    private IObjectTypeDescriptor ResolveReference(
-        FieldResolverDelegate fieldResolver,
-        IReadOnlyList<string[]> required)
-    {
-        if (fieldResolver is null)
-        {
-            throw new ArgumentNullException(nameof(fieldResolver));
-        }
-
-        if (required is null)
-        {
-            throw new ArgumentNullException(nameof(required));
-        }
-
-        Definition.ResolverDefinition = new(fieldResolver, required);
-        return _typeDescriptor;
-    }
-
     /// <inheritdoc cref="IEntityResolverDescriptor{T}"/>
     public IObjectTypeDescriptor ResolveReferenceWith(
         Expression<Func<TEntity, object?>> method)
@@ -115,13 +92,6 @@ public sealed class EntityResolverDescriptor<TEntity>
     }
 
     /// <inheritdoc cref="IEntityResolverDescriptor"/>
-    public IObjectTypeDescriptor ResolveReferenceWith<TResolver>()
-        => ResolveReferenceWith(
-            Context.TypeInspector.GetNodeResolverMethod(
-                Definition.EntityType ?? typeof(TResolver),
-                typeof(TResolver))!);
-
-    /// <inheritdoc cref="IEntityResolverDescriptor"/>
     public IObjectTypeDescriptor ResolveReferenceWith(MethodInfo method)
     {
         if (method is null)
@@ -141,10 +111,21 @@ public sealed class EntityResolverDescriptor<TEntity>
         return ResolveReference(resolver.Resolver!, argumentBuilder.Required);
     }
 
-    /// <inheritdoc cref="IEntityResolverDescriptor"/>
-    public IObjectTypeDescriptor ResolveReferenceWith(Type type)
-        => ResolveReferenceWith(
-            Context.TypeInspector.GetNodeResolverMethod(
-                Definition.EntityType ?? type,
-                type)!);
+    private IObjectTypeDescriptor ResolveReference(
+        FieldResolverDelegate fieldResolver,
+        IReadOnlyList<string[]> required)
+    {
+        if (fieldResolver is null)
+        {
+            throw new ArgumentNullException(nameof(fieldResolver));
+        }
+
+        if (required is null)
+        {
+            throw new ArgumentNullException(nameof(required));
+        }
+
+        Definition.ResolverDefinition = new(fieldResolver, required);
+        return _typeDescriptor;
+    }
 }
