@@ -152,24 +152,6 @@ public class EntityTypeTests
             t => Assert.Equal("Review", t.Name));
     }
 
-    // [Fact]
-    // public void TestEntityTypeCodeFirstPropertyKeyAttributes()
-    // {
-    //     // arrange
-    //     var schema = SchemaBuilder.New()
-    //         .AddApolloFederation()
-    //         .AddQueryType<Query<UserWithPropertyAttributes>>()
-    //         .Create();
-
-    //     // act
-    //     var entityType = schema.GetType<EntityType>("_Entity");
-
-    //     // assert
-    //     Assert.Collection(
-    //         entityType.Types.Values,
-    //         t => Assert.Equal("UserWithPropertyAttributes", t.Name));
-    // }
-
     [Fact]
     public void TestEntityTypeCodeFirstClassKeyAttributeNestedKey()
     {
@@ -200,15 +182,6 @@ public class UserWithClassAttribute
     public string IdCode { get; set; } = default!;
     public Review[] Reviews { get; set; } = default!;
 }
-
-// TODO this is no longer valid
-// public class UserWithPropertyAttributes
-// {
-//     [Key]
-//     public int Id { get; set; }
-//     [Key]
-//     public string IdCode { get; set; } = default!;
-// }
 
 [Key("id address { matchCode }")]
 public class UserWithNestedKeyClassAttribute

@@ -142,58 +142,6 @@ public class KeyDirectiveTests : FederationTypesTestBase
         schema.ToString().MatchSnapshot();
     }
 
-    // [Fact]
-    // public void AnnotateKeyToClassAttributePureCodeFirst()
-    // {
-    //     // arrange
-    //     Snapshot.FullName();
-
-    //     var schema = SchemaBuilder.New()
-    //         .AddApolloFederation()
-    //         .AddQueryType<Query<TestTypePropertyDirective>>()
-    //         .Create();
-
-    //     // act
-    //     var testType = schema.GetType<ObjectType>("TestTypePropertyDirective");
-
-    //     // assert
-    //     Assert.Collection(testType.Directives,
-    //         item =>
-    //         {
-    //             Assert.Equal(WellKnownTypeNames.Key, item.Type.Name);
-    //             Assert.Equal("fields", item.AsSyntaxNode().Arguments[0].Name.ToString());
-    //             Assert.Equal("\"id\"", item.AsSyntaxNode().Arguments[0].Value.ToString());
-    //         });
-
-    //     schema.ToString().MatchSnapshot();
-    // }
-
-    // [Fact]
-    // public void AnnotateKeyToClassAttributesPureCodeFirst()
-    // {
-    //     // arrange
-    //     Snapshot.FullName();
-
-    //     var schema = SchemaBuilder.New()
-    //         .AddApolloFederation()
-    //         .AddQueryType<Query<TestTypePropertyDirectives>>()
-    //         .Create();
-
-    //     // act
-    //     var testType = schema.GetType<ObjectType>("TestTypePropertyDirectives");
-
-    //     // assert
-    //     Assert.Collection(testType.Directives,
-    //         item =>
-    //         {
-    //             Assert.Equal(WellKnownTypeNames.Key, item.Type.Name);
-    //             Assert.Equal("fields", item.AsSyntaxNode().Arguments[0].Name.ToString());
-    //             Assert.Equal("\"id name\"", item.AsSyntaxNode().Arguments[0].Value.ToString());
-    //         });
-
-    //     schema.ToString().MatchSnapshot();
-    // }
-
     public class Query<T>
     {
         public T someField(int id) => default!;
@@ -204,19 +152,4 @@ public class KeyDirectiveTests : FederationTypesTestBase
     {
         public int Id { get; set; }
     }
-
-    // NO LONGER VALID
-    // public class TestTypePropertyDirective
-    // {
-    //     [Key]
-    //     public int Id { get; set; }
-    // }
-
-    // public class TestTypePropertyDirectives
-    // {
-    //     [Key]
-    //     public int Id { get; set; }
-    //     [Key]
-    //     public string Name { get; set; } = default!;
-    // }
 }

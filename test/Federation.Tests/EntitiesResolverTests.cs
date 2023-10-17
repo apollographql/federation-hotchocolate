@@ -70,31 +70,6 @@ public class EntitiesResolverTests
         Assert.Equal("InternalValue", obj.InternalField);
     }
 
-    // TODO not supported
-    // [Fact]
-    // public async void TestResolveViaEntityResolver()
-    // {
-    //     var schema = SchemaBuilder.New()
-    //         .AddApolloFederation()
-    //         .AddQueryType<Query>()
-    //         .Create();
-
-    //     var context = CreateResolverContext(schema);
-
-    //     // act
-    //     var representations = new List<Representation>
-    //     {
-    //         new("TypeWithReferenceResolver",
-    //             new ObjectValueNode(new ObjectFieldNode("Id", "1")))
-    //     };
-
-    //     // assert
-    //     var result = await EntitiesResolver.ResolveAsync(schema, representations, context);
-    //     var obj = Assert.IsType<TypeWithReferenceResolver>(result[0]);
-    //     Assert.Equal("1", obj.Id);
-    //     Assert.Equal("SomeField", obj.SomeField);
-    // }
-
     [Fact]
     public async void TestResolveViaEntityResolver_WithDataLoader()
     {
@@ -176,7 +151,6 @@ public class EntitiesResolverTests
     public class Query
     {
         public ForeignType ForeignType { get; set; } = default!;
-        // public TypeWithReferenceResolver TypeWithReferenceResolver { get; set; } = default!;
         public TypeWithoutRefResolver TypeWithoutRefResolver { get; set; } = default!;
         public MixedFieldTypes MixedFieldTypes { get; set; } = default!;
         public FederatedType TypeWithReferenceResolverMany { get; set; } = default!;
@@ -186,19 +160,6 @@ public class EntitiesResolverTests
     {
         public string Id { get; set; } = default!;
     }
-
-    // TODO no longer supported
-    // [ReferenceResolver(EntityResolver = nameof(Get))]
-    // public class TypeWithReferenceResolver
-    // {
-    //     public string Id { get; set; } = default!;
-    //     public string SomeField { get; set; } = default!;
-
-    //     public static TypeWithReferenceResolver Get([LocalState] ObjectValueNode data)
-    //     {
-    //         return new TypeWithReferenceResolver { Id = "1", SomeField = "SomeField" };
-    //     }
-    // }
 
     [Key("id")]
     [ExtendServiceType]

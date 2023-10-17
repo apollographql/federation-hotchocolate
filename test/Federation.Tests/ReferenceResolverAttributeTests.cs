@@ -4,7 +4,6 @@ using HotChocolate;
 using HotChocolate.Language;
 using HotChocolate.Resolvers;
 using HotChocolate.Types;
-using Xunit;
 using static ApolloGraphQL.HotChocolate.Federation.Constants.WellKnownContextData;
 using static ApolloGraphQL.HotChocolate.Federation.TestHelper;
 
@@ -12,179 +11,72 @@ namespace ApolloGraphQL.HotChocolate.Federation;
 
 public class ReferenceResolverAttributeTests
 {
-    // [Fact(Skip = "Needs to be fixed!")]
-    // public async void InClassRefResolver_PureCodeFirst()
-    // {
-    //     // arrange
-    //     var schema = SchemaBuilder.New()
-    //         .AddApolloFederation()
-    //         .AddQueryType<Query>()
-    //         .Create();
+    [Fact]
+    public async void SimpleKey()
+    {
+        var schema = SchemaBuilder.New()
+            .AddApolloFederation()
+            .AddQueryType<QueryWithSingleKey>()
+            .Create();
 
-    //     // act
-    //     var type = schema.GetType<ObjectType>(nameof(InClassRefResolver));
+        var type = schema.GetType<ObjectType>(nameof(KeyEntity));
 
-    //     // assert
-    //     var result = await ResolveRef(schema, type);
-    //     Assert.Equal(
-    //         nameof(InClassRefResolver),
-    //         Assert.IsType<InClassRefResolver>(result).Id);
-    // }
+        var resultId = await ResolveRef(schema, type, new(new ObjectFieldNode("id", "id_123")));
 
-    // [Fact]
-    // public async void ExternalRefResolver_PureCodeFirst()
-    // {
-    //     // arrange
-    //     var schema = SchemaBuilder.New()
-    //         .AddApolloFederation()
-    //         .AddQueryType<Query>()
-    //         .Create();
-
-    //     // act
-    //     var type = schema.GetType<ObjectType>(nameof(ExternalRefResolver));
-
-    //     // assert
-    //     var result = await ResolveRef(schema, type);
-
-    //     Assert.Equal(
-    //         nameof(ExternalRefResolver),
-    //         Assert.IsType<ExternalRefResolver>(result).Id);
-    // }
-
-    // [Fact]
-    // public async void SingleKey_CompiledResolver()
-    // {
-    //     // arrange
-    //     var schema = SchemaBuilder.New()
-    //         .AddApolloFederation()
-    //         .AddQueryType<QueryWithSingleKeyResolver>()
-    //         .Create();
-
-    //     // act
-    //     var type = schema.GetType<ObjectType>(nameof(ExternalSingleKeyResolver));
-
-    //     // assert
-    //     var result = await ResolveRef(schema, type);
-
-    //     Assert.Equal("abc", Assert.IsType<ExternalSingleKeyResolver>(result).Id);
-    // }
-
-    // [Fact]
-    // public async void ExternalFields_Set()
-    // {
-    //     // arrange
-    //     var schema = SchemaBuilder.New()
-    //         .AddApolloFederation()
-    //         .AddQueryType<QueryWithExternalField>()
-    //         .Create();
-
-    //     // act
-    //     var type = schema.GetType<ObjectType>(nameof(ExternalFields));
-    //     var representation = new ObjectValueNode(
-    //         new ObjectFieldNode("id", "id_123"),
-    //         new ObjectFieldNode("foo", "bar"));
-
-    //     // assert
-    //     var result = await ResolveRef(schema, type, representation);
-
-    //     Assert.Equal("bar", Assert.IsType<ExternalFields>(result).Foo);
-    // }
-
-    // [Fact]
-    // public async void ExternalFields_Not_Set()
-    // {
-    //     // arrange
-    //     var schema = SchemaBuilder.New()
-    //         .AddApolloFederation()
-    //         .AddQueryType<QueryWithExternalField>()
-    //         .Create();
-
-    //     // act
-    //     var type = schema.GetType<ObjectType>(nameof(ExternalFields));
-    //     var representation = new ObjectValueNode(new ObjectFieldNode("id", "id_123"));
-
-    //     // assert
-    //     var result = await ResolveRef(schema, type, representation);
-
-    //     Assert.Null(Assert.IsType<ExternalFields>(result).Foo);
-    // }
+        Assert.Equal("id_123", Assert.IsType<KeyEntity>(resultId).Id);
+    }
 
     [Fact]
-    public async void MultiKey_CompiledResolver()
+    public async void MultiKey()
     {
         // arrange
         var schema = SchemaBuilder.New()
             .AddApolloFederation()
-            .AddQueryType<QueryWithMultiKeyResolver>()
+            .AddQueryType<QueryWithMultiKey>()
             .Create();
 
-        var type = schema.GetType<ObjectType>(nameof(ExternalMultiKeyResolver));
+        var type = schema.GetType<ObjectType>(nameof(MultiKeyEntity));
 
         // act
         var resultId = await ResolveRef(schema, type, new(new ObjectFieldNode("id", "id_123")));
         var resultSku = await ResolveRef(schema, type, new(new ObjectFieldNode("sku", "sku_123")));
 
         // assert
-        Assert.Equal("id_123", Assert.IsType<ExternalMultiKeyResolver>(resultId).Id);
-        Assert.Equal("sku_123", Assert.IsType<ExternalMultiKeyResolver>(resultSku).Sku);
+        Assert.Equal("id_123", Assert.IsType<MultiKeyEntity>(resultId).Id);
+        Assert.Equal("sku_123", Assert.IsType<MultiKeyEntity>(resultSku).Sku);
     }
 
-    // [Fact]
-    // public async void ExternalRefResolver_RenamedMethod_PureCodeFirst()
-    // {
-    //     // arrange
-    //     var schema = SchemaBuilder.New()
-    //         .AddApolloFederation()
-    //         .AddQueryType<Query>()
-    //         .Create();
+    [Fact]
+    public async void CompositeKey()
+    {
+        var schema = SchemaBuilder.New()
+            .AddApolloFederation()
+            .AddQueryType<QueryWithCompositeKey>()
+            .Create();
 
-    //     // act
-    //     var type = schema.GetType<ObjectType>(nameof(ExternalRefResolverRenamedMethod));
+        var type = schema.GetType<ObjectType>(nameof(CompositeKeyEntity));
 
-    //     // assert
-    //     var result = await ResolveRef(schema, type);
-    //     Assert.Equal(
-    //         nameof(ExternalRefResolverRenamedMethod),
-    //         Assert.IsType<ExternalRefResolver>(result).Id);
-    // }
+        // act
+        var result = await ResolveRef(schema, type, new(new ObjectFieldNode("id", "id_123"), new ObjectFieldNode("sku", "sku_123")));
 
-    // TODO unsupported
-    // [Fact]
-    // public void InClassRefResolver_RenamedMethod_InvalidName_PureCodeFirst()
-    // {
-    //     // arrange
-    //     void SchemaCreation()
-    //     {
-    //         SchemaBuilder.New()
-    //             .AddApolloFederation()
-    //             .AddQueryType<Query_InClass_Invalid>()
-    //             .Create();
-    //     }
+        // assert
+        Assert.Equal("id_123", Assert.IsType<CompositeKeyEntity>(result).Id);
+        Assert.Equal("sku_123", Assert.IsType<CompositeKeyEntity>(result).Sku);
+    }
 
-    //     // act
-    //     // assert
-    //     Assert.Throws<SchemaException>((Action)SchemaCreation);
-    // }
+    [Fact]
+    public async void CompositeObjectKey()
+    {
+        var schema = SchemaBuilder.New()
+            .AddApolloFederation()
+            .AddQueryType<QueryWithObjectKey>()
+            .Create();
 
-    // [Fact]
-    // public void ExternalRefResolver_RenamedMethod_InvalidName_PureCodeFirst()
-    // {
-    //     // arrange
-    //     void SchemaCreation()
-    //     {
-    //         SchemaBuilder.New()
-    //             .AddApolloFederation()
-    //             .AddQueryType<Query_ExternalClass_Invalid>()
-    //             .Create();
-    //     }
+        var type = schema.GetType<ObjectType>(nameof(ObjectKeyEntity));
+        var result = await ResolveRef(schema, type, new ObjectValueNode(new ObjectFieldNode("foo", new ObjectValueNode(new ObjectFieldNode("id", "id_123")))));
 
-    //     // act
-    //     // assert
-    //     Assert.Throws<SchemaException>((Action)SchemaCreation);
-    // }
-
-    private ValueTask<object?> ResolveRef(ISchema schema, ObjectType type)
-        => ResolveRef(schema, type, new ObjectValueNode(new ObjectFieldNode("id", "abc")));
+        Assert.Equal("id_123", Assert.IsType<ObjectKeyEntity>(result).Foo.Id);
+    }
 
     private async ValueTask<object?> ResolveRef(
         ISchema schema,
@@ -212,159 +104,80 @@ public class ReferenceResolverAttributeTests
         return entity;
     }
 
-    // TODO not supported
-    // public class Query_InClass_Invalid
-    // {
-    //     public InvalidInClassRefResolver InvalidInClassRefResolver { get; set; } = default!;
-    // }
-    // 
-    // public class Query_ExternalClass_Invalid
-    // {
-    //     public ExternalRefResolver_Invalid ExternalRefResolver_Invalid { get; set; } = default!;
-    // }
-    // 
-    // [ReferenceResolver(EntityResolver = "non-existing-method")]
-    // public class InvalidInClassRefResolver
-    // {
-    //     [Key]
-    //     public string? Id { get; set; }
-    // }
-    // 
-    // [ReferenceResolver(
-    //     EntityResolverType = typeof(InvalidExternalRefResolver),
-    //     EntityResolver = "non-existing-method")]
-    // public class ExternalRefResolver_Invalid
-    // {
-    //     [Key]
-    //     public string? Id { get; set; }
-    // }
-    // [Key("id")]
-    // public class InvalidExternalRefResolver
-    // {
-    //     public string? Id { get; set; }
-    // }
+    // TEST SCHEMAS BELOW
 
-    // public class Query
-    // {
-    //     public InClassRefResolver InClassRefResolver { get; set; } = default!;
-    //     public ExternalRefResolver ExternalRefResolver { get; set; } = default!;
-    //     public ExternalRefResolverRenamedMethod ExternalRefResolverRenamedMethod { get; set; } =
-    //         default!;
-    // }
-
-    // public class QueryWithSingleKeyResolver
-    // {
-    //     public ExternalSingleKeyResolver ExternalRefResolver { get; set; } = default!;
-    // }
-
-    public class QueryWithMultiKeyResolver
+    public class QueryWithSingleKey
     {
-        public ExternalMultiKeyResolver ExternalRefResolver { get; set; } = default!;
+        public KeyEntity SingleKey { get; set; } = default!;
     }
 
-    // public class QueryWithExternalField
-    // {
-    //     public ExternalFields ExternalRefResolver { get; set; } = default!;
-    // }
+    [Key("id")]
+    public class KeyEntity
+    {
+        public string Id { get; set; } = default!;
 
-    // TODO unsupported
-    // [ReferenceResolver(EntityResolver = nameof(GetAsync))]
-    // public class InClassRefResolver
-    // {
-    //     [Key]
-    //     public string? Id { get; set; }
+        [ReferenceResolver]
+        public static Task<KeyEntity> GetByIdAsync(string id)
+            => Task.FromResult(new KeyEntity { Id = id });
+    }
 
-    //     public Task<InClassRefResolver> GetAsync([LocalState] ObjectValueNode data)
-    //     {
-    //         return Task.FromResult(
-    //             new InClassRefResolver()
-    //             {
-    //                 Id = nameof(InClassRefResolver)
-    //             });
-    //     }
-    // }
+    public class QueryWithMultiKey
+    {
+        public MultiKeyEntity MultiKey { get; set; } = default!;
+    }
 
-    // [ReferenceResolver(EntityResolverType = typeof(ExternalReferenceResolver))]
-    // public class ExternalRefResolver
-    // {
-    //     [Key]
-    //     public string Id { get; set; } = default!;
-    // }
-
-    // [ReferenceResolver(EntityResolver = nameof(GetAsync))]
-    // public class ExternalSingleKeyResolver
-    // {
-    //     [Key]
-    //     public string Id { get; set; } = default!;
-
-    //     public static Task<ExternalSingleKeyResolver> GetAsync(string id)
-    //         => Task.FromResult(new ExternalSingleKeyResolver { Id = id });
-    // }
-
-    // [ReferenceResolver(EntityResolver = nameof(GetAsync))]
-    // public class ExternalFields
-    // {
-    //     [Key]
-    //     public string Id { get; set; } = default!;
-
-    //     [External]
-    //     public string Foo { get; private set; } = default!;
-
-    //     public static Task<ExternalFields> GetAsync(string id)
-    //         => Task.FromResult(new ExternalFields { Id = id });
-    // }
 
     [Key("id")]
     [Key("sku")]
-
-    public class ExternalMultiKeyResolver
+    public class MultiKeyEntity
     {
         public string Id { get; set; } = default!;
 
         public string Sku { get; set; } = default!;
 
         [ReferenceResolver]
-        public static Task<ExternalMultiKeyResolver> GetByIdAsync(string id)
-            => Task.FromResult(new ExternalMultiKeyResolver { Id = id });
+        public static Task<MultiKeyEntity> GetByIdAsync(string id)
+            => Task.FromResult(new MultiKeyEntity { Id = id });
 
         [ReferenceResolver]
-        public static Task<ExternalMultiKeyResolver> GetBySkuAsync(string sku)
-            => Task.FromResult(new ExternalMultiKeyResolver { Sku = sku });
+        public static Task<MultiKeyEntity> GetBySkuAsync(string sku)
+            => Task.FromResult(new MultiKeyEntity { Sku = sku });
     }
 
-    // [ReferenceResolver(
-    //     EntityResolverType = typeof(ExternalReferenceResolverRenamedMethod),
-    //     EntityResolver = nameof(ExternalReferenceResolverRenamedMethod.SomeRenamedMethod))]
-    // public class ExternalRefResolverRenamedMethod
-    // {
-    //     [Key]
-    //     public string Id { get; set; } = default!;
-    // }
+    public class QueryWithCompositeKey
+    {
+        public CompositeKeyEntity CompositeKey { get; set; } = default!;
+    }
 
-    // public static class ExternalReferenceResolverRenamedMethod
-    // {
-    //     public static Task<ExternalRefResolver> SomeRenamedMethod(
-    //         [LocalState] ObjectValueNode data)
-    //     {
-    //         return Task.FromResult(
-    //             new ExternalRefResolver()
-    //             {
-    //                 Id = nameof(ExternalRefResolverRenamedMethod)
-    //             });
-    //     }
-    // }
+    [Key("id sku")]
+    public class CompositeKeyEntity
+    {
+        public string Id { get; set; } = default!;
 
-    // public static class ExternalReferenceResolver
-    // {
-    //     public static Task<ExternalRefResolver> GetExternalReferenceResolverAsync(
-    //         [LocalState] ObjectValueNode data)
-    //     {
-    //         return Task.FromResult(
-    //             new ExternalRefResolver()
-    //             {
-    //                 Id = nameof(ExternalRefResolver)
-    //             });
-    //     }
-    // }
+        public string Sku { get; set; } = default!;
 
+        [ReferenceResolver]
+        public static Task<CompositeKeyEntity> GetByIdAndSkuAsync(string id, string sku)
+            => Task.FromResult(new CompositeKeyEntity { Id = id, Sku = sku });
+    }
+
+    public class QueryWithObjectKey
+    {
+        public ObjectKeyEntity ObjectKey { get; set; } = default!;
+    }
+
+    [Key("id sku")]
+    public class ObjectKeyEntity
+    {
+        public ObjectKey Foo { get; set; } = default!;
+
+        [ReferenceResolver]
+        public static Task<ObjectKeyEntity> GetByFooIdAsync([Map("foo.id")] string id)
+            => Task.FromResult(new ObjectKeyEntity { Foo = new ObjectKey { Id = id } });
+    }
+
+    public class ObjectKey
+    {
+        public string Id { get; set; } = default!;
+    }
 }
