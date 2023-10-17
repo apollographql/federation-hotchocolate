@@ -43,7 +43,7 @@ public class Product
     public static Product? GetProductById(
         string id,
         Data repository)
-        => repository.Products.FirstOrDefault(t => t.Id.Equals(id));
+        => repository.Products.FirstOrDefault(t => id.Equals(t.Id));
 
     [ReferenceResolver]
     public static Product? GetProductByPackage(
@@ -51,8 +51,7 @@ public class Product
         string package,
         Data repository)
         => repository.Products.FirstOrDefault(
-            t => (t.Sku?.Equals(sku) ?? false) &&
-                (t.Package?.Equals(package) ?? false));
+            t => sku.Equals(t.Sku) && package.Equals(t.Package));
 
     [ReferenceResolver]
     public static Product? GetProductByVariation(
@@ -60,6 +59,6 @@ public class Product
         [Map("variation.id")] string variationId,
         Data repository)
         => repository.Products.FirstOrDefault(
-            t => (t.Sku?.Equals(sku) ?? false) &&
-                (t.Variation?.Id.Equals(variationId) ?? false));
+            t => sku.Equals(t.Sku) && variationId.Equals(t.Variation?.Id)
+        );
 }

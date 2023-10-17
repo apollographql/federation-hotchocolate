@@ -20,7 +20,6 @@ public class ProductResearch
         [Map("study.caseNumber")] string caseNumber,
         Data repository)
     {
-        Console.WriteLine("case number = {0}", caseNumber);
         return repository.ProductResearches.FirstOrDefault(
             r => r.Study.CaseNumber.Equals(caseNumber));
     }
