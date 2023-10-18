@@ -7,22 +7,24 @@ namespace ApolloGraphQL.HotChocolate.Federation.Two;
 /// <summary>
 /// Apollo Federation v2 base schema object that allows users to apply custom schema directives (e.g. @composeDirective)
 /// </summary>
-[Link("https://specs.apollo.dev/federation/v2.5", new string[] {
-                "@composeDirective",
-                "@extends",
-                "@external",
-                "@key",
-                "@inaccessible",
-                "@interfaceObject",
-                "@override",
-                "@provides",
-                "@requires",
-                "@shareable",
-                "@tag",
-                "FieldSet"
-})]
 public class FederatedSchema : Schema
 {
+    /// <summary>
+    /// Initializes new instance of <see cref="FederatedSchema"/>
+    /// </summary>
+    /// <param name="version">
+    /// Supported Apollo Federation version
+    /// </param>
+    public FederatedSchema(FederationVersion version = FederationVersion.FEDERATION_25)
+    {
+        FederationVersion = version;
+    }
+
+    /// <summary>
+    /// Retrieve supported Apollo Federation version
+    /// </summary>
+    public FederationVersion FederationVersion { get; }
+
     private IDescriptorContext _context = default!;
     protected override void OnAfterInitialize(ITypeDiscoveryContext context, DefinitionBase definition)
     {
@@ -43,5 +45,7 @@ public class FederatedSchema : Schema
                 }
             }
         }
+        var link = FederationUtils.GetFederationLink(FederationVersion);
+        descriptor.Link(link.Url, link.Import?.ToArray());
     }
 }

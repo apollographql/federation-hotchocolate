@@ -222,11 +222,36 @@ You can then generate your schema by running
 dotnet run -- schema export --output schema.graphql
 ```
 
+#### Specifying Federation Version
+
+By default, `ApolloGraphQL.HotChocolate.Federation` will generate schema using latest supported Federation version. If you would like to opt-in to use older versions you can
+so by specifying the version on your custom schema object and passing it to the `AddApolloFederationV2` extension.
+
+```csharp
+public class CustomSchema : FederatedSchema
+{
+    public CustomSchema() : base(FederationVersion.FEDERATION_23) {
+    }
+}
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services
+    .AddGraphQLServer()
+    .AddApolloFederationV2(new CustomSchema())
+    // register your types and services
+    ;
+
+var app = builder.Build();
+app.MapGraphQL();
+app.Run();
+```
+
 #### `@composedDirective` usage
 
-By default, Supergraph schema excludes all custom directives. The `@composeDirective`` is used to specify custom directives that should be preserved in the Supergraph schema.
+By default, Supergraph schema excludes all custom directives. The `@composeDirective` is used to specify custom directives that should be preserved in the Supergraph schema.
 
-`ApolloGraphQL.HotChocolate.Federation` provides common `FederatedSchema` class that automatically includes Apollo Federation v2 `@link` definition. When applying any custom
+`ApolloGraphQL.HotChocolate.Federation` provides common `FederatedSchema` class that automatically applies Apollo Federation v2 `@link` definition. When applying any custom
 schema directives, you should extend this class and add required attributes/directives.
 
 When applying `@composedDirective` you also need to `@link` it your specification. Your custom schema should then be passed to the `AddApolloFederationV2` extension.
@@ -296,7 +321,7 @@ public class Product
 }
 ```
 
-### Providing subgraph contact information
+#### Providing subgraph contact information
 
 You can use the `@contact` directive to add your team's contact information to a subgraph schema. This information is displayed in Studio, which helps *other* teams know who
 to contact for assistance with the subgraph. See [documentation](https://www.apollographql.com/docs/graphos/graphs/federated-graphs/#contact-info-for-subgraphs) for details.
@@ -351,6 +376,32 @@ While we tried to make migration process as seamless as possible, we had to make
 
 * `[Key]` is now applicable **only on classes** and you no longer can apply it on individual fields
 * `[ReferenceResolver]` is now applicable **only on public static methods within an entity**, it is no longer applicable on classes
+
+## Known Limitations
+
+#### Entity Resolver Auto-Map Only Scalar Values
+
+`[EntityResolver]`s can automatically map entity representation to the supported `@key`/`@requires` values. Scalars `@key` fields are automatically mapped and we can use `[Map]` attribute to auto map scalar values from complex selection sets.
+
+Currently we don't support auto-mapping of [List](https://github.com/apollographql/federation-hotchocolate/issues/19) and [Object](https://github.com/apollographql/federation-hotchocolate/issues/20) values.
+
+As a workaround, you need to manually parse the representation object in your implementation.
+
+```csharp
+[ReferenceResolver]
+public static Foo GetByFooBar(
+    [LocalState] ObjectValueNode data
+    Data repository)
+{
+    // TODO implement logic here by manually reading values from local state data
+}
+```
+
+#### Limited `@link` support
+
+Currently we only support importing elements from the referenced subgraphs.
+
+Namespacing and renaming elements is currently unsupported. See [issue](https://github.com/apollographql/federation-hotchocolate/issues/24) for details.
 
 ## Contact
 
