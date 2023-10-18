@@ -183,6 +183,9 @@
     <data name="ThrowHelper_Contact_Name_CannotBeEmpty" xml:space="preserve">
     <value>The contact attribute is used on `{0}` without specifying the name.</value>
   </data>
+  <data name="ThrowHelper_FederationVersion_Unknown" xml:space="preserve">
+    <value>Specified federation version `{0}` is not supported.</value>
+  </data>
   <data name="FieldDescriptorExtensions_Key_FieldSet_CannotBeNullOrEmpty" xml:space="preserve">
     <value>Value cannot be null or empty.</value>
   </data>

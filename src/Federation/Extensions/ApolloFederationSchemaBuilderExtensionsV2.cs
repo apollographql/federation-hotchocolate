@@ -69,18 +69,40 @@ public static class ApolloFederationSchemaBuilderExtensionsV2
         builder.AddType(new ServiceType(true));
 
         // directives
-        builder.AddType<ComposeDirectiveType>();
-        builder.AddType<ExtendsDirectiveType>();
-        builder.AddType<ExternalDirectiveType>();
-        builder.AddType<InaccessibleDirectiveType>();
-        builder.AddType<InterfaceObjectirectiveType>();
-        builder.AddType<KeyV2>();
-        builder.AddType<LinkDirectiveType>();
-        builder.AddType<OverrideDirectiveType>();
-        builder.AddType<ProvidesV2>();
-        builder.AddType<RequiresV2>();
-        builder.AddType<ShareableDirectiveType>();
-        builder.AddType<TagDirectiveType>();
+        switch (schema.FederationVersion)
+        {
+            case FederationVersion.FEDERATION_25: // same as 2.3
+            case FederationVersion.FEDERATION_24: // same as 2.3
+            case FederationVersion.FEDERATION_23:
+                {
+                    builder.AddType<InterfaceObjectirectiveType>();
+                    goto case FederationVersion.FEDERATION_22;
+                }
+            case FederationVersion.FEDERATION_22: // same as 2.1
+            case FederationVersion.FEDERATION_21:
+                {
+                    builder.AddType<ComposeDirectiveType>();
+                    goto case FederationVersion.FEDERATION_20;
+                }
+            case FederationVersion.FEDERATION_20:
+                {
+                    builder.AddType<ExtendsDirectiveType>();
+                    builder.AddType<ExternalDirectiveType>();
+                    builder.AddType<InaccessibleDirectiveType>();
+                    builder.AddType<KeyV2>();
+                    builder.AddType<LinkDirectiveType>();
+                    builder.AddType<OverrideDirectiveType>();
+                    builder.AddType<ProvidesV2>();
+                    builder.AddType<RequiresV2>();
+                    builder.AddType<ShareableDirectiveType>();
+                    builder.AddType<TagDirectiveType>();
+                    break;
+                }
+            default:
+                {
+                    break;
+                }
+        }
         builder.TryAddTypeInterceptor<FederationTypeInterceptor>();
         return builder;
     }

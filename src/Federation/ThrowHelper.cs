@@ -1,6 +1,7 @@
 using System.Reflection;
 using FieldSetTypeV1 = ApolloGraphQL.HotChocolate.Federation.One.FieldSetType;
 using FieldSetTypeV2 = ApolloGraphQL.HotChocolate.Federation.Two.FieldSetType;
+using FederationVersion = ApolloGraphQL.HotChocolate.Federation.Two.FederationVersion;
 using static ApolloGraphQL.HotChocolate.Federation.Properties.FederationResources;
 
 namespace ApolloGraphQL.HotChocolate.Federation;
@@ -190,5 +191,17 @@ internal static class ThrowHelper
                 .SetMessage(
                     ThrowHelper_Contact_Name_CannotBeEmpty,
                     type.FullName ?? type.Name)
+                .Build());
+
+    /// <summary>
+    /// Specified federation version is not supported.
+    /// </summary>
+    public static SchemaException FederationVersion_Unknown(
+        FederationVersion version) =>
+        new SchemaException(
+            SchemaErrorBuilder.New()
+                .SetMessage(
+                    ThrowHelper_FederationVersion_Unknown,
+                    version)
                 .Build());
 }

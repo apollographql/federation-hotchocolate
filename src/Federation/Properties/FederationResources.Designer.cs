@@ -231,6 +231,14 @@ namespace ApolloGraphQL.HotChocolate.Federation.Properties
             }
         }
 
+        internal static string ThrowHelper_FederationVersion_Unknown
+        {
+            get
+            {
+                return ResourceManager.GetString("ThrowHelper_FederationVersion_Unknown", resourceCulture);
+            }
+        }
+
         internal static string ExpressionHelper_GetScopedStateWithDefault_NoDefaultValue
         {
             get
