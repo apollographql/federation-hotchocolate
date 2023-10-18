@@ -110,6 +110,7 @@ Federation v2 directives (includes all of the v1 directives)
 
 * `ApolloTag` applicable on schema, see [`@tag` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#tag)
 * `ComposeDirective` applicable on schema, see [`@composeDirective` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#composedirective)
+* `Contact` applicable on schema, see [`@contact` usage](#providing-subgraph-contact-information)
 * `Inaccessible` applicable on all type definitions, see [`@inaccessible` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#inaccessible)
 * `InterfaceObject` applicable on objects, see [`@interfaceObject` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#interfaceobject)
 * `KeyInterface` applicable on interfaces, see [entity interface `@key` documentation](https://www.apollographql.com/docs/federation/federated-types/interfaces)
@@ -184,6 +185,7 @@ Federation v2 directives (includes all of the v1 directives)
 
 * `ApolloTag` applicable on all type definitions, see [`@tag` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#tag)
 * `ComposeDirective(name)` applicable on schema, see [`@composeDirective` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#composedirective)
+* `Contact(name, url?, description?)` applicable on schema, see [`@contact` usage](#providing-subgraph-contact-information)
 * `Inaccessible` applicable on all type definitions, see [`@inaccessible` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#inaccessible)
 * `InterfaceObject` applicable on objects, see [`@interfaceObject` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#interfaceobject)
 * `Key(fieldset, resolvable?)` applicable on objects, see [`@key` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#key)
@@ -292,6 +294,36 @@ public class Product
 
     public List<string> Reviews { get; set; }
 }
+```
+
+### Providing subgraph contact information
+
+You can use the `@contact` directive to add your team's contact information to a subgraph schema. This information is displayed in Studio, which helps *other* teams know who
+to contact for assistance with the subgraph. See [documentation](https://www.apollographql.com/docs/graphos/graphs/federated-graphs/#contact-info-for-subgraphs) for details.
+
+We can apply `[Contact]` attribute on a custom schema. You then need to include `@contact` directive definition and pass your custom schema to the `AddApolloFederationV2` extension.
+
+```csharp
+[Contact("MyTeamName", "https://myteam.slack.com/archives/teams-chat-room-url", "send urgent issues to [#oncall](https://yourteam.slack.com/archives/oncall)")]
+public class CustomSchema : FederatedSchema
+{
+}
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services
+    .AddGraphQLServer()
+    .AddType<ContactDirectiveType>();
+    .AddApolloFederationV2(new CustomSchema())
+    // register your types and services
+    ;
+
+var app = builder.Build();
+app.MapGraphQL();
+app.Run();
+```
+
+```csharp
 ```
 
 ### Migration Guide

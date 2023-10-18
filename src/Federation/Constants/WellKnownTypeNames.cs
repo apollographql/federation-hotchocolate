@@ -2,6 +2,7 @@ namespace ApolloGraphQL.HotChocolate.Federation.Constants;
 
 internal static class WellKnownTypeNames
 {
+    public const string ContactDirective = "contact";
     public const string ComposeDirective = "composeDirective";
     public const string Extends = "extends";
     public const string External = "external";

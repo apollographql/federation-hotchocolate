@@ -4,6 +4,7 @@ using HotChocolate.Language;
 using System.Collections.Generic;
 using System.Linq;
 
+using ContactDirective = ApolloGraphQL.HotChocolate.Federation.Two.Contact;
 using LinkDirective = ApolloGraphQL.HotChocolate.Federation.Two.Link;
 
 using static ApolloGraphQL.HotChocolate.Federation.Constants.WellKnownContextData;
@@ -16,6 +17,54 @@ namespace HotChocolate.Types;
 /// </summary>
 public static partial class ApolloFederationDescriptorExtensions
 {
+    /// <summary>
+    /// Applies @contact directive which can be used to prpvode team contact information to your subgraph schema.
+    /// This information is automatically parsed and displayed by Apollo Studio. See 
+    /// <see href="https://www.apollographql.com/docs/graphos/graphs/federated-graphs/#contact-info-for-subgraphs">Subgraph Contact Information</see> 
+    /// for additional details.
+    /// 
+    /// <code>
+    /// schema @contact(description : "send urgent issues to [#oncall](https://yourteam.slack.com/archives/oncall).", name : "My Team Name", url : "https://myteam.slack.com/archives/teams-chat-room-url"){
+    ///   query: Query
+    /// }
+    /// </code>
+    /// </example>
+    /// </summary>
+    /// <param name="descriptor">
+    /// The object type descriptor on which this directive shall be annotated.
+    /// </param>
+    /// <param name="name">
+    /// Contact title of the subgraph owner
+    /// </param>
+    /// <param name="url">
+    /// URL where the subgraph's owner can be reached
+    /// </param>
+    /// <param name="description">
+    /// Other relevant contact notes; supports markdown links
+    /// </param>
+    /// <returns>
+    /// Returns the object type descriptor.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="descriptor"/> is <c>null</c>.
+    /// </exception>
+    /// <exception cref="ArgumentNullException">
+    /// <paramref name="name"/> is <c>null</c>.
+    /// </exception>
+    public static ISchemaTypeDescriptor Contact(this ISchemaTypeDescriptor descriptor, string name, string? url, string? description)
+    {
+        if (descriptor is null)
+        {
+            throw new ArgumentNullException(nameof(descriptor));
+        }
+        if (name is null)
+        {
+            throw new ArgumentNullException(nameof(name));
+        }
+
+        return descriptor.Directive(new ContactDirective(name, url, description));
+    }
+
     /// <summary>
     /// Applies @composeDirective which is used to specify custom directives that should be exposed in the
     /// Supergraph schema. If not specified, by default, Supergraph schema excludes all custom directives.

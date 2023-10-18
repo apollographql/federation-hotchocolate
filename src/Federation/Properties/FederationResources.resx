@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Contact_Description" xml:space="preserve">
+    <value>Provides contact information of the owner responsible for this subgraph schema.</value>
+  </data>
   <data name="ComposeDirective_Description" xml:space="preserve">
     <value>Marks underlying custom directive to be included in the Supergraph schema.</value>
   </data>
@@ -176,6 +179,9 @@
   </data>
   <data name="ThrowHelper_Link_Url_CannotBeEmpty" xml:space="preserve">
     <value>The link attribute is used on `{0}` without specifying the url.</value>
+  </data>
+    <data name="ThrowHelper_Contact_Name_CannotBeEmpty" xml:space="preserve">
+    <value>The contact attribute is used on `{0}` without specifying the name.</value>
   </data>
   <data name="FieldDescriptorExtensions_Key_FieldSet_CannotBeNullOrEmpty" xml:space="preserve">
     <value>Value cannot be null or empty.</value>

@@ -39,10 +39,19 @@ namespace ApolloGraphQL.HotChocolate.Federation;
 public sealed class ApolloTagAttribute : Attribute
 {
 
+    /// <summary>
+    /// Initializes new instance of <see cref="ApolloTagAttribute"/>
+    /// </summary>
+    /// <param name="name">
+    /// Tag metadata value
+    /// </param>
     public ApolloTagAttribute(string name)
     {
         Name = name;
     }
 
+    /// <summary>
+    /// Retrieves tag metadata value
+    /// </summary>
     public string Name { get; }
 }
