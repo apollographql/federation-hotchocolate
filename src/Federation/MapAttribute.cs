@@ -2,6 +2,8 @@ namespace ApolloGraphQL.HotChocolate.Federation;
 
 /// <summary>
 /// Maps an argument to a representation value.
+/// 
+/// WARNING: Only scalar leaf values are supported. Path cannot point to an object nor a list field.
 /// </summary>
 [AttributeUsage(AttributeTargets.Parameter)]
 public class MapAttribute : Attribute

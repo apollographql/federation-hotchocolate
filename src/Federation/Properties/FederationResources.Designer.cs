@@ -54,6 +54,15 @@ namespace ApolloGraphQL.HotChocolate.Federation.Properties
             }
         }
 
+        internal static string Contact_Description
+        {
+            get
+            {
+                return ResourceManager.GetString("Contact_Description", resourceCulture);
+            }
+        }
+
+
         internal static string ComposeDirective_Description
         {
             get
@@ -211,6 +220,14 @@ namespace ApolloGraphQL.HotChocolate.Federation.Properties
             get
             {
                 return ResourceManager.GetString("ThrowHelper_Link_Url_CannotBeEmpty", resourceCulture);
+            }
+        }
+
+        internal static string ThrowHelper_Contact_Name_CannotBeEmpty
+        {
+            get
+            {
+                return ResourceManager.GetString("ThrowHelper_Contact_Name_CannotBeEmpty", resourceCulture);
             }
         }
 

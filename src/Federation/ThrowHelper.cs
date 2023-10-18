@@ -169,7 +169,7 @@ internal static class ThrowHelper
                 .Build());
 
     /// <summary>
-    /// The link attribute is used on the type level without specifying the url.
+    /// The link attribute is used on the schema without specifying the url.
     /// </summary>
     public static SchemaException Link_Url_CannotBeEmpty(
         Type type) =>
@@ -177,6 +177,18 @@ internal static class ThrowHelper
             SchemaErrorBuilder.New()
                 .SetMessage(
                     ThrowHelper_Link_Url_CannotBeEmpty,
+                    type.FullName ?? type.Name)
+                .Build());
+
+    /// <summary>
+    /// The contact attribute is used on the schema without specifying the name.
+    /// </summary>
+    public static SchemaException Contact_Name_CannotBeEmpty(
+        Type type) =>
+        new SchemaException(
+            SchemaErrorBuilder.New()
+                .SetMessage(
+                    ThrowHelper_Contact_Name_CannotBeEmpty,
                     type.FullName ?? type.Name)
                 .Build());
 }
