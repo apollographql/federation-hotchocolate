@@ -30,7 +30,7 @@ internal sealed class FederationUtils
     private static List<string?> ConcatFederationImports(List<string?> baseImports, List<string?> additionalImports)
     {
         var imports = new List<string?>(baseImports);
-        imports.Concat(additionalImports);
+        imports.AddRange(additionalImports);
         return imports;
     }
 
