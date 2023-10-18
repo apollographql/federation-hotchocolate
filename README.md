@@ -249,9 +249,9 @@ app.Run();
 
 #### `@composedDirective` usage
 
-By default, Supergraph schema excludes all custom directives. The `@composeDirective`` is used to specify custom directives that should be preserved in the Supergraph schema.
+By default, Supergraph schema excludes all custom directives. The `@composeDirective` is used to specify custom directives that should be preserved in the Supergraph schema.
 
-`ApolloGraphQL.HotChocolate.Federation` provides common `FederatedSchema` class that automatically includes Apollo Federation v2 `@link` definition. When applying any custom
+`ApolloGraphQL.HotChocolate.Federation` provides common `FederatedSchema` class that automatically applies Apollo Federation v2 `@link` definition. When applying any custom
 schema directives, you should extend this class and add required attributes/directives.
 
 When applying `@composedDirective` you also need to `@link` it your specification. Your custom schema should then be passed to the `AddApolloFederationV2` extension.
