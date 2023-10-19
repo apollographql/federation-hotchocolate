@@ -225,7 +225,17 @@ dotnet run -- schema export --output schema.graphql
 #### Specifying Federation Version
 
 By default, `ApolloGraphQL.HotChocolate.Federation` will generate schema using latest supported Federation version. If you would like to opt-in to use older versions you can
-so by specifying the version on your custom schema object and passing it to the `AddApolloFederationV2` extension.
+so by specifying the version when configuring `AddApolloFederationV2` extension.
+
+```csharp
+builder.Services
+    .AddGraphQLServer()
+    .AddApolloFederationV2(FederationVersion.FEDERATION_23)
+    // register your types and services
+    ;
+```
+
+Alternatively you can also provide custom `FederatedSchema` that targets specific Federation version
 
 ```csharp
 public class CustomSchema : FederatedSchema
@@ -234,17 +244,11 @@ public class CustomSchema : FederatedSchema
     }
 }
 
-var builder = WebApplication.CreateBuilder(args);
-
 builder.Services
     .AddGraphQLServer()
     .AddApolloFederationV2(new CustomSchema())
     // register your types and services
     ;
-
-var app = builder.Build();
-app.MapGraphQL();
-app.Run();
 ```
 
 #### `@composedDirective` usage
