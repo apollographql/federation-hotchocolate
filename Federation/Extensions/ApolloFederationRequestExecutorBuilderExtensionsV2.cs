@@ -37,6 +37,33 @@ public static class ApolloFederationRequestExecutorBuilderExtensionsV2
     /// <param name="builder">
     /// The <see cref="IRequestExecutorBuilder"/>.
     /// </param>
+    /// <param name="version">
+    /// Target Federation version
+    /// </param
+    /// <returns>
+    /// Returns the <see cref="IRequestExecutorBuilder"/>.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">
+    /// The <paramref name="builder"/> is <c>null</c>.
+    /// </exception>
+    public static IRequestExecutorBuilder AddApolloFederationV2(
+        this IRequestExecutorBuilder builder,
+        FederationVersion version)
+    {
+        if (builder is null)
+        {
+            throw new ArgumentNullException(nameof(builder));
+        }
+
+        return builder.ConfigureSchema(s => ApolloFederationSchemaBuilderExtensionsV2.AddApolloFederationV2(s, version));
+    }
+
+    /// <summary>
+    /// Adds support for Apollo Federation V2 to the schema.
+    /// </summary>
+    /// <param name="builder">
+    /// The <see cref="IRequestExecutorBuilder"/>.
+    /// </param>
     /// <param name="schema">
     /// Federated schema object
     /// </param

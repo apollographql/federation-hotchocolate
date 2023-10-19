@@ -35,6 +35,26 @@ public static class ApolloFederationSchemaBuilderExtensionsV2
     /// <param name="builder">
     /// The <see cref="ISchemaBuilder"/>.
     /// </param>
+    /// <returns>
+    /// Returns the <see cref="ISchemaBuilder"/>.
+    /// </returns>
+    /// <param name="version">
+    /// Target Federation version
+    /// </param>
+    /// <exception cref="ArgumentNullException">
+    /// The <paramref name="builder"/> is <c>null</c>.
+    /// </exception>
+    public static ISchemaBuilder AddApolloFederationV2(this ISchemaBuilder builder, FederationVersion version)
+    {
+        return AddApolloFederationV2(builder, new FederatedSchema(version));
+    }
+
+    /// <summary>
+    /// Adds support for Apollo Federation to the schema.
+    /// </summary>
+    /// <param name="builder">
+    /// The <see cref="ISchemaBuilder"/>.
+    /// </param>
     /// <param name="schema">
     /// Federated schema object.
     /// </param>
