@@ -34,6 +34,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>FederationResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="$(MSBuildThisFileDirectory)..\..\README.md" Pack="true" PackagePath="\"/>
+    <None Include="$(MSBuildThisFileDirectory)..\README.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 </Project>
