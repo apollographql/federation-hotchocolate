@@ -22,11 +22,11 @@ jobs:
       - name: Build
         run: dotnet build --no-restore
       - name: Generate schema file
-        run: dotnet run --project compatibility/Products.csproj schema export --output products.graphql 
+        run: dotnet run --project Compatibility/Products.csproj schema export --output products.graphql 
       - name: Compatibility Test
         uses: apollographql/federation-subgraph-compatibility@v2
         with:
-          compose: 'compatibility/docker-compose.yaml'
-          schema: 'compatibility/products.graphql'
+          compose: 'Compatibility/docker-compose.yaml'
+          schema: 'Compatibility/products.graphql'
           debug: true
           token: ${{ secrets.token }}
