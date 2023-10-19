@@ -24,6 +24,6 @@ jobs:
           echo "New version: ${NEW_VERSION}"
           dotnet pack -p:Version=${NEW_VERSION} -p:Configuration=Release Federation/ApolloGraphQL.HotChocolate.Federation.csproj
       - name: Publish package
-        run: dotnet nuget push src/Federation/bin/Release/*.nupkg -k $NUGET_AUTH_TOKEN -s https://api.nuget.org/v3/index.json
+        run: dotnet nuget push Federation/bin/Release/*.nupkg -k $NUGET_AUTH_TOKEN -s https://api.nuget.org/v3/index.json
         env:
           NUGET_AUTH_TOKEN: ${{ secrets.NUGET_TOKEN }}
