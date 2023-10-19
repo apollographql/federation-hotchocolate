@@ -24,7 +24,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Moq" Version="4.18.1" />
+    <PackageReference Include="Moq" Version="4.20.69" />
     <PackageReference Include="Snapshooter.Xunit" Version="0.5.4" />
     <PackageReference Include="ChilliCream.Testing.Utilities" Version="0.2.0" />
   </ItemGroup>
