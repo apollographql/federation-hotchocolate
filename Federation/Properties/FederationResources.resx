@@ -117,7 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Contact_Description" xml:space="preserve">
+  <data name="AuthenticatedDirective_Description" xml:space="preserve">
+    <value>Indicates to composition that the target element is accessible only to the authenticated supergraph users.</value>
+  </data>
+  <data name="ContactDirective_Description" xml:space="preserve">
     <value>Provides contact information of the owner responsible for this subgraph schema.</value>
   </data>
   <data name="ComposeDirective_Description" xml:space="preserve">
@@ -149,6 +152,12 @@
   </data>
   <data name="RequiresDirective_Description" xml:space="preserve">
     <value>Used to annotate the required input fieldset from a base type for a resolver.</value>
+  </data>
+  <data name="RequiresScopesDirective_Description" xml:space="preserve">
+    <value>Indicates to composition that the target element is accessible only to the authenticated supergraph users with the appropriate JWT scopes.</value>
+  </data>
+  <data name="ScopeType_Description" xml:space="preserve">
+    <value>Scalar representing a JWT scope</value>
   </data>
   <data name="ShareableDirective_Description" xml:space="preserve">
     <value>Indicates that given object and/or field can be resolved by multiple subgraphs.</value>
