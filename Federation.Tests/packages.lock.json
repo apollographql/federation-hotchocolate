@@ -62,13 +62,13 @@
       },
       "Snapshooter.Xunit": {
         "type": "Direct",
-        "requested": "[0.5.4, )",
-        "resolved": "0.5.4",
-        "contentHash": "gE9VlseOySUSwwAKCXastwxJ7qYpVHwIEi+QbzRVmdOvV6Ry/vE1WqyuolRHwhjx2QZY8+YuO4L/cKJGrt2H6w==",
+        "requested": "[0.13.0, )",
+        "resolved": "0.13.0",
+        "contentHash": "TmlyJuJTfrO5SYO0ANfXhJEdDEPzQT4vcgPtqNH6Vn3en899xUOKH920+AtUiN+Syj6zfkAL7pVHiwxrShwXtQ==",
         "dependencies": {
-          "Snapshooter": "0.5.4",
-          "xunit.assert": "2.4.1",
-          "xunit.core": "2.4.1"
+          "Snapshooter": "0.13.0",
+          "xunit.assert": "2.4.2",
+          "xunit.core": "2.4.2"
         }
       },
       "xunit": {
@@ -596,10 +596,10 @@
       },
       "Snapshooter": {
         "type": "Transitive",
-        "resolved": "0.5.4",
-        "contentHash": "znayjnxtFjFcRFdS4W8KyeODS/FOVkIzlAD8hRfrrf3fd3hJ9k+XMNRYCARtzrN3ueIpF4USQbAhWrO73Z9z6w==",
+        "resolved": "0.13.0",
+        "contentHash": "8r9eYsiZngbnGRVN72YnZqtdlybsqK8QIQMYrhSFuG9pR8pJkgk3k7Ep9VvE0+G/3bGk2hnm8OjvfDmFXd6V3w==",
         "dependencies": {
-          "Newtonsoft.Json": "12.0.1"
+          "Newtonsoft.Json": "13.0.1"
         }
       },
       "System.AppContext": {
