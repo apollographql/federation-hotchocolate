@@ -54,11 +54,19 @@ namespace ApolloGraphQL.HotChocolate.Federation.Properties
             }
         }
 
-        internal static string Contact_Description
+        internal static string AuthenticatedDirective_Description
         {
             get
             {
-                return ResourceManager.GetString("Contact_Description", resourceCulture);
+                return ResourceManager.GetString("AuthenticatedDirective_Description", resourceCulture);
+            }
+        }
+
+        internal static string ContactDirective_Description
+        {
+            get
+            {
+                return ResourceManager.GetString("ContactDirective_Description", resourceCulture);
             }
         }
 
@@ -140,6 +148,22 @@ namespace ApolloGraphQL.HotChocolate.Federation.Properties
             get
             {
                 return ResourceManager.GetString("RequiresDirective_Description", resourceCulture);
+            }
+        }
+
+        internal static string RequiresScopesDirective_Description
+        {
+            get
+            {
+                return ResourceManager.GetString("RequiresScopesDirective_Description", resourceCulture);
+            }
+        }
+
+        internal static string ScopeType_Description
+        {
+            get
+            {
+                return ResourceManager.GetString("ScopeType_Description", resourceCulture);
             }
         }
 

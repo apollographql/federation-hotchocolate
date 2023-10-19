@@ -18,13 +18,13 @@ public static partial class ApolloFederationDescriptorExtensions
     /// </example>
     /// </summary>
     /// <param name="descriptor">
-    /// The object field descriptor on which this directive shall be annotated.
+    /// The type descriptor on which this directive shall be annotated.
     /// </param>
     /// <param name="name">
     /// Tag value to be applied on the target
     /// </param>
     /// <returns>
-    /// Returns the object field descriptor.
+    /// Returns the type descriptor.
     /// </returns>
     /// <exception cref="ArgumentNullException">
     /// The <paramref name="descriptor"/> is <c>null</c>.

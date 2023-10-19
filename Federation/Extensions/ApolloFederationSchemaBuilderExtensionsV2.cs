@@ -91,7 +91,14 @@ public static class ApolloFederationSchemaBuilderExtensionsV2
         // directives
         switch (schema.FederationVersion)
         {
-            case FederationVersion.FEDERATION_25: // same as 2.3
+            case FederationVersion.FEDERATION_25:
+                {
+                    builder.AddType<ScopeType>();
+                    builder.AddType<AuthenticatedDirectiveType>();
+                    builder.AddType<RequiresScopesDirectiveType>();
+                    builder.BindRuntimeType<Scope, ScopeType>();
+                    goto case FederationVersion.FEDERATION_24;
+                }
             case FederationVersion.FEDERATION_24: // same as 2.3
             case FederationVersion.FEDERATION_23:
                 {

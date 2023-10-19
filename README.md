@@ -109,12 +109,14 @@ Federation v1 directives
 Federation v2 directives (includes all of the v1 directives)
 
 * `ApolloTag` applicable on schema, see [`@tag` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#tag)
-* `ComposeDirective` applicable on schema, see [`@composeDirective` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#composedirective)
+* `ApolloAuthenticated` **(since v2.5)** applicable on enum, field, interface and object, [`@authenticated` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives/#authenticated)
+* `ComposeDirective` **(since v2.1)** applicable on schema, see [`@composeDirective` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#composedirective)
 * `Contact` applicable on schema, see [`@contact` usage](#providing-subgraph-contact-information)
 * `Inaccessible` applicable on all type definitions, see [`@inaccessible` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#inaccessible)
-* `InterfaceObject` applicable on objects, see [`@interfaceObject` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#interfaceobject)
+* `InterfaceObject` **(since v2.3)** applicable on objects, see [`@interfaceObject` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#interfaceobject)
 * `KeyInterface` applicable on interfaces, see [entity interface `@key` documentation](https://www.apollographql.com/docs/federation/federated-types/interfaces)
 * `Link` applicable on schema, see [`@link` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#the-link-directive)
+* `RequiresScopes` **(since v2.5)** applicable on enum, field, interface and object, [`@requiresScopes` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives/#requiresscopes)
 * `Shareable` applicable on schema, see [`@shareable` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#shareable)
 
 Entity resolution
@@ -184,12 +186,14 @@ Federation v1 directives
 Federation v2 directives (includes all of the v1 directives)
 
 * `ApolloTag` applicable on all type definitions, see [`@tag` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#tag)
-* `ComposeDirective(name)` applicable on schema, see [`@composeDirective` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#composedirective)
+* `ApolloAuthenticated` **(since v2.5)** applicable on enum, field, interface and object, [`@authenticated` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives/#authenticated)
+* `ComposeDirective(name)` **(since v2.1)** applicable on schema, see [`@composeDirective` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#composedirective)
 * `Contact(name, url?, description?)` applicable on schema, see [`@contact` usage](#providing-subgraph-contact-information)
 * `Inaccessible` applicable on all type definitions, see [`@inaccessible` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#inaccessible)
-* `InterfaceObject` applicable on objects, see [`@interfaceObject` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#interfaceobject)
+* `InterfaceObject` **(since v2.3)** applicable on objects, see [`@interfaceObject` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#interfaceobject)
 * `Key(fieldset, resolvable?)` applicable on objects, see [`@key` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#key)
 * `Link(url, [import]?)` applicable on schema, see [`@link` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#the-link-directive)
+* `RequiresScopes(scopes)` **(since v2.5)** applicable on enum, field, interface and object, [`@requiresScopes` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives/#requiresscopes)
 * `Shareable` applicable on fields and objects, see [`@shareable` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#shareable)
 
 Entity resolution
@@ -322,6 +326,29 @@ public class Product
     public string Id { get; set; }
 
     public List<string> Reviews { get; set; }
+}
+```
+
+#### Access control through @requiresScopes
+
+The `@requiresScopes` directive is used to indicate that the target element is accessible only to the authenticated supergraph users with the appropriate JWT scopes. 
+Refer to the [Apollo Router article](https://www.apollographql.com/docs/router/configuration/authorization#requiresscopes) for additional details.
+
+```csharp
+public class Query
+{
+    [RequiresScopes(scopes: new string[] { "scope1, scope2", "scope3" })]
+    [RequiresScopes(scopes: new string[] { "scope4" })]
+    public Product? GetProduct([ID] string id, Data repository)
+        => repository.Products.FirstOrDefault(t => t.Id.Equals(id));
+}
+```
+
+This will generate the following schema
+
+```graphql
+type Query {
+    product(id: ID!): Product @requiresScopes(scopes: [ [ "scope1, scope2", "scope3" ], [ "scope4" ] ])
 }
 ```
 

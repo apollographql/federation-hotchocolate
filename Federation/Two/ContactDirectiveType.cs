@@ -33,6 +33,6 @@ public sealed class ContactDirectiveType : DirectiveType<Contact>
     protected override void Configure(IDirectiveTypeDescriptor<Contact> descriptor)
         => descriptor
             .Name(WellKnownTypeNames.ContactDirective)
-            .Description(FederationResources.Contact_Description)
+            .Description(FederationResources.ContactDirective_Description)
             .Location(DirectiveLocation.Schema);
 }
