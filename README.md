@@ -19,7 +19,7 @@ relationships to the other subgraphs by using Federated directives. See [Apollo 
 ```xml
   <ItemGroup>
     <!-- make sure to also include HotChocolate package -->
-    <PackageReference Include="HotChocolate.AspNetCore" Version="13.5.1" />
+    <PackageReference Include="HotChocolate.AspNetCore" Version="13.6.0" />
     <!-- federation package -->
     <PackageReference Include="ApolloGraphQL.HotChocolate.Federation" Version="$LatestVersion" />
   </ItemGroup>
@@ -389,7 +389,7 @@ Migrating from `HotChocolate.Federation` to `ApolloGraphQL.HotChocolate.Federati
 ```diff
   <ItemGroup>
     <!-- make sure to also include HotChocolate package -->
-    <PackageReference Include="HotChocolate.AspNetCore" Version="13.5.1" />
+    <PackageReference Include="HotChocolate.AspNetCore" Version="13.6.0" />
     <!-- federation package -->
 -    <PackageReference Include="HotChocolate.ApolloFederation" Version="$LatestVersion" />
 +    <PackageReference Include="ApolloGraphQL.HotChocolate.Federation" Version="$LatestVersion" />

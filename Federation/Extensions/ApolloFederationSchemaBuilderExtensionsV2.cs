@@ -77,6 +77,16 @@ public static class ApolloFederationSchemaBuilderExtensionsV2
         {
             throw new ArgumentNullException(nameof(schema));
         }
+        // disable hot chocolate tag directive
+        // specify default Query type name if not specified
+        builder.ModifyOptions(opt =>
+        {
+            opt.EnableTag = false;
+            if (opt.QueryTypeName is null)
+            {
+                opt.QueryTypeName = "Query";
+            }
+        });
 
         builder.SetSchema(schema);
 

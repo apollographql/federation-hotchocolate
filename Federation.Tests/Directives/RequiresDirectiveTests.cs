@@ -36,7 +36,7 @@ public class RequiresDirectiveTests : FederationTypesTestBase
         // arrange
         Snapshot.FullName();
 
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddDocumentFromString(
                 @"type Review @key(fields: ""id"") {
                         id: Int!
@@ -106,7 +106,7 @@ public class RequiresDirectiveTests : FederationTypesTestBase
                 o.Field("someField").Argument("a", a => a.Type<IntType>()).Type(reviewType);
             });
 
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddQueryType(queryType)
             .AddType<FieldSetType>()
             .AddDirectiveType<KeyDirectiveType>()
@@ -136,7 +136,7 @@ public class RequiresDirectiveTests : FederationTypesTestBase
         // arrange
         Snapshot.FullName();
 
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddApolloFederation()
             .AddQueryType<Query>()
             .Create();

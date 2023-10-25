@@ -40,7 +40,7 @@ public class KeyDirectiveTests : FederationTypesTestBase
         // arrange
         Snapshot.FullName();
 
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddQueryType(o => o
                 .Name("Query")
                 .Field("someField")
@@ -81,7 +81,7 @@ public class KeyDirectiveTests : FederationTypesTestBase
         // arrange
         Snapshot.FullName();
 
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddDocumentFromString(
                 @"
                     type TestType @key(fields: ""id"") {
@@ -122,7 +122,8 @@ public class KeyDirectiveTests : FederationTypesTestBase
         // arrange
         Snapshot.FullName();
 
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
+            .ModifyOptions(opts => opts.QueryTypeName = "QueryOfTestTypeClassDirective")
             .AddApolloFederation()
             .AddQueryType<Query<TestTypeClassDirective>>()
             .Create();

@@ -10,13 +10,13 @@ using static ApolloGraphQL.HotChocolate.Federation.TestHelper;
 
 namespace ApolloGraphQL.HotChocolate.Federation;
 
-public class EntitiesResolverTests
+public class EntitiesResolverTests : FederationTypesTestBase
 {
     [Fact]
     public async void TestResolveViaForeignServiceType()
     {
         // arrange
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddApolloFederation()
             .AddQueryType<Query>()
             .Create();
@@ -45,7 +45,7 @@ public class EntitiesResolverTests
     public async void TestResolveViaForeignServiceType_MixedTypes()
     {
         // arrange
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddApolloFederation()
             .AddQueryType<Query>()
             .Create();
@@ -74,7 +74,7 @@ public class EntitiesResolverTests
     public async void TestResolveViaEntityResolver_WithDataLoader()
     {
         // arrange
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddApolloFederation()
             .AddQueryType<Query>()
             .Create();
@@ -109,7 +109,7 @@ public class EntitiesResolverTests
     [Fact]
     public async void TestResolveViaEntityResolver_NoTypeFound()
     {
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddApolloFederation()
             .AddQueryType<Query>()
             .Create();
@@ -130,7 +130,7 @@ public class EntitiesResolverTests
     [Fact]
     public async void TestResolveViaEntityResolver_NoResolverFound()
     {
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddApolloFederation()
             .AddQueryType<Query>()
             .Create();

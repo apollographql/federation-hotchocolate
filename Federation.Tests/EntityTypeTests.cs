@@ -4,13 +4,13 @@ using static ApolloGraphQL.HotChocolate.Federation.Properties.FederationResource
 
 namespace ApolloGraphQL.HotChocolate.Federation;
 
-public class EntityTypeTests
+public class EntityTypeTests : FederationTypesTestBase
 {
     [Fact]
     public void TestEntityTypeSchemaFirstSingleKey()
     {
         // arrange
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddApolloFederation()
             .AddDocumentFromString(
                 @"
@@ -46,7 +46,7 @@ public class EntityTypeTests
     public void TestEntityTypeSchemaFirstMultiKey()
     {
         // arrange
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddApolloFederation()
             .AddDocumentFromString(
                 @"
@@ -74,7 +74,7 @@ public class EntityTypeTests
     public void TestEntityTypeSchemaFirstNestedKey()
     {
         // arrange
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddApolloFederation()
             .AddDocumentFromString(
                 @"
@@ -107,7 +107,7 @@ public class EntityTypeTests
         void CreateSchema()
         {
             // arrange
-            SchemaBuilder.New()
+            CreateSchemaBuilder()
                 .AddApolloFederation()
                 .AddQueryType<Query<Address>>()
                 .Create();
@@ -121,7 +121,7 @@ public class EntityTypeTests
     public void TestEntityTypeCodeFirstClassKeyAttributeSingleKey()
     {
         // arrange
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddApolloFederation()
             .AddQueryType<Query<Review>>()
             .Create();
@@ -137,7 +137,7 @@ public class EntityTypeTests
     public void TestEntityTypeCodeFirstClassKeyAttributeMultiKey()
     {
         // arrange
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddApolloFederation()
             .AddQueryType<Query<UserWithClassAttribute>>()
             .Create();
@@ -156,7 +156,7 @@ public class EntityTypeTests
     public void TestEntityTypeCodeFirstClassKeyAttributeNestedKey()
     {
         // arrange
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddApolloFederation()
             .AddQueryType<Query<UserWithNestedKeyClassAttribute>>()
             .Create();
