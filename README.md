@@ -379,7 +379,30 @@ app.MapGraphQL();
 app.Run();
 ```
 
+#### Custom Query types
+
+`ApolloGraphQL.HotChocolate.Federation` automatically defaults to use `Query` type name. When using custom root `Query` operation types, you have to explicitly configure schema
+with those custom values.
+
 ```csharp
+public class CustomQuery
+{
+    public Foo? GetFoo([ID] string id, Data repository)
+        => repository.Foos.FirstOrDefault(t => t.Id.Equals(id));
+}
+
+var builder = WebApplication.CreateBuilder(args);
+builder.Services
+    .AddGraphQLServer()
+    .ModifyOptions(opts => opts.QueryTypeName = "CustomQuery")
+    .AddApolloFederationV2()
+    .AddQueryType<CustomQuery>()
+    // register your other types and services
+    ;
+
+var app = builder.Build();
+app.MapGraphQL();
+app.Run();
 ```
 
 ### Migration Guide
