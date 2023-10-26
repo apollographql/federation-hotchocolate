@@ -2,18 +2,17 @@ using System.Threading.Tasks;
 using ApolloGraphQL.HotChocolate.Federation.Constants;
 using HotChocolate;
 using Snapshooter.Xunit;
-using Xunit;
 using static ApolloGraphQL.HotChocolate.Federation.TestHelper;
 
 namespace ApolloGraphQL.HotChocolate.Federation;
 
-public class ServiceTypeTests
+public class ServiceTypeTests : FederationTypesTestBase
 {
     [Fact]
     public async Task TestServiceTypeEmptyQueryTypeSchemaFirst()
     {
         // arrange
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddApolloFederation()
             .AddDocumentFromString(
                 @"type Query {
@@ -39,7 +38,7 @@ public class ServiceTypeTests
     public async Task TestServiceTypeTypeSchemaFirst()
     {
         // arrange
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddApolloFederation()
             .AddDocumentFromString(@"
                     type Query {
@@ -67,7 +66,8 @@ public class ServiceTypeTests
     public async Task TestServiceTypeEmptyQueryTypePureCodeFirst()
     {
         // arrange
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
+            .ModifyOptions(opts => opts.QueryTypeName = "EmptyQuery")
             .AddApolloFederation()
             .AddType<Address>()
             .AddQueryType<EmptyQuery>()
@@ -86,7 +86,7 @@ public class ServiceTypeTests
     public async Task TestServiceTypeTypePureCodeFirst()
     {
         // arrange
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddApolloFederation()
             .AddQueryType<Query>()
             .Create();

@@ -9,12 +9,12 @@ using static ApolloGraphQL.HotChocolate.Federation.TestHelper;
 
 namespace ApolloGraphQL.HotChocolate.Federation;
 
-public class ReferenceResolverAttributeTests
+public class ReferenceResolverAttributeTests : FederationTypesTestBase
 {
     [Fact]
     public async void SimpleKey()
     {
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddApolloFederation()
             .AddQueryType<QueryWithSingleKey>()
             .Create();
@@ -30,7 +30,7 @@ public class ReferenceResolverAttributeTests
     public async void MultiKey()
     {
         // arrange
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddApolloFederation()
             .AddQueryType<QueryWithMultiKey>()
             .Create();
@@ -49,7 +49,7 @@ public class ReferenceResolverAttributeTests
     [Fact]
     public async void CompositeKey()
     {
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddApolloFederation()
             .AddQueryType<QueryWithCompositeKey>()
             .Create();
@@ -67,7 +67,7 @@ public class ReferenceResolverAttributeTests
     [Fact]
     public async void CompositeObjectKey()
     {
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddApolloFederation()
             .AddQueryType<QueryWithObjectKey>()
             .Create();

@@ -35,7 +35,7 @@ public class ExternalDirectiveTests : FederationTypesTestBase
         // arrange
         Snapshot.FullName();
 
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddQueryType(o => o
                 .Name("Query")
                 .Field("field")
@@ -63,7 +63,7 @@ public class ExternalDirectiveTests : FederationTypesTestBase
         // arrange
         Snapshot.FullName();
 
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddDocumentFromString(
                 @"
                     type Query {
@@ -91,8 +91,7 @@ public class ExternalDirectiveTests : FederationTypesTestBase
     {
         // arrange
         Snapshot.FullName();
-
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddApolloFederation()
             .AddQueryType<Query>()
             .Create();

@@ -9,7 +9,7 @@ using Xunit;
 
 namespace ApolloGraphQL.HotChocolate.Federation.One;
 
-public class FederationSchemaPrinterTests
+public class FederationSchemaPrinterTests : FederationTypesTestBase
 {
     [Fact]
     public void TestFederationPrinter_ShouldThrow()
@@ -27,7 +27,7 @@ public class FederationSchemaPrinterTests
     public void TestFederationPrinterApolloDirectivesSchemaFirst()
     {
         // arrange
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddApolloFederation()
             .AddDocumentFromString(
                 @"type TestType @key(fields: ""id"") {
@@ -50,7 +50,7 @@ public class FederationSchemaPrinterTests
     public void TestFederationPrinterSchemaFirst()
     {
         // arrange
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddApolloFederation()
             .AddDocumentFromString(@"
                 type TestType @key(fields: ""id"") {
@@ -105,7 +105,7 @@ public class FederationSchemaPrinterTests
     public void TestFederationPrinterSchemaFirst_With_DateTime()
     {
         // arrange
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddApolloFederation()
             .AddDocumentFromString(@"
                 type TestType @key(fields: ""id"") {
@@ -163,7 +163,7 @@ public class FederationSchemaPrinterTests
     public void TestFederationPrinterApolloDirectivesPureCodeFirst()
     {
         // arrange
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddApolloFederation()
             .AddQueryType<QueryRoot<User>>()
             .Create();
@@ -177,7 +177,7 @@ public class FederationSchemaPrinterTests
     public void TestFederationPrinterTypeExtensionPureCodeFirst()
     {
         // arrange
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddApolloFederation()
             .AddQueryType<QueryRoot<Product>>()
             .Create();
@@ -191,7 +191,7 @@ public class FederationSchemaPrinterTests
     public void CustomDirective()
     {
         // arrange
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddQueryType<QueryWithDirective>()
             .AddDirectiveType(new CustomDirectiveType())
             .Create();

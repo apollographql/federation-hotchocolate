@@ -2,16 +2,30 @@ using System;
 using ApolloGraphQL.HotChocolate.Federation.One;
 using HotChocolate;
 using HotChocolate.Types;
-using Xunit;
 
 namespace ApolloGraphQL.HotChocolate.Federation;
 
 public class FederationTypesTestBase
 {
+    protected ISchemaBuilder CreateSchemaBuilder()
+    {
+        return SchemaBuilder.New()
+            .ModifyOptions(opt =>
+                {
+                    // tag is added by default
+                    opt.EnableTag = false;
+                    // this is set after we process our federated schema extensions
+                    if (opt.QueryTypeName is null)
+                    {
+                        opt.QueryTypeName = "Query";
+                    }
+                });
+    }
+
     protected ISchema CreateSchema(Action<ISchemaBuilder> configure)
     {
         var builder =
-            SchemaBuilder.New()
+            CreateSchemaBuilder()
                 .AddQueryType(
                     c =>
                     {

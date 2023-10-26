@@ -36,7 +36,7 @@ public class ProvidesDirectiveTests : FederationTypesTestBase
         // arrange
         Snapshot.FullName();
 
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddDocumentFromString(
                 @"
                     type Review @key(fields: ""id"") {
@@ -79,7 +79,7 @@ public class ProvidesDirectiveTests : FederationTypesTestBase
         // arrange
         Snapshot.FullName();
 
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddType(
                 new ObjectType(o =>
                 {
@@ -135,7 +135,7 @@ public class ProvidesDirectiveTests : FederationTypesTestBase
         // arrange
         Snapshot.FullName();
 
-        var schema = SchemaBuilder.New()
+        var schema = CreateSchemaBuilder()
             .AddApolloFederation()
             .AddQueryType<Query>()
             .Create();

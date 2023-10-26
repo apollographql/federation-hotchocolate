@@ -19,7 +19,7 @@ relationships to the other subgraphs by using Federated directives. See [Apollo 
 ```xml
   <ItemGroup>
     <!-- make sure to also include HotChocolate package -->
-    <PackageReference Include="HotChocolate.AspNetCore" Version="13.5.1" />
+    <PackageReference Include="HotChocolate.AspNetCore" Version="13.6.0" />
     <!-- federation package -->
     <PackageReference Include="ApolloGraphQL.HotChocolate.Federation" Version="$LatestVersion" />
   </ItemGroup>
@@ -379,7 +379,30 @@ app.MapGraphQL();
 app.Run();
 ```
 
+#### Custom Query types
+
+`ApolloGraphQL.HotChocolate.Federation` automatically defaults to use `Query` type name. When using custom root `Query` operation types, you have to explicitly configure schema
+with those custom values.
+
 ```csharp
+public class CustomQuery
+{
+    public Foo? GetFoo([ID] string id, Data repository)
+        => repository.Foos.FirstOrDefault(t => t.Id.Equals(id));
+}
+
+var builder = WebApplication.CreateBuilder(args);
+builder.Services
+    .AddGraphQLServer()
+    .ModifyOptions(opts => opts.QueryTypeName = "CustomQuery")
+    .AddApolloFederationV2()
+    .AddQueryType<CustomQuery>()
+    // register your other types and services
+    ;
+
+var app = builder.Build();
+app.MapGraphQL();
+app.Run();
 ```
 
 ### Migration Guide
@@ -389,7 +412,7 @@ Migrating from `HotChocolate.Federation` to `ApolloGraphQL.HotChocolate.Federati
 ```diff
   <ItemGroup>
     <!-- make sure to also include HotChocolate package -->
-    <PackageReference Include="HotChocolate.AspNetCore" Version="13.5.1" />
+    <PackageReference Include="HotChocolate.AspNetCore" Version="13.6.0" />
     <!-- federation package -->
 -    <PackageReference Include="HotChocolate.ApolloFederation" Version="$LatestVersion" />
 +    <PackageReference Include="ApolloGraphQL.HotChocolate.Federation" Version="$LatestVersion" />

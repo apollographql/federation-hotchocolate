@@ -41,6 +41,7 @@ internal sealed class FederationTypeInterceptor : TypeInterceptor
 
     private readonly List<ObjectType> _entityTypes = new();
     private IDescriptorContext _context = default!;
+
     public override void OnBeforeCreateSchema(IDescriptorContext context, ISchemaBuilder schemaBuilder)
     {
         base.OnBeforeCreateSchema(context, schemaBuilder);
@@ -149,8 +150,8 @@ internal sealed class FederationTypeInterceptor : TypeInterceptor
         ITypeCompletionContext completionContext,
         DefinitionBase? definition)
     {
-        if (completionContext.IsQueryType == true &&
-            definition is ObjectTypeDefinition objectTypeDefinition)
+        if (definition is ObjectTypeDefinition objectTypeDefinition &&
+                _context.Options.QueryTypeName == definition.Name)
         {
             var serviceFieldDescriptor = ObjectFieldDescriptor.New(
                 _context,

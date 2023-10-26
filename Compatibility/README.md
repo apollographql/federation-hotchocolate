@@ -13,13 +13,13 @@ npm install --dev @apollo/federation-subgraph-compatibility
 Generate test schema
 
 ```shell
-dotnet run --project compatibility/Products.csproj schema export --output products.graphql
+dotnet run --project Compatibility/Products.csproj schema export --output products.graphql
 ```
 
 Run compatibility tests
 
 ```shell
-npx fedtest docker --compose compatibility/docker-compose.yaml --schema compatibility/products.graphql
+npx fedtest docker --compose Compatibility/docker-compose.yaml --schema Compatibility/products.graphql
 ```
 
 See [compatibility script documentation](https://www.npmjs.com/package/@apollo/federation-subgraph-compatibility) for additional details.
