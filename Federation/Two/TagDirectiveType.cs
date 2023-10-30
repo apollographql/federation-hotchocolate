@@ -30,6 +30,7 @@ public sealed class TagDirectiveType : DirectiveType<TagValue>
 {
     protected override void Configure(IDirectiveTypeDescriptor<TagValue> descriptor)
         => descriptor
+            .BindArgumentsImplicitly()
             .Name(WellKnownTypeNames.Tag)
             .Description(FederationResources.TagDirective_Description)
             .Location(

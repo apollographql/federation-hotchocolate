@@ -3,6 +3,6 @@ services:
     # must be relative to the root of the project
     build:
       context: .
-      dockerfile: ./Compatibility/Dockerfile
+      dockerfile: ./Compatibility/CodeFirst/Dockerfile
     ports:
       - 4001:4001

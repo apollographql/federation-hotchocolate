@@ -1,6 +1,5 @@
 using System.Linq.Expressions;
 using System.Reflection;
-using HotChocolate.Resolvers;
 
 namespace ApolloGraphQL.HotChocolate.Federation.Descriptors;
 
