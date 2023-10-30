@@ -20,7 +20,7 @@ public class ProductResearchType : ObjectType<ProductResearch>
     protected override void Configure(IObjectTypeDescriptor<ProductResearch> descriptor)
     {
         descriptor.BindFieldsImplicitly();
-        descriptor.Field(pr => pr.Study).Type<CaseStudyType>();
+        descriptor.Field(pr => pr.Study).Type<NonNullType<CaseStudyType>>();
         descriptor.Key("study { caseNumber }")
             .ResolveReferenceWith(pr => GetProductReasearchByCaseNumber(default!, default!));
     }
