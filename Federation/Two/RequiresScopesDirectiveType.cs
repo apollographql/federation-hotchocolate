@@ -26,6 +26,7 @@ public sealed class RequiresScopesDirectiveType : DirectiveType<RequiresScopes>
 {
     protected override void Configure(IDirectiveTypeDescriptor<RequiresScopes> descriptor)
         => descriptor
+            .BindArgumentsImplicitly()
             .Name(WellKnownTypeNames.RequiresScopes)
             .Description(FederationResources.RequiresScopesDirective_Description)
             .Location(DirectiveLocation.Enum | DirectiveLocation.FieldDefinition | DirectiveLocation.Interface | DirectiveLocation.Object | DirectiveLocation.Scalar);

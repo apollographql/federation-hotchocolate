@@ -89,7 +89,17 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/compatibility/Products.csproj"
+                "${workspaceFolder}/Compatibility/Attributes/AttributeFirst.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build-codefirst-compatibility",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/Compatibility/CodeFirst/CodeFirst.csproj"
             ],
             "problemMatcher": "$msCompile"
         }

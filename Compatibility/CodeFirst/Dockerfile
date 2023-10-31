@@ -3,16 +3,16 @@ FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env
 WORKDIR /app
 
 # Copy csproj and restore as distinct layers
-COPY ./Compatibility/ ./Compatibility/
+COPY ./Compatibility/CodeFirst ./Compatibility/CodeFirst
 COPY ./Federation/ ./Federation/
-WORKDIR /app/Compatibility
+WORKDIR /app/Compatibility/CodeFirst
 RUN dotnet restore
 RUN dotnet publish -c Release -o out
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /app
-COPY --from=build-env /app/Compatibility/out .
+COPY --from=build-env /app/Compatibility/CodeFirst/out .
 EXPOSE 4001
 ENV ASPNETCORE_URLS=http://*:4001
-ENTRYPOINT ["dotnet", "Products.dll"]
+ENTRYPOINT ["dotnet", "CodeFirst.dll"]

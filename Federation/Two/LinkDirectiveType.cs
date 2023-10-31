@@ -36,6 +36,7 @@ public sealed class LinkDirectiveType : DirectiveType<Link>
 {
     protected override void Configure(IDirectiveTypeDescriptor<Link> descriptor)
         => descriptor
+            .BindArgumentsImplicitly()
             .Name(WellKnownTypeNames.Link)
             .Location(DirectiveLocationType.Schema)
             .Repeatable();
