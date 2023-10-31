@@ -51,7 +51,7 @@ public static partial class ApolloFederationDescriptorExtensions
     /// <exception cref="ArgumentNullException">
     /// <paramref name="name"/> is <c>null</c>.
     /// </exception>
-    public static ISchemaTypeDescriptor Contact(this ISchemaTypeDescriptor descriptor, string name, string? url, string? description)
+    public static ISchemaTypeDescriptor Contact(this ISchemaTypeDescriptor descriptor, string name, string? url = null, string? description = null)
     {
         if (descriptor is null)
         {
@@ -382,8 +382,11 @@ public static partial class ApolloFederationDescriptorExtensions
     /// <param name="descriptor">
     /// The object type descriptor on which this directive shall be annotated.
     /// </param>
-    /// <param name="name">
-    /// Name of the directive that should be preserved in the supergraph composition.
+    /// <param name="url">
+    /// Url of specification to be imported
+    /// </param>
+    /// <param name="import">
+    /// Optional list of imported elements.
     /// </param>
     /// <returns>
     /// Returns the object type descriptor.

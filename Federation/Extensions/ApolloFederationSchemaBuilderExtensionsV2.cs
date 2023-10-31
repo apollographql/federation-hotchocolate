@@ -21,32 +21,24 @@ public static class ApolloFederationSchemaBuilderExtensionsV2
     /// <returns>
     /// Returns the <see cref="ISchemaBuilder"/>.
     /// </returns>
-    /// <exception cref="ArgumentNullException">
-    /// The <paramref name="builder"/> is <c>null</c>.
-    /// </exception>
-    public static ISchemaBuilder AddApolloFederationV2(this ISchemaBuilder builder)
-    {
-        return AddApolloFederationV2(builder, new FederatedSchema());
-    }
-
-    /// <summary>
-    /// Adds support for Apollo Federation to the schema.
-    /// </summary>
-    /// <param name="builder">
-    /// The <see cref="ISchemaBuilder"/>.
-    /// </param>
-    /// <returns>
-    /// Returns the <see cref="ISchemaBuilder"/>.
-    /// </returns>
     /// <param name="version">
     /// Target Federation version
     /// </param>
     /// <exception cref="ArgumentNullException">
     /// The <paramref name="builder"/> is <c>null</c>.
     /// </exception>
-    public static ISchemaBuilder AddApolloFederationV2(this ISchemaBuilder builder, FederationVersion version)
+    public static ISchemaBuilder AddApolloFederationV2(this ISchemaBuilder builder, FederationVersion version = FederationVersion.FEDERATION_25)
     {
-        return AddApolloFederationV2(builder, new FederatedSchema(version));
+        if (builder is null)
+        {
+            throw new ArgumentNullException(nameof(builder));
+        }
+        builder.SetSchema(s =>
+        {
+            var link = FederationUtils.GetFederationLink(version);
+            s.Link(link.Url, link.Import?.ToArray());
+        });
+        return AddApolloFederationV2Definitions(builder, version);
     }
 
     /// <summary>
@@ -77,6 +69,16 @@ public static class ApolloFederationSchemaBuilderExtensionsV2
         {
             throw new ArgumentNullException(nameof(schema));
         }
+        builder.SetSchema(schema);
+        return AddApolloFederationV2Definitions(builder, schema.FederationVersion);
+    }
+
+    private static ISchemaBuilder AddApolloFederationV2Definitions(this ISchemaBuilder builder, FederationVersion version)
+    {
+        if (builder is null)
+        {
+            throw new ArgumentNullException(nameof(builder));
+        }
         // disable hot chocolate tag directive
         // specify default Query type name if not specified
         builder.ModifyOptions(opt =>
@@ -88,8 +90,6 @@ public static class ApolloFederationSchemaBuilderExtensionsV2
             }
         });
 
-        builder.SetSchema(schema);
-
         // scalars
         builder.AddType<AnyType>();
         builder.AddType<FieldSetType>();
@@ -99,7 +99,7 @@ public static class ApolloFederationSchemaBuilderExtensionsV2
         builder.AddType(new ServiceType(true));
 
         // directives
-        switch (schema.FederationVersion)
+        switch (version)
         {
             case FederationVersion.FEDERATION_25:
                 {
