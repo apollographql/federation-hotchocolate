@@ -7,7 +7,7 @@ on:
         required: false
 
 jobs:
-  compatibility-attributes:
+  compatibility-annotationbased:
     timeout-minutes: 30
     runs-on: ubuntu-latest
 
@@ -22,12 +22,12 @@ jobs:
       - name: Build
         run: dotnet build --no-restore
       - name: Generate schema file
-        run: dotnet run --project Compatibility/Attributes/AttributeFirst.csproj schema export --output products.graphql 
+        run: dotnet run --project Compatibility/AnnotationBased/AnnotationBased.csproj schema export --output products.graphql 
       - name: Compatibility Test
         uses: apollographql/federation-subgraph-compatibility@v2
         with:
-          compose: 'Compatibility/Attributes/docker-compose.yaml'
-          schema: 'Compatibility/Attributes/products.graphql'
+          compose: 'Compatibility/AnnotationBased/docker-compose.yaml'
+          schema: 'Compatibility/AnnotationBased/products.graphql'
           debug: true
           token: ${{ secrets.token }}
 

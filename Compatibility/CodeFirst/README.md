@@ -1,4 +1,4 @@
-# HotChocolate Federation CodeFirst Compatibility
+# HotChocolate Federation Compatibility using Code-First approach
 
 Example HotChocolate subgraph (configured using explicit binding and code first approach) used for testing [Apollo Federation Subgraph Compatibility](https://github.com/apollographql/apollo-federation-subgraph-compatibility).
 

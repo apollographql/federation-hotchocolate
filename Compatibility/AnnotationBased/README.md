@@ -1,4 +1,4 @@
-# HotChocolate Federation Attribute Compatibility
+# HotChocolate Federation Compatibility usign AnnotationBased approach
 
 Example HotChocolate subgraph (configured using Attributes) used for testing [Apollo Federation Subgraph Compatibility](https://github.com/apollographql/apollo-federation-subgraph-compatibility).
 
@@ -13,13 +13,13 @@ npm install --dev @apollo/federation-subgraph-compatibility
 Generate test schema
 
 ```shell
-dotnet run --project Compatibility/Attributes/AttributeFirst.csproj schema export --output products.graphql
+dotnet run --project Compatibility/AnnotationBased/AnnotationBased.csproj schema export --output products.graphql
 ```
 
 Run compatibility tests
 
 ```shell
-npx fedtest docker --compose Compatibility/Attributes/docker-compose.yaml --schema Compatibility/Attributes/products.graphql
+npx fedtest docker --compose Compatibility/AnnotationBased/docker-compose.yaml --schema Compatibility/AnnotationBased/products.graphql
 ```
 
 See [compatibility script documentation](https://www.npmjs.com/package/@apollo/federation-subgraph-compatibility) for additional details.
