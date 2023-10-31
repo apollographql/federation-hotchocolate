@@ -22,7 +22,8 @@ public class User
         return null;
     }
 
-    [ID]
+    [GraphQLType(typeof(IdType))]
+    [GraphQLNonNullType]
     [External]
     public string Email { get; set; }
 

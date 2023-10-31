@@ -20,7 +20,8 @@ public class Product
         Research = research;
     }
 
-    [ID]
+    [GraphQLType(typeof(IdType))]
+    [GraphQLNonNullType]
     public string Id { get; }
 
     public string? Sku { get; }

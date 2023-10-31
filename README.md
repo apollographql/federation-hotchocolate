@@ -69,7 +69,8 @@ public class Product
         Description = description;
     }
 
-    [ID]
+    [GraphQLType(typeof(IdType))]
+    [GraphQLNonNullType]
     public string Id { get; }
 
     public string Name { get; }
@@ -139,7 +140,8 @@ public class Product
         Description = description;
     }
 
-    [ID]
+    [GraphQLType(typeof(IdType))]
+    [GraphQLNonNullType]
     public string Id { get; }
 
     public string Name { get; }
@@ -296,7 +298,8 @@ In a subgraph defininig the interface we need to apply `@key`
 [KeyInterface("id")]
 public interface Product
 {
-    [ID]
+    [GraphQLType(typeof(IdType))]
+    [GraphQLNonNullType]
     string Id { get; }
 
     string Name { get; }
@@ -305,7 +308,8 @@ public interface Product
 [Key("id")]
 public class Book : Product
 {
-    [ID]
+    [GraphQLType(typeof(IdType))]
+    [GraphQLNonNullType]
     public string Id { get; set; }
 
     public string Name { get; set; }
@@ -322,7 +326,8 @@ entity that implements your interface (e.g. adding `Reviews` field to all `Produ
 [InterfaceObject]
 public class Product
 {
-    [ID]
+    [GraphQLType(typeof(IdType))]
+    [GraphQLNonNullType]
     public string Id { get; set; }
 
     public List<string> Reviews { get; set; }
@@ -339,7 +344,7 @@ public class Query
 {
     [RequiresScopes(scopes: new string[] { "scope1, scope2", "scope3" })]
     [RequiresScopes(scopes: new string[] { "scope4" })]
-    public Product? GetProduct([ID] string id, Data repository)
+    public Product? GetProduct([GraphQLType(typeof(IdType))][GraphQLNonNullType] string id, Data repository)
         => repository.Products.FirstOrDefault(t => t.Id.Equals(id));
 }
 ```
@@ -387,7 +392,7 @@ with those custom values.
 ```csharp
 public class CustomQuery
 {
-    public Foo? GetFoo([ID] string id, Data repository)
+    public Foo? GetFoo([GraphQLType(typeof(IdType))][GraphQLNonNullType] string id, Data repository)
         => repository.Foos.FirstOrDefault(t => t.Id.Equals(id));
 }
 

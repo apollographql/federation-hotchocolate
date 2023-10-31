@@ -12,7 +12,8 @@ public class Inventory
         Id = id;
     }
 
-    [ID]
+    [GraphQLType(typeof(IdType))]
+    [GraphQLNonNullType]
     public string Id { get; }
 
     public List<DeprecatedProduct> DeprecatedProducts(Data repository) => repository.DeprecatedProducts;

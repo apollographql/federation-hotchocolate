@@ -1,5 +1,6 @@
 using System.Linq;
-using HotChocolate.Types.Relay;
+using HotChocolate;
+using HotChocolate.Types;
 
 namespace ApolloGraphQL.HotChocolate.Federation.CertificationSchema.AnnotationBased.Types;
 
@@ -16,7 +17,8 @@ public class Product
         Variation = new(variation);
     }
 
-    [ID]
+    [GraphQLType(typeof(IdType))]
+    [GraphQLNonNullType]
     public string Id { get; }
 
     public string? Sku { get; }

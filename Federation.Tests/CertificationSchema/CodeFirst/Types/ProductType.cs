@@ -15,6 +15,9 @@ public class ProductType : ObjectType<Product>
             .Field(t => t.Id)
             .ID();
 
+        descriptor.Field(p => p.Variation)
+            .Type<ProductVariationType>();
+
         descriptor
             .Key("sku package")
             .ResolveReferenceWith(t => GetProductByPackage(default!, default!, default!));

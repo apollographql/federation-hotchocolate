@@ -2,7 +2,7 @@ namespace Products;
 
 public class Query
 {
-    public Product? GetProduct([ID] string id, Data repository)
+    public Product? GetProduct([GraphQLType(typeof(IdType))][GraphQLNonNullType] string id, Data repository)
         => repository.Products.FirstOrDefault(t => t.Id.Equals(id));
 
     [GraphQLDeprecated("Use product query instead")]

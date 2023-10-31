@@ -1,5 +1,3 @@
-using HotChocolate.Types.Relay;
-
 namespace ApolloGraphQL.HotChocolate.Federation.CertificationSchema.CodeFirst.Types;
 
 public class User

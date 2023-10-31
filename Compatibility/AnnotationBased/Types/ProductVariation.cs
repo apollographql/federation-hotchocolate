@@ -7,6 +7,7 @@ public class ProductVariation
         Id = id;
     }
 
-    [ID]
+    [GraphQLType(typeof(IdType))]
+    [GraphQLNonNullType]
     public string Id { get; }
 }

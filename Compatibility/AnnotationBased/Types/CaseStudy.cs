@@ -9,7 +9,8 @@ public class CaseStudy
         Description = description;
     }
 
-    [ID]
+    [GraphQLType(typeof(IdType))]
+    [GraphQLNonNullType]
     public string CaseNumber { get; }
     public string? Description { get; }
 

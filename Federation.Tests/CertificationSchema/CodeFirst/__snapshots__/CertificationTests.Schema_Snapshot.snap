@@ -4,10 +4,10 @@
 
 type Product @key(fields: "id") @key(fields: "sku package") @key(fields: "sku variation { id }") {
   id: ID!
+  variation: ProductVariation
   createdBy: User! @provides(fields: "totalProductsCreated")
   sku: String
   package: String
-  variation: ProductVariation
   dimensions: ProductDimension
 }
 

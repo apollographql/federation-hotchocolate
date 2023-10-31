@@ -1,4 +1,5 @@
-using HotChocolate.Types.Relay;
+using HotChocolate;
+using HotChocolate.Types;
 
 namespace ApolloGraphQL.HotChocolate.Federation.CertificationSchema.AnnotationBased.Types;
 
@@ -9,6 +10,7 @@ public class ProductVariation
         Id = id;
     }
 
-    [ID]
+    [GraphQLType(typeof(IdType))]
+    [GraphQLNonNullType]
     public string Id { get; }
 }
