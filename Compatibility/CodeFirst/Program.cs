@@ -7,7 +7,7 @@ builder.Services
     .AddGraphQLServer()
     .AddApolloFederationV2(schemaConfiguration: s =>
     {
-        s.Link("https://myspecs.dev/myCustomDirective/v1.0", ["@custom"]);
+        s.Link("https://myspecs.dev/myCustomDirective/v1.0", new string[] { "@custom" });
         s.ComposeDirective("@custom");
     })
     .AddType<CustomDirectiveType>()
