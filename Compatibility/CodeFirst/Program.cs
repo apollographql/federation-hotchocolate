@@ -5,11 +5,14 @@ builder.Services
 
 builder.Services
     .AddGraphQLServer()
-    .AddApolloFederationV2()
+    .AddApolloFederationV2(schemaConfiguration: s =>
+    {
+        s.Link("https://myspecs.dev/myCustomDirective/v1.0", ["@custom"]);
+        s.ComposeDirective("@custom");
+    })
     .AddType<CustomDirectiveType>()
     .AddType<InventoryType>()
     .AddQueryType<QueryType>()
-    .ApplyComposeDirective("https://myspecs.dev/myCustomDirective/v1.0", "@custom")
     .ModifyOptions(options => options.DefaultBindingBehavior = BindingBehavior.Explicit)
     .RegisterService<Data>();
 

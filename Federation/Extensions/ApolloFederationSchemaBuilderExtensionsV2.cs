@@ -27,7 +27,10 @@ public static class ApolloFederationSchemaBuilderExtensionsV2
     /// <exception cref="ArgumentNullException">
     /// The <paramref name="builder"/> is <c>null</c>.
     /// </exception>
-    public static ISchemaBuilder AddApolloFederationV2(this ISchemaBuilder builder, FederationVersion version = FederationVersion.FEDERATION_25)
+    public static ISchemaBuilder AddApolloFederationV2(
+        this ISchemaBuilder builder,
+        FederationVersion version = FederationVersion.FEDERATION_25,
+        Action<ISchemaTypeDescriptor>? schemaConfiguration = null)
     {
         if (builder is null)
         {
@@ -37,6 +40,7 @@ public static class ApolloFederationSchemaBuilderExtensionsV2
         {
             var link = FederationUtils.GetFederationLink(version);
             s.Link(link.Url, link.Import?.ToArray());
+            schemaConfiguration?.Invoke(s);
         });
         return AddApolloFederationV2Definitions(builder, version);
     }
