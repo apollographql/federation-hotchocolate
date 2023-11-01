@@ -89,7 +89,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/Compatibility/Attributes/AttributeFirst.csproj"
+                "${workspaceFolder}/Compatibility/AnnotationBased/AnnotationBased.csproj"
             ],
             "problemMatcher": "$msCompile"
         },

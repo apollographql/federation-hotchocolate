@@ -54,7 +54,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build-annotated-compatibility",
-            "program": "${workspaceFolder}/Compatibility/Attributes/bin/Debug/net7.0/AttributeFirst.dll",
+            "program": "${workspaceFolder}/Compatibility/AnnotationBased/bin/Debug/net7.0/AnnotationBased.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",
