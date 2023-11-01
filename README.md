@@ -239,7 +239,7 @@ builder.Services
     ;
 ```
 
-Alternatively you can also provide custom `FederatedSchema` that targets specific Federation version
+Alternatively, you can also provide custom `FederatedSchema` that targets specific Federation version
 
 ```csharp
 public class CustomSchema : FederatedSchema
@@ -251,6 +251,49 @@ public class CustomSchema : FederatedSchema
 builder.Services
     .AddGraphQLServer()
     .AddApolloFederationV2(new CustomSchema())
+    // register your types and services
+    ;
+```
+
+### Customizing Schema
+
+If you would like to customize your schema by applying some directives, you can also provide custom `FederatedSchema` that can be annotated with attributes extending `SchemaTypeDescriptorAttribute`
+
+```csharp
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, Inherited = true, AllowMultiple = true)]
+public sealed class CustomAttribute : SchemaTypeDescriptorAttribute
+{
+    public override void OnConfigure(IDescriptorContext context, ISchemaTypeDescriptor descriptor, Type type)
+    {
+        // configure your directive here
+    }
+}
+
+[Custom]
+public class CustomSchema : FederatedSchema
+{
+    public CustomSchema() : base(FederationVersion.FEDERATION_23) {
+    }
+}
+
+builder.Services
+    .AddGraphQLServer()
+    .AddApolloFederationV2(new CustomSchema())
+    // register your types and services
+    ;
+```
+
+Alternatively, you can also specify custom schema configuration action when building federated subgraph
+
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services
+    .AddGraphQLServer()
+    .AddApolloFederationV2(schemaConfiguration: s =>
+    {
+        // apply your directive here
+    })
     // register your types and services
     ;
 ```
@@ -278,10 +321,22 @@ builder.Services
     .AddApolloFederationV2(new CustomSchema())
     // register your types and services
     ;
+```
 
-var app = builder.Build();
-app.MapGraphQL();
-app.Run();
+Alternatively, you can apply `@composedDirective` by directly applying it on a target schema by using configuration action
+
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services
+    .AddGraphQLServer()
+    .AddApolloFederationV2(schemaConfiguration: s =>
+    {
+        s.Link("https://myspecs.dev/myCustomDirective/v1.0", new string[] { "@custom" });
+        s.ComposeDirective("@custom");
+    })
+    // register your types and services
+    ;
 ```
 
 #### `@interfaceObject` usage
@@ -357,7 +412,7 @@ type Query {
 You can use the `@contact` directive to add your team's contact information to a subgraph schema. This information is displayed in Studio, which helps *other* teams know who
 to contact for assistance with the subgraph. See [documentation](https://www.apollographql.com/docs/graphos/graphs/federated-graphs/#contact-info-for-subgraphs) for details.
 
-We can apply `[Contact]` attribute on a custom schema. You then need to include `@contact` directive definition and pass your custom schema to the `AddApolloFederationV2` extension.
+We need to apply `[Contact]` attribute on a schema. You can either apply `[Contact]` attribute on a custom schema and pass your custom schema to the `AddApolloFederationV2` extension.
 
 ```csharp
 [Contact("MyTeamName", "https://myteam.slack.com/archives/teams-chat-room-url", "send urgent issues to [#oncall](https://yourteam.slack.com/archives/oncall)")]
@@ -373,10 +428,21 @@ builder.Services
     .AddApolloFederationV2(new CustomSchema())
     // register your types and services
     ;
+```
 
-var app = builder.Build();
-app.MapGraphQL();
-app.Run();
+or apply `@contact` directive directly on a schema by providing custom schema configuration action
+
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services
+    .AddGraphQLServer()
+    .AddApolloFederationV2(schemaConfiguration: s =>
+    {
+        s.Contact("MyTeamName", "https://myteam.slack.com/archives/teams-chat-room-url", "send urgent issues to [#oncall](https://yourteam.slack.com/archives/oncall)");
+    })
+    // register your types and services
+    ;
 ```
 
 #### Custom Query types

@@ -5,9 +5,11 @@ builder.Services
 
 builder.Services
     .AddGraphQLServer()
-    // TODO there is no way to programmatically configure custom schema as we don't have option to access schema object
-    // ISchemaDirective can be used to specify directive definition but I don't see an option to provide applied value
-    .AddApolloFederationV2(new CustomSchema())
+    .AddApolloFederationV2(schemaConfiguration: s =>
+    {
+        s.Link("https://myspecs.dev/myCustomDirective/v1.0", new string[] { "@custom" });
+        s.ComposeDirective("@custom");
+    })
     .AddType<CustomDirectiveType>()
     .AddType<InventoryType>()
     .AddQueryType<QueryType>()
