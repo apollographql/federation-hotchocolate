@@ -6,6 +6,9 @@
 
 # Apollo Federation for Hot Chocolate
 
+> **Warning**
+> Due to a breaking change to the public API, we cannot support newer versions of `HotChocolate` until their replacement API (currently work in progress) is complete. **We can only support v`13.5.x` and v`13.6.x` releases**.
+
 >This is the **official Apollo Federation support library for Hot Chocolate** with support for Federation 1 and Federation 2 subgraphs. For backwards compatibility, it was based on HotChocolate's original Fed 1 module with added support for Fed v2. We recommend [migrating to this officially supported library](#migration-guide) as ongoing Federation support for HotChocolate ecosystem and using `rover subgraph create` to kickstart new projects.
 
 [**Apollo Federation**](https://www.apollographql.com/docs/federation/) is a powerful, open architecture that helps you create a **unified supergraph** that combines multiple GraphQL APIs.
