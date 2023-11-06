@@ -208,6 +208,8 @@ Entity resolution
 #### Generating schema at build time
 
 See [HotChocolate documentation](https://chillicream.com/docs/hotchocolate/v13/server/command-line) for details on the server support for command line interface.
+In order to generate schema at build time, you need to add additional dependency on `HotChocolate.AspNetCore.CommandLine` package and configure your server to allow it
+to `RunWithGraphQLCommands`.
 
 ```csharp
 var builder = WebApplication.CreateBuilder(args);
@@ -220,7 +222,7 @@ builder.Services
 
 var app = builder.Build();
 app.MapGraphQL();
-app.RunWithGraphQLCommands();
+app.RunWithGraphQLCommands(args);
 ```
 
 You can then generate your schema by running
