@@ -5,9 +5,6 @@ namespace ApolloGraphQL.HotChocolate.Federation;
 
 /// <summary>
 /// <code>
-/// # federation v1 definition
-/// directive @key(fields: _FieldSet!) repeatable on OBJECT | INTERFACE
-/// 
 /// # federation v2 definition
 /// directive @key(fields: FieldSet!, resolvable: Boolean = true) repeatable on OBJECT | INTERFACE
 /// </code>
@@ -31,18 +28,18 @@ namespace ApolloGraphQL.HotChocolate.Federation;
 ///   id: ID!
 /// }
 /// </example>
-/// <see cref="NonResolvableKeyAttribute"/>
+/// <see cref="KeyAttribute"/>
 /// </summary>
-public sealed class KeyAttribute : ObjectTypeDescriptorAttribute
+public sealed class NonResolvableKeyAttribute : ObjectTypeDescriptorAttribute
 {
     /// <summary>
-    /// Initializes a new instance of <see cref="KeyAttribute"/>.
+    /// Initializes a new instance of <see cref="NonResolvableKeyAttribute"/>.
     /// </summary>
     /// <param name="fieldSet">
     /// The field set that describes the key.
     /// Grammatically, a field set is a selection set minus the braces.
     /// </param>
-    public KeyAttribute(string fieldSet)
+    public NonResolvableKeyAttribute(string fieldSet)
     {
         FieldSet = fieldSet;
     }
@@ -59,6 +56,6 @@ public sealed class KeyAttribute : ObjectTypeDescriptorAttribute
         {
             throw Key_FieldSet_CannotBeEmpty(type);
         }
-        descriptor.Key(FieldSet);
+        descriptor.Key(FieldSet, false);
     }
 }

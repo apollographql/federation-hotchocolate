@@ -194,8 +194,9 @@ Federation v2 directives (includes all of the v1 directives)
 * `Contact(name, url?, description?)` applicable on schema, see [`@contact` usage](#providing-subgraph-contact-information)
 * `Inaccessible` applicable on all type definitions, see [`@inaccessible` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#inaccessible)
 * `InterfaceObject` **(since v2.3)** applicable on objects, see [`@interfaceObject` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#interfaceobject)
-* `Key(fieldset, resolvable?)` applicable on objects, see [`@key` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#key)
+* `Key(fieldset)` applicable on objects, see [`@key` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#key)
 * `Link(url, [import]?)` applicable on schema, see [`@link` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#the-link-directive)
+* `NonResolvableKey(fieldset)` applicable on objects, see [non-resolvable `@key` documentation](https://www.apollographql.com/docs/federation/entities#referencing-an-entity-without-contributing-fields)
 * `RequiresScopes(scopes)` **(since v2.5)** applicable on enum, field, interface and object, [`@requiresScopes` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives/#requiresscopes)
 * `Shareable` applicable on fields and objects, see [`@shareable` documentation](https://www.apollographql.com/docs/federation/federated-types/federated-directives#shareable)
 
@@ -301,6 +302,35 @@ builder.Services
     })
     // register your types and services
     ;
+```
+
+#### Non-resolvable `@key`
+
+Your subgraphs can use an entity as a field's return type without contributing any fields to that entity. Since we still need a type definition to generate a valid schema,
+we can define a **stub** object with `[NonResolvableKeyAttribute]`.
+
+```csharp
+public class Review {
+    public Review(Product product, int score)
+    {
+        Product = product;
+        Score = score
+    }
+
+    public Product Product { get; }
+    public int Score { get; }
+}
+
+
+[NonResolvableKey("id")]
+public class Product {
+    public Product(string id)
+    {
+        Id = id;
+    }
+
+    public string Id { get; }
+}
 ```
 
 #### `@composedDirective` usage
