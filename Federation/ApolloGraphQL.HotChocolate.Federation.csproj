@@ -7,14 +7,18 @@
     <AssemblyName>ApolloGraphQL.HotChocolate.Federation</AssemblyName>
     <Description>Apollo Federation Subgraph support for HotChocolate.</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
     <InternalsVisibleTo Include="ApolloGraphQL.HotChocolate.Federation.Tests" />
   </ItemGroup>
 
-  <ItemGroup> 
+  <ItemGroup>
     <PackageReference Include="HotChocolate" Version="13.6.1" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
   </ItemGroup>
 
   <ItemGroup>
