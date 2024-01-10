@@ -1,3 +1,5 @@
+using ApolloGraphQL.HotChocolate.Federation.Two;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services

@@ -1,3 +1,5 @@
+using ApolloGraphQL.HotChocolate.Federation.Two;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
@@ -5,7 +7,9 @@ builder.Services
 
 builder.Services
     .AddGraphQLServer()
-    .AddApolloFederationV2(schemaConfiguration: s =>
+    .AddApolloFederationV2(
+        version: FederationVersion.FEDERATION_25,
+        schemaConfiguration: s =>
     {
         s.Link("https://myspecs.dev/myCustomDirective/v1.0", new string[] { "@custom" });
         s.ComposeDirective("@custom");
