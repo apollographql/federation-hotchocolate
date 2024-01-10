@@ -1,0 +1,20 @@
+﻿schema {
+  query: Query
+}
+
+type Query {
+  someField(a: Int): Review @override(from: "reviews", label: "percent(50)")
+}
+
+type Review @key(fields: "id") {
+  id: Int
+}
+
+"Used to indicate a combination of fields that can be used to uniquely identify and fetch an object or interface."
+directive @key(fields: FieldSet! resolvable: Boolean = true) repeatable on OBJECT | INTERFACE
+
+"Overrides fields resolution logic from other subgraph. Used for migrating fields from one subgraph to another."
+directive @override(from: String! label: String) on FIELD_DEFINITION
+
+"Scalar representing a set of fields."
+scalar FieldSet

@@ -29,7 +29,7 @@ public static class ApolloFederationSchemaBuilderExtensionsV2
     /// </exception>
     public static ISchemaBuilder AddApolloFederationV2(
         this ISchemaBuilder builder,
-        FederationVersion version = FederationVersion.FEDERATION_25,
+        FederationVersion version = FederationVersion.FEDERATION_27,
         Action<ISchemaTypeDescriptor>? schemaConfiguration = null)
     {
         if (builder is null)
@@ -105,6 +105,8 @@ public static class ApolloFederationSchemaBuilderExtensionsV2
         // directives
         switch (version)
         {
+            case FederationVersion.FEDERATION_27:
+            case FederationVersion.FEDERATION_26:
             case FederationVersion.FEDERATION_25:
                 {
                     builder.AddType<ScopeType>();
@@ -132,7 +134,6 @@ public static class ApolloFederationSchemaBuilderExtensionsV2
                     builder.AddType<InaccessibleDirectiveType>();
                     builder.AddType<KeyV2>();
                     builder.AddType<LinkDirectiveType>();
-                    builder.AddType<OverrideDirectiveType>();
                     builder.AddType<ProvidesV2>();
                     builder.AddType<RequiresV2>();
                     builder.AddType<ShareableDirectiveType>();
@@ -141,6 +142,20 @@ public static class ApolloFederationSchemaBuilderExtensionsV2
                 }
             default:
                 {
+                    break;
+                }
+        }
+        
+        // override directive
+        switch(version) {
+            case FederationVersion.FEDERATION_27:
+                {
+                    builder.AddType<OverrideDirectiveTypeV27>();
+                    break;
+                }
+            default:
+                {
+                    builder.AddType<OverrideDirectiveType>();
                     break;
                 }
         }

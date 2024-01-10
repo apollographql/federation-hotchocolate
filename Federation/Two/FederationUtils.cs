@@ -71,6 +71,14 @@ internal sealed class FederationUtils
                 {
                     return new Link(FEDERATION_SPEC_BASE_URL + "2.5", FEDERATION_IMPORTS_25);
                 }
+            case FederationVersion.FEDERATION_26:
+                {
+                    return new Link(FEDERATION_SPEC_BASE_URL + "2.6", FEDERATION_IMPORTS_25);
+                }
+            case FederationVersion.FEDERATION_27:
+                {
+                    return new Link(FEDERATION_SPEC_BASE_URL + "2.7", FEDERATION_IMPORTS_25);
+                }
             default:
                 {
                     throw ThrowHelper.FederationVersion_Unknown(federationVersion);

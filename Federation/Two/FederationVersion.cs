@@ -11,4 +11,7 @@ public enum FederationVersion
     FEDERATION_23,
     FEDERATION_24,
     FEDERATION_25,
+    // TODO: actually add @policy support
+    FEDERATION_26,
+    FEDERATION_27,
 }

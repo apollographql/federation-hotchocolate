@@ -4,11 +4,8 @@ using ApolloGraphQL.HotChocolate.Federation.Properties;
 namespace ApolloGraphQL.HotChocolate.Federation.Two;
 
 /// <summary>
-/// Note: This @override implementation applies to Federation v2.0 through v2.6.
-/// As of v2.7, the @override directive includes an additional `label` argument.
-/// The implementation for v2.7+ can be found in OverrideDirectiveTypeV27.
 /// <code>
-/// directive @override(from: String!) on FIELD_DEFINITION
+/// directive @override(from: String!, label: String) on FIELD_DEFINITION
 /// </code>
 /// 
 /// The @override directive is used to indicate that the current subgraph is taking
@@ -22,13 +19,22 @@ namespace ApolloGraphQL.HotChocolate.Federation.Two;
 /// }
 /// </example>
 /// </summary>
-public sealed class OverrideDirectiveType : DirectiveType
+public sealed class OverrideDirectiveTypeV27 : DirectiveType
 {
     protected override void Configure(IDirectiveTypeDescriptor descriptor)
-        => descriptor
+    { 
+        IDirectiveTypeDescriptor directive = descriptor
             .Name(WellKnownTypeNames.Override)
             .Description(FederationResources.OverrideDirective_Description)
-            .Location(DirectiveLocation.FieldDefinition)
+            .Location(DirectiveLocation.FieldDefinition);
+        
+        directive
             .Argument(WellKnownArgumentNames.From)
             .Type<NonNullType<StringType>>();
+
+        directive
+            .Argument(WellKnownArgumentNames.Label)
+            .Type<StringType>();
+    }
+            
 }

@@ -412,10 +412,18 @@ public static partial class ApolloFederationDescriptorExtensions
     }
 
     /// <summary>
-    /// Applies the @override directive which is used to indicate that the current subgraph is taking
-    /// responsibility for resolving the marked field away from the subgraph specified in the from
-    /// argument. Name of the subgraph to be overridden has to match the name of the subgraph that
-    /// was used to publish their schema.
+    /// <code>
+    /// directive @override(from: String!, label: String) on FIELD_DEFINITION
+    /// </code>
+    ///
+    /// The @override directive is used to indicate that the current subgraph is
+    /// taking responsibility for resolving the marked field away from the subgraph
+    /// specified in the from argument. Name of the subgraph to be overridden has to
+    /// match the name of the subgraph that was used to publish their schema. As of
+    /// federation v2.7, Enterprise router users can use the optional `label`
+    /// argument to progressively roll out a field migration.
+    ///
+    /// NOTE: Only available in Federation v2
     /// <example>
     /// type Foo @key(fields: "id") {
     ///   id: ID!
@@ -429,6 +437,9 @@ public static partial class ApolloFederationDescriptorExtensions
     /// <param name="from">
     /// Name of the subgraph to be overridden.
     /// </param>
+    /// <param name="label">
+    /// Label used to progressively roll out a field migration
+    /// </param>
     /// <returns>
     /// Returns the object field descriptor.
     /// </returns>
@@ -440,7 +451,7 @@ public static partial class ApolloFederationDescriptorExtensions
     /// </exception>
     public static IObjectFieldDescriptor Override(
         this IObjectFieldDescriptor descriptor,
-        string from)
+        string from, string label = null)
     {
         if (descriptor is null)
         {
@@ -458,7 +469,11 @@ public static partial class ApolloFederationDescriptorExtensions
             WellKnownTypeNames.Override,
             new ArgumentNode(
                 WellKnownArgumentNames.From,
-                new StringValueNode(from)));
+                new StringValueNode(from)),
+            new ArgumentNode(
+                WellKnownArgumentNames.Label,
+                new StringValueNode(label)));
+        
     }
 
     /// <summary>

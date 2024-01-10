@@ -49,4 +49,12 @@ public class FederationTypesTestBase
             }
         );
     }
+
+    protected void AssertDirectiveHasArgumentOfType<T>(DirectiveType directive, string argName) where T: IType
+    {
+        Assert.Contains(
+            directive.Arguments,
+            t => t.Type is T && argName == t.Name
+        );
+    }
 }

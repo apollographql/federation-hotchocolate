@@ -15,7 +15,7 @@ public class FederatedSchema : Schema
     /// <param name="version">
     /// Supported Apollo Federation version
     /// </param>
-    public FederatedSchema(FederationVersion version = FederationVersion.FEDERATION_25)
+    public FederatedSchema(FederationVersion version = FederationVersion.FEDERATION_27)
     {
         FederationVersion = version;
     }
