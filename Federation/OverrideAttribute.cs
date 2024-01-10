@@ -35,7 +35,7 @@ public sealed class OverrideAttribute : ObjectFieldDescriptorAttribute
     /// <param name="label">
     /// Label used to progressively roll out a field migration
     /// </param>
-    public OverrideAttribute(string from, string label = null)
+    public OverrideAttribute(string from, string? label = null)
     {
         From = from;
         Label = label;
@@ -49,7 +49,7 @@ public sealed class OverrideAttribute : ObjectFieldDescriptorAttribute
     /// <summary>
     /// Get the override label.
     /// </summary>
-    public string Label { get; }
+    public string? Label { get; }
 
     protected override void OnConfigure(
         IDescriptorContext context,

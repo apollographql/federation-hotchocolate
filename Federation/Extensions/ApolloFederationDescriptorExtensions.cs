@@ -451,7 +451,7 @@ public static partial class ApolloFederationDescriptorExtensions
     /// </exception>
     public static IObjectFieldDescriptor Override(
         this IObjectFieldDescriptor descriptor,
-        string from, string label = null)
+        string from, string? label = null)
     {
         if (descriptor is null)
         {
@@ -465,15 +465,22 @@ public static partial class ApolloFederationDescriptorExtensions
                 nameof(from));
         }
 
-        return descriptor.Directive(
-            WellKnownTypeNames.Override,
-            new ArgumentNode(
-                WellKnownArgumentNames.From,
-                new StringValueNode(from)),
-            new ArgumentNode(
-                WellKnownArgumentNames.Label,
-                new StringValueNode(label)));
-        
+        if (label == null) {
+            return descriptor.Directive(
+                WellKnownTypeNames.Override,
+                new ArgumentNode(
+                    WellKnownArgumentNames.From,
+                    new StringValueNode(from)));
+        } else {
+            return descriptor.Directive(
+                WellKnownTypeNames.Override,
+                new ArgumentNode(
+                    WellKnownArgumentNames.From,
+                    new StringValueNode(from)),
+                new ArgumentNode(
+                    WellKnownArgumentNames.Label,
+                    new StringValueNode(label)));
+        }
     }
 
     /// <summary>
