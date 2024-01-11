@@ -7,7 +7,7 @@ builder.Services
 
 builder.Services
     .AddGraphQLServer()
-    .AddApolloFederationV2(new CustomSchema())
+    .AddApolloFederationV2(new CustomSchema(FederationVersion.FEDERATION_25))
     .AddType<CustomDirectiveType>()
     .AddType<Inventory>()
     .AddQueryType<Query>()
