@@ -166,7 +166,7 @@ public class OverrideDirectiveTests : FederationTypesTestBase
 
     public class Query
     {
-        [Override("reviews", "percent(50)")]
+        [ProgressiveOverride("reviews", "percent(50)")]
         public Review SomeField(int id) => default!;
     }
 

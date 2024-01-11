@@ -23,30 +23,39 @@ namespace ApolloGraphQL.HotChocolate.Federation;
 /// }
 /// </example>
 /// </summary>
-public sealed class OverrideAttribute : ObjectFieldDescriptorAttribute
+public sealed class ProgressiveOverrideAttribute : ObjectFieldDescriptorAttribute
 {
 
     /// <summary>
-    /// Initializes new instance of <see cref="OverrideAttribute"/> 
+    /// Initializes new instance of <see cref="ProgressiveOverrideAttribute"/> 
     /// </summary>
     /// <param name="from">
     /// Name of the subgraph to be overridden
     /// </param>
-    public OverrideAttribute(string from)
+    /// <param name="label">
+    /// Label used to progressively roll out a field migration
+    /// </param>
+    public ProgressiveOverrideAttribute(string from, string label)
     {
         From = from;
+        Label = label;
     }
 
     /// <summary>
     /// Get name of the subgraph to be overridden.
     /// </summary>
     public string From { get; }
+    
+    /// <summary>
+    /// Get the override label.
+    /// </summary>
+    public string Label { get; }
 
     protected override void OnConfigure(
         IDescriptorContext context,
         IObjectFieldDescriptor descriptor,
         MemberInfo member)
     {
-        descriptor.Override(From);
+        descriptor.Override(From, Label);
     }
 }
