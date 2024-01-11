@@ -13,14 +13,14 @@ public class OverrideDirectiveTests : FederationTypesTestBase
     [Fact]
     public void AddOverrideDirective_EnsureAvailableInSchema()
     {
-        var schema = CreateSchema(b => b.AddDirectiveType<OverrideDirectiveTypeV27>());
+        var schema = CreateSchema(b => b.AddDirectiveType<ProgressiveOverrideDirectiveType>());
 
         var directive =
             schema.DirectiveTypes.FirstOrDefault(
                 t => t.Name.EqualsOrdinal(WellKnownTypeNames.Override));
 
         Assert.NotNull(directive);
-        Assert.IsType<OverrideDirectiveTypeV27>(directive);
+        Assert.IsType<ProgressiveOverrideDirectiveType>(directive);
         Assert.Equal(WellKnownTypeNames.Override, directive!.Name);
         Assert.Equal(2, directive.Arguments.Count);
         // TODO: possible to assert NonNullType<StringType>?
@@ -47,7 +47,7 @@ public class OverrideDirectiveTests : FederationTypesTestBase
                     }
                 ")
             .AddDirectiveType<KeyDirectiveType>()
-            .AddDirectiveType<OverrideDirectiveTypeV27>()
+            .AddDirectiveType<ProgressiveOverrideDirectiveType>()
             .AddType<FieldSetType>()
             .Use(_ => _ => default)
             .Create();
@@ -93,7 +93,7 @@ public class OverrideDirectiveTests : FederationTypesTestBase
                 }))
             .AddType<FieldSetType>()
             .AddDirectiveType<KeyDirectiveType>()
-            .AddDirectiveType<OverrideDirectiveTypeV27>()
+            .AddDirectiveType<ProgressiveOverrideDirectiveType>()
             .Use(_ => _ => default)
             .Create();
 

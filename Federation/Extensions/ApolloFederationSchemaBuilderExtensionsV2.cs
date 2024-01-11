@@ -150,7 +150,7 @@ public static class ApolloFederationSchemaBuilderExtensionsV2
         switch(version) {
             case FederationVersion.FEDERATION_27:
                 {
-                    builder.AddType<OverrideDirectiveTypeV27>();
+                    builder.AddType<ProgressiveOverrideDirectiveType>();
                     break;
                 }
             default:

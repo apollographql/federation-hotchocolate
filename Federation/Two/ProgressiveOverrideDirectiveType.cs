@@ -19,7 +19,7 @@ namespace ApolloGraphQL.HotChocolate.Federation.Two;
 /// }
 /// </example>
 /// </summary>
-public sealed class OverrideDirectiveTypeV27 : DirectiveType
+public sealed class ProgressiveOverrideDirectiveType : DirectiveType
 {
     protected override void Configure(IDirectiveTypeDescriptor descriptor)
     { 

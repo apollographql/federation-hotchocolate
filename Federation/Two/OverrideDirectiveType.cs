@@ -6,7 +6,7 @@ namespace ApolloGraphQL.HotChocolate.Federation.Two;
 /// <summary>
 /// Note: This @override implementation applies to Federation v2.0 through v2.6.
 /// As of v2.7, the @override directive includes an additional `label` argument.
-/// The implementation for v2.7+ can be found in OverrideDirectiveTypeV27.
+/// The implementation for v2.7+ can be found in ProgressiveOverrideDirectiveType.
 /// <code>
 /// directive @override(from: String!) on FIELD_DEFINITION
 /// </code>
