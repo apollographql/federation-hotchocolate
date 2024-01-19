@@ -28,7 +28,7 @@ public static class ApolloFederationRequestExecutorBuilderExtensionsV2
     /// </exception>
     public static IRequestExecutorBuilder AddApolloFederationV2(
         this IRequestExecutorBuilder builder,
-        FederationVersion version = FederationVersion.FEDERATION_27,
+        FederationVersion version = FederationVersion.FEDERATION_25,
         Action<ISchemaTypeDescriptor>? schemaConfiguration = null
     )
     {

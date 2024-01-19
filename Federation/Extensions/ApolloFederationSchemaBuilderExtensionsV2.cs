@@ -29,7 +29,7 @@ public static class ApolloFederationSchemaBuilderExtensionsV2
     /// </exception>
     public static ISchemaBuilder AddApolloFederationV2(
         this ISchemaBuilder builder,
-        FederationVersion version = FederationVersion.FEDERATION_27,
+        FederationVersion version = FederationVersion.FEDERATION_25,
         Action<ISchemaTypeDescriptor>? schemaConfiguration = null)
     {
         if (builder is null)
