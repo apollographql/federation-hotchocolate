@@ -132,7 +132,7 @@ public class OverrideDirectiveTests : FederationTypesTestBase
         Snapshot.FullName();
 
         var schema = CreateSchemaBuilder()
-            .AddApolloFederationV2()
+            .AddApolloFederationV2(FederationVersion.FEDERATION_27)
             .AddQueryType<Query>()
             .Create();
 
