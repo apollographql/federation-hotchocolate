@@ -1,3 +1,6 @@
+# This package is now officially deprecated in favor of the HotChocolate built-in Federation module. 
+## We created this package when there was no built-in HC support for Federation v2, but as of HC v13.9.0 `HotChocolate.ApolloFederation` package now fully supports Federation v2. In order to simplify the integrations in the HC ecosystem, we decided to deprecate this package in favor of supporting a single fully featured built-in package.
+
 [![Continuous Integration](https://github.com/apollographql/federation-hotchocolate/workflows/Continuous%20Integration/badge.svg)](https://github.com/apollographql/federation-hotchocolate/actions?query=workflow%3A%22Continuous+Integration%22)
 [![MIT License](https://img.shields.io/github/license/apollographql/federation-hotchocolate.svg)](LICENSE)
 [![Nuget](https://img.shields.io/nuget/v/ApolloGraphQL.HotChocolate.Federation)](https://www.nuget.org/packages/ApolloGraphQL.HotChocolate.Federation/)
@@ -8,8 +11,6 @@
 
 > **Warning**
 > Due to a breaking change to the public API, we cannot support newer versions of `HotChocolate` until their replacement API (currently work in progress) is complete. **We can only support v`13.5.x` and v`13.6.x` releases**.
-
->This is the **official Apollo Federation support library for Hot Chocolate** with support for Federation 1 and Federation 2 subgraphs. For backwards compatibility, it was based on HotChocolate's original Fed 1 module with added support for Fed v2. We recommend [migrating to this officially supported library](#migration-guide) as ongoing Federation support for HotChocolate ecosystem and using `rover subgraph create` to kickstart new projects.
 
 [**Apollo Federation**](https://www.apollographql.com/docs/federation/) is a powerful, open architecture that helps you create a **unified supergraph** that combines multiple GraphQL APIs.
 `ApolloGraphQL.HotChocolate.Federation` provides Apollo Federation support for building subgraphs in the `HotChocolate` ecosystem. Individual subgraphs can be run independently of each other but can also specify
